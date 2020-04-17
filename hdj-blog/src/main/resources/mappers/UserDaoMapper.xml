@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hdj.hdjblog.dao.UserDao">
+
+    <select id="findAllMenuForUser" resultType="java.lang.Long">
+        select distinct rm.menu_id from t_user_role ur
+        LEFT JOIN t_role_menu rm on ur.role_id = rm.role_id
+        <where>
+            <if test="userId!=null and userId!=''">
+                ur.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+    <select id="queryAllPerms" resultType="java.lang.String">
+        select  tm.permission from  t_user_role as tur
+        left join t_role_menu as trm on trm.role_id = tur.role_id
+        left join t_menu as tm on tm.id = trm.menu_id
+        where tur.user_id =  #{userId}
+    </select>
+</mapper>

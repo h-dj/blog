@@ -1,0 +1,18 @@
+#Spring
+spring:
+  application:
+    name: hdj-blog
+  profiles:
+    active: '@profile.active@'
+  http:
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
+mybatis-plus:
+  mapper-locations: classpath*:/mappers/*
+  #type-aliases-package:
+  # 数据库表与实体类的驼峰命名自动转换
+  configuration:
+    map-underscore-to-camel-case: true
+
