@@ -12,14 +12,14 @@ spring:
     # 初始化Druid
     druid:
       # mysql数据库接地址
-      url: jdbc:mysql://172.16.0.4:44064/blog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+      url: jdbc:mysql://${BLOG-MYSQL-HOST}/${BLOG-MYSQL-DB}?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: blog
       password: blog
       # 监控页面的用户名和密码 以及页面地址
       stat-view-servlet:
-        login-username: blog
-        login-password: blog
+        login-username: ${BLOG-MYSQL-NAME}
+        login-password: ${BLOG-MYSQL-PWD}
         enabled: true
         url-pattern: /druid/*
         # 初始化连接大小   默认：0
@@ -71,11 +71,11 @@ spring:
     # Redis数据库索引（默认为0）
     database: 0
     # Redis服务器地址
-    host: 172.16.0.4
+    host: ${BLOG-REDIS-HOST}
     # Redis服务器连接端口
-    port: 6379
+    port: ${BLOG-REDIS-PORT}
     # Redis服务器连接密码（默认为空）如果没有配置密码就不要写这个属性了
-    password: 123456
+    password: ${BLOG-REDIS-PWD}
     #连接池
     lettuce:
       pool:
@@ -101,10 +101,10 @@ spring:
       # 最大请求大小
       max-request-size: 10MB
   rabbitmq:
-    host: 172.16.0.4
-    port: 5672
-    username: blog
-    password: blog
+    host: ${BLOG-MQ-HOST}
+    port: ${BLOG-MQ-PORT}
+    username: ${BLOG-MQ-NAME}
+    password: ${BLOG-MQ-PWD}
     #虚拟主机地址
     virtual-host: /blog
     #连接超时时间
