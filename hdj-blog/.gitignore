@@ -3,6 +3,8 @@ HELP.md
 .mvn
 /gen
 /logs
+../build
+
 
 ### STS ###
 .apt_generated

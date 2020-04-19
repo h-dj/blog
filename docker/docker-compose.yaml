@@ -1,0 +1,98 @@
+version: '3'
+services:
+  db:
+    container_name: blog-mysql
+    image: 'mysql:8.0'
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=blog
+      - MYSQL_USER=blog
+      - MYSQL_PASSWORD=blog
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf/my.cnf:/etc/mysql/my.cnf
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    privileged: true
+    networks:
+      - blog-extranet
+    expose:
+      - 3306
+  redis:
+    container_name: blog-redis
+    image: 'redis:5'
+    restart: always
+    privileged: true
+    volumes:
+      - ./redis/data:/data
+      - ./redis/conf/redis.conf:/conf/redis.conf
+    command: redis-server /conf/redis.conf
+    networks:
+      - blog-extranet
+    expose:
+      - 6379
+  mq:
+    container_name: blog-rabbitmq
+    image: 'rabbitmq:3.8.2-management-alpine'
+    restart: always
+    privileged: true
+    environment:
+      - RABBITMQ_DEFAULT_USER=blog
+      - RABBITMQ_DEFAULT_PASS=blog
+      - RABBITMQ_DEFAULT_VHOST=/blog
+    networks:
+      - blog-extranet
+    expose:
+      - 5672
+      - 15672
+  es:
+    container_name: blog-es
+    image: 'elasticsearch:7.1.0'
+    restart: always
+    privileged: true
+    environment:
+      - "discovery.type=single-node"
+    volumes:
+      - ./es/plugins:/usr/share/elasticsearch/plugins
+      - ./es/data:/usr/share/elasticsearch/data
+    expose:
+      - 9200
+      - 9300
+    networks:
+      - blog-extranet
+  nginx:
+    container_name: blog-nginx
+    image: 'nginx:1.16-alpine'
+    restart: always
+    privileged: true
+    volumes:
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/www:/home/www/website
+    ports:
+      - 80:80
+    networks:
+      - blog-extranet
+    depends_on:
+      - blog-api
+    blog-api:
+      build: ./app
+      restart: always
+      privileged: true
+      container_name: blog-api
+      networks:
+        - blog-extranet
+      volumes:
+        - ./app:/app
+      ports:
+        - 8181:8181
+      depends_on:
+        - db
+        - mq
+        - redis
+      environment:
+        - BLOG-MQ-HOST=mq
+        - BLOG-REDIS-HOST=redis
+        - BLOG-MYSQL-URL=jdbc:mysql://db:3306/blog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+networks:
+  blog-extranet:
+    driver: bridge

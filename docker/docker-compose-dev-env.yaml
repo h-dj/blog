@@ -1,0 +1,49 @@
+# 开发环境搭建
+version: '3'
+services:
+  db:
+    container_name: blog-mysql
+    image: 'mysql:8.0'
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=blog
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf/my.cnf:/etc/mysql/my.cnf
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    privileged: true
+    ports:
+      - 3306:3306
+  redis:
+    container_name: blog-redis
+    image: 'redis:5'
+    restart: always
+    privileged: true
+    volumes:
+      - ./redis/data:/data
+      - ./redis/conf/redis.conf:/conf/redis.conf
+    command: redis-server /conf/redis.conf
+    ports:
+      - 6379:6379
+  mq:
+    container_name: blog-rabbitmq
+    image: 'rabbitmq:3.8.2-management-alpine'
+    restart: always
+    privileged: true
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - 5672:5672
+      - 15672:15672
+  es:
+    container_name: blog-es
+    image: 'elasticsearch:7.1.0'
+    restart: always
+    privileged: true
+    environment:
+      - "discovery.type=single-node"
+    ports:
+      - 9200:9200
+      - 9300:9300

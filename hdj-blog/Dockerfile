@@ -7,22 +7,8 @@ ARG JAR_FILE=hdj-blog-0.0.1-SNAPSHOT.jar
 # 表示将jar包添加到镜像中，并重命名app.jar
 COPY ${JAR_FILE} app.jar
 RUN sh -c 'touch /app.jar'
-
-#定义的环境变量
-ENV BLOG-MYSQL-HOST="127.0.0.1"
-ENV BLOG-MYSQL-DB="blog"
-ENV BLOG-MYSQL-NAME="blog"
-ENV BLOG-MYSQL-PWD="123456"
-ENV BLOG-REDIS-HOST="127.0.0.1"
-ENV BLOG-REDIS-PORT="6379"
-ENV BLOG-REDIS-PWD="123456"
-ENV BLOG-MQ-HOST="127.0.0.1"
-ENV BLOG-MQ-NAME="blog"
-ENV BLOG-MQ-PWD="blog"
-
 # 代表的是jvm的参数，如果有需要可以写在这里
 ENV JAVA_OPTS=""
 
 # 表示启动时运行 java -jar app.jar
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
-EXPOSE 8181
