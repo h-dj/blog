@@ -93,16 +93,17 @@ create database `blog` default character set utf8mb4 collate utf8mb4_0900_ai_ci;
  -- Table structure for t_friend_link
  -- ----------------------------
  DROP TABLE IF EXISTS `t_friend_link`;
- CREATE TABLE `t_friend_link`  (
-   `id` bigint(19) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-   `create_time` datetime(0) NOT NULL ON UPDATE CURRENT_TIMESTAMP(0),
-   `update_time` datetime(0) NOT NULL ON UPDATE CURRENT_TIMESTAMP(0),
-   `status` int(1) NOT NULL DEFAULT 0 COMMENT '状态:0新建，1审核通过，2不通过',
-   `describe` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '描述',
-   `url` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '友链',
-   `email` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '通知邮箱',
-   PRIMARY KEY (`id`) USING BTREE
- ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '友链' ROW_FORMAT = Dynamic;
+CREATE TABLE `t_friend_link` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `create_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `status` int NOT NULL DEFAULT '0' COMMENT '状态:0新建，1审核通过，2不通过',
+  `remark` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '描述',
+  `url` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '友链',
+  `email` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '通知邮箱',
+  `title` varchar(100) NOT NULL COMMENT '友链标题',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='友链'
 
  -- ----------------------------
  -- Table structure for t_log
@@ -299,4 +300,4 @@ INSERT INTO `t_tag_article` VALUES (32, 1215290346028900353, 1215290345965985793
 INSERT INTO `t_tag_article` VALUES (33, 1215290346041483265, 1215290345965985793);
 
 -- 用户
-INSERT INTO `t_user` VALUES (0, 'hdj', 'hdj@admin.cn', '2fb59eba241926beeb7ce3096ba3b5442d3da1f05fe0b3146dacedb472002393', '9af1d92077b5d384fc9401fea35e0c2c', 'http://192.168.43.122:8181/upload/2/4/e6fea537-facd-4117-ad69-229b454016b3_2020-01-07.jpg', 1, '1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111', 0, 0, '2020-01-10 21:38:28', '2019-07-10 10:48:04', '2020-01-07 23:21:53');
+INSERT INTO `t_user` VALUES (0, 'hdj', 'admin', '2fb59eba241926beeb7ce3096ba3b5442d3da1f05fe0b3146dacedb472002393', '9af1d92077b5d384fc9401fea35e0c2c', 'http://192.168.43.122:8181/upload/2/4/e6fea537-facd-4117-ad69-229b454016b3_2020-01-07.jpg', 1, '1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111', 0, 0, '2020-01-10 21:38:28', '2019-07-10 10:48:04', '2020-01-07 23:21:53');

@@ -20,7 +20,7 @@ services:
       - 3306
   redis:
     container_name: blog-redis
-    image: 'redis:5'
+    image: 'redis:5.0'
     restart: always
     privileged: true
     volumes:
@@ -74,25 +74,25 @@ services:
       - blog-extranet
     depends_on:
       - blog-api
-    blog-api:
-      build: ./app
-      restart: always
-      privileged: true
-      container_name: blog-api
-      networks:
-        - blog-extranet
-      volumes:
-        - ./app:/app
-      ports:
-        - 8181:8181
-      depends_on:
-        - db
-        - mq
-        - redis
-      environment:
-        - BLOG-MQ-HOST=mq
-        - BLOG-REDIS-HOST=redis
-        - BLOG-MYSQL-URL=jdbc:mysql://db:3306/blog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+  blog-api:
+    build: ./app
+    restart: always
+    privileged: true
+    container_name: blog-api
+    networks:
+      - blog-extranet
+    volumes:
+      - ./app:/app
+    ports:
+      - 8181:8181
+    depends_on:
+      - db
+      - mq
+      - redis
+    environment:
+      - BLOG-MQ-HOST=mq
+      - BLOG-REDIS-HOST=redis
+      - BLOG-MYSQL-URL=jdbc:mysql://db:3306/blog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
 networks:
   blog-extranet:
     driver: bridge

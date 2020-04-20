@@ -8,6 +8,7 @@ mkdir -vp build/{mysql/{init,conf,data},nginx/{conf,wwww},es/{plugins,data},redi
 cp ./docker/mysql/blog_init.sql build/mysql/init
 cp ./docker/mysql/my.cnf  build/mysql/conf
 cp ./docker/redis/redis.conf  build/redis/conf
+cp ./docker/nginx/nginx.conf  build/nginx/conf/nginx.conf
 cp ./docker/docker-compose-dev-env.yaml  build/
 
 #安装分词插件(可选)
@@ -47,6 +48,7 @@ mkdir -vp /opt/blog/{mysql/{init,conf,data},nginx/{conf,wwww/{front,admin}},es/{
 scp ./docker/mysql/blog_init.sql  username@host:/opt/blog/mysql/init
 scp ./docker/mysql/my.cnf  username@host:/opt/blog/mysql/conf
 scp ./docker/redis/redis.conf  username@host:/opt/blog/redis/conf
+scp ./docker/nginx/nginx.conf  username@host:/opt/blog/nginx/conf/nginx.conf
 scp ./docker/docker-compose.yaml  username@host:/opt/blog
 
 wget  https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.1.0/elasticsearch-analysis-ik-7.1.0.zip -O ./es/plugins/elasticsearch-analysis-ik-7.1.0.zip && unzip ./es/plugins/elasticsearch-analysis-ik-7.1.0.zip
