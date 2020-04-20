@@ -1,44 +1,6 @@
-# Fblog
-```
-一个基于vue3.x+element-ui简洁的博客模板
-```
+## 博客前台项目
 
-## 演示地址
-[demo](http://www.fengziy.cn/fBlog/)
-[备用地址](https://fengziye.github.io/blog/)
-```
-http://www.fengziy.cn/fBlog/
-
-https://fengziye.github.io/blog/
-```
-
-## 项目截图
-
-### 首页（懒，博文列表都一样 :sweat_smile: ）
-
-![首页](https://images.gitee.com/uploads/images/2019/0326/212821_d068d429_1658323.png "屏幕截图.png")
-
-### 国际化效果（只截了一张图）
-
-![国际化](https://images.gitee.com/uploads/images/2019/0326/213439_7719202a_1658323.png "屏幕截图.png")
-
-### 博文页
-
-![博文页](https://images.gitee.com/uploads/images/2019/0326/213002_d950f6fe_1658323.png "屏幕截图.png")
-
-### 申请友链
-
-![申请友链](https://images.gitee.com/uploads/images/2019/0326/213340_0de8aa80_1658323.png "屏幕截图.png")
-
-### 归档（标签页与他类似）
-
-![归档](https://images.gitee.com/uploads/images/2019/0326/213057_d1b8d6ac_1658323.png "屏幕截图.png")
-
-### 关于页
-
-![关于](https://images.gitee.com/uploads/images/2019/0326/213232_9b8a17df_1658323.png "屏幕截图.png")
-
-
+> 基于https://gitee.com/fengziy/Fblog模板 开发
 
 ## 安装
 ```
@@ -51,21 +13,60 @@ npm run serve
 
 ## 打包
 ```
-npm run build
+npm run build:prod
 ```
 
 ## 部署
-把build的dist文件命名为fBlog(自取)上传到服务器
 
-### nginx配置
+1. 设置后台api 
 ```
-location /fBlog/ {
-	root /usr/local/nginx/;#fBlog所在的更目录
-	try_files $uri $uri/ /fBlog/;
+#在文件.env.production 修改以下变量
+VUE_APP_BASE_API = /api
+VUE_APP_PORT = 8282
+
+```
+2. 修改 publicPath  作为访问的路径
+```
+#vue.config.js
+publicPath: isDev ? '/' : '/front/',
+```
+
+3. 注意，路由的basepath 与publicPath 一致
+```
+const isDev = process.env.NODE_ENV === 'development'
+const router = new VueRouter({
+	base: isDev ? '/' : '/front/',
+    ...
+})
+```
+4. 最后把打包好/dist/里的文件放到服务器中
+- 上传
+```shell script
+scp ./dist/**  username@host:/opt/blog/nginx/wwww/front
+或者 , 如果修改了ssh端口 -e "ssh -p 端口" 
+rsync -avu --progress  ./dist/**  username@host:/opt/blog/nginx/wwww/front
+
+```
+- 启动nginx 
+```
+#nginx.conf
+server {
+        #监听端口
+        listen  80;
+        #编码格式
+        charset utf-8;
+        #根目录
+        root  /home/www/website;
+
+        # 前端门户静态文件资源
+        location /front {
+            try_files $uri $uri/ /front/index.html;
+        }
+
+        # 代理api
+        location /api {
+            proxy_pass  http://ip:8181/api;
+        }
 }
 ```
-
-## 演示
-```
-域名:4567/fBlog/
-```
+- 访问 http://ip:port/front

@@ -1,5 +1,5 @@
 # 开发环境搭建
-version: '3'
+version: '3.3'
 services:
   db:
     container_name: blog-mysql
