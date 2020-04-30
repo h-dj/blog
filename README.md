@@ -68,7 +68,7 @@ rsync -avu --progress  ./dist/**  username@host:/opt/blog/nginx/wwww/front
 #后台
 scp ./dist/**  username@host:/opt/blog/nginx/wwww/admin
 或者 , 如果修改了ssh端口 -e "ssh -p 端口" 
-rsync -avu --progress  ./dist/**  username@host:/opt/blog/nginx/wwww/admin
+rsync -Wvc --progress  ./dist/**  username@host:/opt/blog/nginx/wwww/admin
 ```
 
 5. 后台打包
@@ -78,13 +78,16 @@ mvn clean compile package -P prod
 ### 拷贝Dockerfile 文件 和jar 包到服务器
 scp ./target/hdj-blog-0.0.1-SNAPSHOT.jar  ./Dockerfile  username@host:/opt/blog/app
 或者 , 如果修改了ssh端口 -e "ssh -p 端口" 
-rsync -avu --progress  ./target/hdj-blog-0.0.1-SNAPSHOT.jar  ./Dockerfile   username@host:/opt/blog/app 
+rsync -Wvc --progress -e "ssh -p 端口" ./target/hdj-blog-0.0.1-SNAPSHOT.jar  ./Dockerfile   username@host:/opt/blog/app 
+
+
+
 
 ```
 
 6. 拷贝docker-compose.yaml 文件到./blog目录下, 启动
 ```shell script
-docker-compose -f ./blog/docker-compose.yaml up -d
+docker-compose -f /opt/blog/docker-compose.yaml up -d  --build
 #关闭
 docker-compose down
 ```

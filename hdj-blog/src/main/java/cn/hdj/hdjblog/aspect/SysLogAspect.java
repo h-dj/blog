@@ -149,7 +149,7 @@ public class SysLogAspect {
                 logDO.setTime(time);
                 String message = ExceptionUtil.getMessage(exception);
                 logDO.setLevel(LevelEnum.ERROR.name());
-                logDO.setException(Base64.encode(message));
+                logDO.setException(message);
                 logService.save(logDO);
             }
         } finally {

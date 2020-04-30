@@ -7,25 +7,23 @@
           class="item-col"
         >
           <div class="title">
-            {{ $t('footer.expressLane') }}
           </div>
           <div class>
             <a
               href="#"
               class="out-link"
-            >{{ $t('footer.gitee') }}</a>
+            ></a>
+          </div>
+          <div class>
+            <a
+              href="#"
+              class="out-link"></a>
           </div>
           <div class>
             <a
               href="#"
               class="out-link"
-            >CSDN</a>
-          </div>
-          <div class>
-            <a
-              href="#"
-              class="out-link"
-            >{{ $t('footer.admin') }}</a>
+            ></a>
           </div>
         </el-col>
         <el-col
@@ -33,16 +31,11 @@
           class="item-col weside"
         >
           <div class="item">
-            <i class="el-icon-caret-right" />
-            本站已稳定运行123天4时36分22秒
           </div>
           <div class="item">
-            <i class="el-icon-caret-right" />
-            fengziy@aliyun.com
           </div>
           <div class="item">
-            <i class="el-icon-caret-right" />
-            © fengziy-博客 | 渝ICP备17015355
+
           </div>
         </el-col>
       </el-row>

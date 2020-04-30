@@ -83,8 +83,8 @@ services:
       - blog-extranet
     volumes:
       - ./app:/app
-    ports:
-      - 8181:8181
+    expose:
+      - 8181
     depends_on:
       - db
       - mq

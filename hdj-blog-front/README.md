@@ -25,7 +25,7 @@ VUE_APP_BASE_API = /api
 VUE_APP_PORT = 8282
 
 ```
-2. 修改 publicPath  作为访问的路径
+2. 修改 publicPath  作为访问的路径 
 ```
 #vue.config.js
 publicPath: isDev ? '/' : '/front/',
@@ -42,9 +42,9 @@ const router = new VueRouter({
 4. 最后把打包好/dist/里的文件放到服务器中
 - 上传
 ```shell script
-scp ./dist/**  username@host:/opt/blog/nginx/wwww/front
+scp ./dist/**  username@host:/opt/blog/nginx/www/front
 或者 , 如果修改了ssh端口 -e "ssh -p 端口" 
-rsync -avu --progress  ./dist/**  username@host:/opt/blog/nginx/wwww/front
+rsync -avu --progress  ./dist/**  username@host:/opt/blog/nginx/www/front
 
 ```
 - 启动nginx 

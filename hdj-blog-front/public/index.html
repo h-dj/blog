@@ -17,7 +17,7 @@
 
 <script>
     /**/
-    function setClipboardText(event){
+   /* function setClipboardText(event){
         event.preventDefault();
         var node = document.createElement('div');
         node.appendChild(window.getSelection().getRangeAt(0).cloneContents());
@@ -41,9 +41,9 @@
             return window.clipboardData.setData("text", textData);
         }
     };
- 
+
     document.addEventListener('copy',function(e){
         setClipboardText(e);
-    });
+    });*/
 </script>
 </html>

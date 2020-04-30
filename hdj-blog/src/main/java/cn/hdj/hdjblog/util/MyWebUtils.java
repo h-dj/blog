@@ -2,6 +2,7 @@ package cn.hdj.hdjblog.util;
 
 import cn.hdj.hdjblog.constaint.ConfigConstaint;
 import cn.hdj.hdjblog.model.dto.UserDetailDTO;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,8 @@ import org.apache.shiro.SecurityUtils;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -16,9 +19,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -115,7 +116,10 @@ public class MyWebUtils {
         try {
             int algorithm = DbSearcher.BTREE_ALGORITHM;
             DbConfig config = new DbConfig();
-            DbSearcher searcher = new DbSearcher(config, ResourceUtils.getFile("classpath:ip2region.db").getPath());
+            Resource ip2region = new ClassPathResource("classpath:ip2region.db");
+            String ip2regionTmpDir = System.getProperty("java.io.tmpdir") + "/ip2region.db";
+            IoUtil.copy(ip2region.getInputStream(),new FileOutputStream(new File(ip2regionTmpDir)));
+            DbSearcher searcher = new DbSearcher(config, ip2regionTmpDir);
             Method method = null;
             switch (algorithm) {
                 case DbSearcher.BTREE_ALGORITHM:
