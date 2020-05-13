@@ -29,7 +29,7 @@ import java.util.List;
 @Api(tags = "菜单管理")
 @RestController
 @RequestMapping("/api/admin/menus")
-public class MenuController  {
+public class MenuController {
 
     @Autowired
     private MenuService service;
@@ -62,8 +62,8 @@ public class MenuController  {
     @ApiOperation(value = "下拉菜单列表", httpMethod = "GET", response = ResultVO.class)
     public ResultVO select() {
         List<MenuDO> list = service.list(Wrappers.<MenuDO>lambdaQuery()
+                .select(MenuDO::getId,MenuDO::getMenuName,MenuDO::getParentId)
                 .eq(MenuDO::getDeleted, false)
-                .ne(MenuDO::getType, MenuTypeEnum.BUTTON.getType())
         );
         return ResultVO.successJson(list);
     }

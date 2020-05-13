@@ -91,7 +91,7 @@ router.beforeEach((to, from, next) => {
   } else {
     // 如果访问非登录界面，且户会话信息不存在，代表未登录，则跳转到登录界面
     if (!hasToken) {
-      next({ path: `/login?redirect=${to.path}` })
+      next({ path: `/login` })
     } else {
       store.dispatch('user/getInfo').then(() => {
         // 加载动态路由
@@ -126,7 +126,8 @@ router.afterEach(() => {
 function parseRouters(data) {
   // 把后台菜单转换为路由对象
   const treeData = treeDataTranslate(data)
-  const routes = generateRoute(treeData)
+  console.log(treeData)
+  const routes = convertRoute(generateRoute(treeData))
   routes.push({ path: '*', redirect: '/404', hidden: true })
   const ayncRouters = []
   ayncRouters.push(...globalRoutes)
@@ -136,6 +137,25 @@ function parseRouters(data) {
   router.addRoutes(routes)
   // 更新vuex中的路由，以便侧边栏渲染
   store.dispatch('app/loadAyncRouter', ayncRouters)
+}
+
+/**
+ * 包裹路由
+ * @param {Array} route
+ */
+function convertRoute(routes = []) {
+  return routes.map(r => {
+    if (r.children) {
+      return r
+    }
+    return {
+      path: r.path,
+      component: Layout,
+      redirect: r.path,
+      meta: r.meta,
+      children: [r]
+    }
+  })
 }
 
 /**

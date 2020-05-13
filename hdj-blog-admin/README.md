@@ -42,7 +42,7 @@ const router = new VueRouter({
 4. 最后把打包好/dist/里的文件放到服务器中
 - 上传
 ```shell script
-scp ./dist/**  username@host:/opt/blog/nginx/wwww/admin
+scp -r ./dist/**  username@host:/opt/blog/nginx/www/admin
 或者 , 如果修改了ssh端口 -e "ssh -p 端口" 
 rsync -avu --progress  ./dist/**  username@host:/opt/blog/nginx/wwww/admin
 ```

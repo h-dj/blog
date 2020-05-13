@@ -142,8 +142,8 @@ export default {
       this.$confirm(
         '确定删除该菜单吗？',
         {
-          confirmButtonText: 'Confirm',
-          cancelButtonText: 'Cancel',
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
           type: 'warning'
         }
       ).then(() => {

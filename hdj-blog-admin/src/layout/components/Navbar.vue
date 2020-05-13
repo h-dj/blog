@@ -52,7 +52,7 @@ export default {
         .then(() => {
           location.reload()
         })
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$router.push(`/login`)
     }
   }
 }

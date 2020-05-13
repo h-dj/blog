@@ -6,6 +6,7 @@ import cn.hdj.hdjblog.entity.MenuDO;
 import cn.hdj.hdjblog.service.MenuService;
 import cn.hdj.hdjblog.service.RoleMenuService;
 import cn.hdj.hdjblog.service.UserService;
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +51,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuDao, MenuDO> implements Men
      */
     private List<MenuDO> getAllMenuList(List<Long> menuIdList) {
         return list(Wrappers.<MenuDO>lambdaQuery()
-                        .eq(MenuDO::getDeleted, false)
-                        .in(menuIdList != null && menuIdList.size() > 0, MenuDO::getId, menuIdList)
-                        .orderByAsc(MenuDO::getSort,MenuDO::getCreateTime)
+                .eq(MenuDO::getDeleted, false)
+                .eq(MenuDO::getHidden, false)
+                .in(CollectionUtil.isNotEmpty(menuIdList), MenuDO::getId, menuIdList)
+                .orderByAsc(MenuDO::getSort, MenuDO::getCreateTime)
         );
     }
 }

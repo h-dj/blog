@@ -133,7 +133,7 @@ export default {
         if (valid) {
           this.submitLoading = true
           const tempData = Object.assign({}, this.temp)
-          tempData['menuIds'] = this.$refs.tree.getCheckedKeys(true).filter(item => item !== 0)
+          tempData['menuIds'] = this.$refs.tree.getCheckedKeys().filter(item => item !== '0')
           addRole(tempData)
             .then(() => {
               this.submitLoading = false
@@ -157,7 +157,7 @@ export default {
         if (valid) {
           this.submitLoading = true
           const tempData = Object.assign({}, this.temp) // copy obj
-          tempData['menuIds'] = this.$refs.tree.getCheckedKeys(true).filter(item => item !== 0)
+          tempData['menuIds'] = this.$refs.tree.getCheckedKeys().filter(item => item !== 0)
           updateRole(tempData['id'], tempData)
             .then(() => {
               this.submitLoading = false

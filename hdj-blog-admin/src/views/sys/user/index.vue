@@ -76,7 +76,7 @@
         class-name="small-padding fixed-width"
       >
         <template slot-scope="{row}">
-          <div v-if="row.id === 0" class="operation">
+          <div v-if="row.id != '0'" class="operation">
             <el-button
               type="primary"
               size="mini"

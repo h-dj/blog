@@ -16,4 +16,11 @@ public class LoginForm {
     private String password;
     @ApiModelProperty(value = "账户")
     private String account;
+
+    @Override
+    public String toString() {
+        return "LoginForm{" +
+                "account='" + account + '\'' +
+                '}';
+    }
 }

@@ -19,4 +19,5 @@ public class DbToken extends UsernamePasswordToken {
         super(user.getAccount(), user.getPassword() != null ? user.getPassword().toCharArray() : null);
         this.user = user;
     }
+
 }
