@@ -23,7 +23,7 @@ Vue.component("f-footer", fFooter)
 const isDev = process.env.NODE_ENV === 'development'
 const router = new VueRouter({
 	routes,
-	base: isDev ? '/' : '/front/',
+	base: process.env.VUE_APP_BASE_PATH,
 	mode: 'history',
 	//路由跳转，回到顶部
 	scrollBehavior() {

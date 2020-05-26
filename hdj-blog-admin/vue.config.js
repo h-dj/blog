@@ -67,9 +67,29 @@ module.exports = {
       alias: {
         '@': resolve('src')
       }
+    },
+    externals: {
+      vue: 'Vue',
+      'element-ui':'ELEMENT'
     }
   },
   chainWebpack(config) {
+    const cdn = {
+      css: [
+        // element-ui css
+        'https://unpkg.com/element-ui/lib/theme-chalk/index.css'
+      ],
+      js: [
+        // vue must at first!
+        'https://unpkg.com/vue/dist/vue.js',
+        // element-ui js
+        'https://unpkg.com/element-ui/lib/index.js'
+      ]
+    }
+    config.plugin('html').tap(args => {
+      args[0].cdn = cdn
+      return args
+    })
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
 
@@ -108,19 +128,6 @@ module.exports = {
       )
 
     config.when(process.env.NODE_ENV !== 'development', config => {
-      // #region 启用GZip压缩
-      // config
-      //   .plugin('compression')
-      //   .use(CompressionPlugin, {
-      //     asset: '[path].gz[query]',
-      //     algorithm: 'gzip',
-      //     test: new RegExp('\\.(' + ['js', 'css'].join('|') + ')$'),
-      //     threshold: 10240,
-      //     minRatio: 0.8,
-      //     cache: true
-      //   })
-      //   .tap(args => {})
-      // #endregion
 
       config
         .plugin('ScriptExtHtmlWebpackPlugin')

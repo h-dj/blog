@@ -36,11 +36,21 @@
                 发表于：
                 <span>{{ this.article.publishTime | formatTime }}</span>
               </span>
-              &nbsp;|&nbsp;
+              <el-divider direction="vertical"></el-divider>
               <span class="article-views">
-                <i class="el-icon-view" />
-                阅读量：
+                <svg-icon
+                  :icon-class="'eye'"
+                  style="height: 16px;width: 16px;"
+                />
                 <span>{{ this.article.readNum || 0 }}</span>
+              </span>
+            <el-divider direction="vertical"></el-divider>
+              <span class="article-like">
+                    <svg-icon
+                      :icon-class="'like'"
+                      style="height: 16px;width: 16px;"
+                    />
+                  <span>{{ this.article.likeNum || 0 }}</span>
               </span>
             </div>
           </div>
@@ -78,7 +88,6 @@ const defaultSettings = require("@/settings.js");
 
 export default {
   name: "Article",
-
   data() {
     return {
       article: {},
@@ -137,10 +146,17 @@ export default {
 }
 
 #artcle-info .timeAndView {
+  text-align: center;
   padding: 20px;
   line-height: 30px;
   font-size: 16px;
   color: #ffffff;
+
+
+}
+
+.svg-icon{
+  margin-right:1em;
 }
 
 #statement {

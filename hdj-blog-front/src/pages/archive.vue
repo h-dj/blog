@@ -24,12 +24,7 @@
               v-for="(p,pIndex) in m.posts"
               :key="pIndex"
             >
-              <el-link
-                :underline="false"
-                :href="`/article/${p.slug}`"
-              >
-                {{ p.createTime | formatTime }} {{ p.title }}
-              </el-link>
+            <el-button type="text" @click="goto(p.slug)">{{ p.createTime | formatTime }} {{ p.title }}</el-button>
             </p>
           </el-timeline-item>
         </el-timeline>
@@ -88,6 +83,9 @@ export default {
           this.activities = r.data;
         }
       });
+    },
+    goto(slug){
+        this.$router.push({ path: 'article/'+slug })
     }
   }
 };
