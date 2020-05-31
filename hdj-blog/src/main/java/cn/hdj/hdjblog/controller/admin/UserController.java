@@ -64,7 +64,7 @@ public class UserController {
      * @return
      */
     @SysLog("获取用户信息")
-    @RequiresPermissions("admin:sys:user:info")
+    @RequiresPermissions("sys:user:info")
     @GetMapping(value = "/info/{userId}")
     @ApiOperation(value = "获取用户信息", httpMethod = "GET", response = ResultVO.class)
     public ResultVO getUserInfo(@PathVariable("userId") Long userId) {
@@ -79,7 +79,7 @@ public class UserController {
      * @return
      */
     @SysLog("获取用户列表")
-    @RequiresPermissions("admin:sys:user:list")
+    @RequiresPermissions("sys:user:search")
     @GetMapping(value = "/list")
     @ApiOperation(value = "获取用户列表", httpMethod = "GET", response = ResultVO.class)
     public ResultVO listUser(@ApiParam UserSearchForm params) {
@@ -103,7 +103,7 @@ public class UserController {
     }
 
     @SysLog("添加用户")
-    @RequiresPermissions("admin:sys:user:add")
+    @RequiresPermissions("sys:user:add")
     @PostMapping(value = "/add")
     @ApiOperation(value = "添加用户", httpMethod = "POST", response = ResultVO.class)
     public ResultVO addUser(@RequestBody UserForm user) {
@@ -120,7 +120,7 @@ public class UserController {
      * @return
      */
     @SysLog("修改用户")
-    @RequiresPermissions("admin:sys:user:edit")
+    @RequiresPermissions("sys:user:edit")
     @PutMapping(value = "/edit/{userId}")
     @ApiOperation(value = "修改用户", httpMethod = "PUT", response = ResultVO.class)
     public ResultVO editUser(@PathVariable("userId") Long userId, @ApiParam @RequestBody UserForm user) {
@@ -137,7 +137,7 @@ public class UserController {
      * @return
      */
     @SysLog("删除用户")
-    @RequiresPermissions("admin:sys:user:delete")
+    @RequiresPermissions("sys:user:delete")
     @DeleteMapping(value = "/delete")
     @ApiOperation(value = "删除多个用户", httpMethod = "DELETE", response = ResultVO.class)
     public ResultVO deleteUser(@ApiParam("userIds") @RequestBody List<Long> userIds) {
@@ -150,7 +150,6 @@ public class UserController {
 
     @SysLog("更改profile")
     @PutMapping("/profile")
-    @RequiresPermissions("admin:sys:user:profile")
     @ApiOperation(value = "更改profile", httpMethod = "PUT", response = ResultVO.class)
     public ResultVO profile(@RequestBody UserForm userForm) {
         ValidatorUtils.validateEntity(userForm);

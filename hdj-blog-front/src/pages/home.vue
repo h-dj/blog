@@ -95,7 +95,7 @@
             </el-row>
           </el-card>
           <img
-            v-if="item.recommend"
+            v-if="item.top"
             class="star"
             src="../assets/star.png"
           >

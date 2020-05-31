@@ -11,8 +11,17 @@ import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
+import org.springframework.data.elasticsearch.core.query.StringQuery;
 
 import java.io.IOException;
 
@@ -23,7 +32,6 @@ import java.io.IOException;
  * @description:
  */
 public class RestHighLevelClientServiceTest extends HdjBlogApplicationTests {
-
 
 
     @Autowired
@@ -57,18 +65,47 @@ public class RestHighLevelClientServiceTest extends HdjBlogApplicationTests {
     public void addDoc() throws IOException {
         IndexRequest request = new IndexRequest("article_index");
         request.id("123456789");
-        ArticleDO articleDO=new ArticleDO();
+        ArticleDO articleDO = new ArticleDO();
         articleDO.setContent("123");
         articleDO.setId(132L);
         articleDO.setTags("afdsafd");
 
         request.source(JSONUtil.toJsonStr(articleDO), XContentType.JSON);
-         client.index(request, RequestOptions.DEFAULT);
+        client.index(request, RequestOptions.DEFAULT);
     }
 
+
+
+    @Autowired
+    private ElasticsearchRestTemplate restTemplate;
+
+    @Autowired
+    private ElasticsearchOperations elasticsearchOperations;
+
     @Test
-    public void existDoc() throws IOException {
-        boolean b = articleRepository.existDoc(EsConstaints.ES_INDEX_ARTICLE, "1215290345965985793");
-        System.out.println(b);
+    public void searchDoc() {
+
+        QueryBuilder queryBuilder = QueryBuilders.queryStringQuery("博客系统")
+                .field("description")
+                .field("content")
+                .field("title");
+
+        StringQuery query = new StringQuery(queryBuilder.toString());
+
+        //分页排序
+        Sort sort = Sort.by(Sort.Order.desc("updateTime"));
+        PageRequest pageRequest = PageRequest.of(0, 10, sort);
+        query.setPageable(pageRequest);
+
+        SearchHits<ArticleDO> search = restTemplate.search(query,
+                ArticleDO.class,
+                IndexCoordinates.of(EsConstaints.ES_INDEX_ARTICLE)
+        );
+
+        System.out.println(search);
+        search.get()
+                .forEach(articleDTOSearchHit -> {
+                    System.out.println(articleDTOSearchHit);
+                });
     }
 }

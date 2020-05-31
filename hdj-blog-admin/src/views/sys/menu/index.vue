@@ -3,14 +3,14 @@
     <div class="filter-container" style="margin-bottom: 10px;">
       <el-input
         v-model="listQuery.key"
-        size="small"
+        size="mini"
         placeholder="输入菜单名称，模糊查询"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-button
-        size="small"
+        size="mini"
         class="filter-item"
         style="margin-left: 10px;"
         type="success"
@@ -18,7 +18,7 @@
         @click="handleFilter"
       >搜索</el-button>
       <el-button
-        size="small"
+        size="mini"
         class="filter-item"
         style="margin-left: 10px;"
         type="primary"

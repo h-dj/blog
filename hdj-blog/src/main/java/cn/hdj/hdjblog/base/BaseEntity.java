@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,6 +21,7 @@ public class BaseEntity implements Serializable {
     /**
      * 实体ID
      */
+    @Id
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
     /**

@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
 
 /**
  * @author hdj
@@ -25,7 +24,6 @@ public class FriendLinkForm {
     @ApiModelProperty(value = "描述")
     private String remark;
 
-    @NotEmpty
     @ApiModelProperty(value = "友链")
     private String url;
 

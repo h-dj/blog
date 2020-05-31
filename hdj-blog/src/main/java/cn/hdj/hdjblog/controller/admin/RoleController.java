@@ -40,7 +40,6 @@ public class RoleController  {
     @Autowired
     private RoleService service;
 
-    @RequiresPermissions("admin:sys:role:selectList")
     @SysLog("下拉角色列表")
     @GetMapping(value = "/selectList")
     @ApiOperation(value = "下拉角色列表", httpMethod = "GET", response = ResultVO.class)
@@ -56,7 +55,7 @@ public class RoleController  {
         );
     }
 
-    @RequiresPermissions("admin:sys:role:list")
+    @RequiresPermissions("sys:role:search")
     @SysLog("角色列表(分页)")
     @GetMapping(value = "/list")
     @ApiOperation(value = "角色列表", httpMethod = "GET", response = ResultVO.class)
@@ -82,7 +81,7 @@ public class RoleController  {
     }
 
 
-    @RequiresPermissions("admin:sys:role:info")
+    @RequiresPermissions("sys:role:info")
     @SysLog("角色详情")
     @GetMapping(value = "/info/{roleId}")
     @ApiOperation(value = "角色详情", httpMethod = "GET", response = ResultVO.class)
@@ -91,7 +90,7 @@ public class RoleController  {
     }
 
 
-    @RequiresPermissions("admin:sys:role:add")
+    @RequiresPermissions("sys:role:add")
     @SysLog("添加角色")
     @PostMapping(value = "/add")
     @ApiOperation(value = "添加角色", httpMethod = "POST", response = ResultVO.class)
@@ -101,7 +100,7 @@ public class RoleController  {
     }
 
 
-    @RequiresPermissions("admin:sys:role:edit")
+    @RequiresPermissions("sys:role:edit")
     @SysLog("编辑角色")
     @PutMapping(value = "/edit/{roleId}")
     @ApiOperation(value = "编辑角色", httpMethod = "PUT", response = ResultVO.class)
@@ -111,7 +110,7 @@ public class RoleController  {
     }
 
 
-    @RequiresPermissions("admin:sys:role:delete")
+    @RequiresPermissions("sys:role:delete")
     @SysLog("删除角色")
     @DeleteMapping(value = "/delete")
     @ApiOperation(value = "批量删除角色", httpMethod = "DELETE", response = ResultVO.class)

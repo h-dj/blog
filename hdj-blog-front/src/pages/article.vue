@@ -36,22 +36,25 @@
                 发表于：
                 <span>{{ this.article.publishTime | formatTime }}</span>
               </span>
-              <el-divider direction="vertical"></el-divider>
-              <span class="article-views">
+              <el-divider direction="vertical" />
+              <el-link type="primary">
                 <svg-icon
                   :icon-class="'eye'"
                   style="height: 16px;width: 16px;"
                 />
                 <span>{{ this.article.readNum || 0 }}</span>
-              </span>
-            <el-divider direction="vertical"></el-divider>
-              <span class="article-like">
-                    <svg-icon
-                      :icon-class="'like'"
-                      style="height: 16px;width: 16px;"
-                    />
-                  <span>{{ this.article.likeNum || 0 }}</span>
-              </span>
+              </el-link>
+              <el-divider direction="vertical" />
+              <el-link
+                type="primary"
+                @click="articleLike"
+              >
+                <svg-icon
+                  :icon-class="'like'"
+                  style="height: 16px;width: 12px;"
+                />
+                <span>{{ this.article.likeNum || 0 }}</span>
+              </el-link>
             </div>
           </div>
           <div
@@ -59,21 +62,6 @@
             v-html="this.article.contentFormat"
           />
         </el-card>
-        <div id="statement">
-          <div class="item">
-            {{ $t('article.author') }}：{{ this.statement.author }}
-          </div>
-          <div class="item">
-            {{ $t('article.originalLink') }}：
-            <a
-              :href="this.statement.originalLink"
-              target="_blank"
-            >{{ this.statement.originalLink }}</a>
-          </div>
-          <div class="item">
-            {{ $t('article.copyright') }}：{{ this.statement.copyright }}
-          </div>
-        </div>
       </el-col>
     </el-row>
   </div>
@@ -82,16 +70,14 @@
 <script>
 import VditorPreview from "vditor/dist/method.min";
 import "vditor/dist/index.classic.css";
-import { articleInfo } from "@/api/article";
+import { articleInfo ,articleLike} from "@/api/article";
 import { formatTime } from "@/utils";
-const defaultSettings = require("@/settings.js");
 
 export default {
   name: "Article",
   data() {
     return {
       article: {},
-      statement: defaultSettings.statement,
       fullscreenLoading: false
     };
   },
@@ -121,6 +107,16 @@ export default {
     preview(content) {
       const artcleDiv = document.querySelector("#articleContent");
       VditorPreview.preview(artcleDiv, content);
+    },
+    articleLike(){
+        articleLike(this.article.slug)
+        .then(res=>{
+            this.article.likeNum+=1
+            this.$message({
+                type:'success',
+                message:'点赞成功!'
+            })
+        })
     }
   }
 };
@@ -156,7 +152,8 @@ export default {
 }
 
 .svg-icon{
-  margin-right:1em;
+  vertical-align: -0.20em;
+  margin-right:0.2em;
 }
 
 #statement {

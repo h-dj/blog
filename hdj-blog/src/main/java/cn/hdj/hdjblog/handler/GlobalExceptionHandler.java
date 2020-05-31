@@ -115,7 +115,6 @@ public class GlobalExceptionHandler {
 
     }
 
-
     /**
      * 系统其它异常
      *
@@ -123,7 +122,7 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler({Exception.class, RuntimeException.class})
+    @ExceptionHandler(Exception.class)
     public ResultVO handleException(Exception e) {
         log.error("错误详情：" + e.getMessage(), e);
         return ResultVO.errorJson();

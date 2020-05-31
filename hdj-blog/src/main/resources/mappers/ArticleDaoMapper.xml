@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.hdj.hdjblog.dao.ArticleDao">
 
+
+    <update id="updateReadNum">
+        update t_article set read_num = read_num + 1 where slug = #{slug}
+    </update>
+
+    <update id="updateLikeNum">
+        update t_article set like_num = like_num + 1 where  slug = #{slug}
+    </update>
+
     <select id="archiveTimeLine" resultType="cn.hdj.hdjblog.model.vo.TimeLineVO">
         SELECT
         COUNT(a.id) as `count`,

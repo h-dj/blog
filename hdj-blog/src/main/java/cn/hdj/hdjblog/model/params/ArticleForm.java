@@ -62,6 +62,11 @@ public class ArticleForm {
     private Boolean recommend;
 
     /**
+     * 是否置顶
+     */
+    private Boolean top;
+
+    /**
      * 标签
      */
     private List<TagDO> tagList;
@@ -99,4 +104,6 @@ public class ArticleForm {
      * 文章封面
      */
     private String cover;
+
+
 }

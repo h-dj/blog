@@ -103,6 +103,10 @@ public class ArticleDO extends BaseEntity {
     private Boolean recommend;
 
     /**
+     * 是否置顶
+     */
+    private Boolean top;
+    /**
      * 分类id
      */
     private Long categoryId;

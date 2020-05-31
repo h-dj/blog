@@ -23,7 +23,7 @@ create database `blog` default character set utf8mb4 collate utf8mb4_0900_ai_ci;
    `status` int(1) NULL DEFAULT 0 COMMENT '状态，0：草稿，1：发布，2：删除',
    `type` int(1) NOT NULL DEFAULT 0 COMMENT '0:普通文章，1：简历，2关于页',
    `publish_time` datetime(0) NULL DEFAULT NULL COMMENT '发布时间',
-   `like_num` int(11) NULL DEFAULT NULL COMMENT '点赞数',
+   `like_num` int(11) NULL DEFAULT 0 COMMENT '点赞数',
    `comment_num` int(11) NULL DEFAULT 0 COMMENT '评论数',
    `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
    `read_num` int(11) NULL DEFAULT 0 COMMENT '阅读量',
@@ -33,7 +33,8 @@ create database `blog` default character set utf8mb4 collate utf8mb4_0900_ai_ci;
    `top` tinyint(1) NULL DEFAULT 0 COMMENT '置顶',
    `cover` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '封面',
    `slug` varchar(19) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文章自定义路径',
-   PRIMARY KEY (`id`) USING BTREE
+    PRIMARY KEY (`id`) USING BTREE
+    UNIQUE KEY `t_article_un` (`slug`)
  ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章信息表' ROW_FORMAT = Dynamic;
 
  -- ----------------------------

@@ -14,8 +14,8 @@ spring:
       # mysql数据库接地址
       url: ${BLOG-MYSQL-URL}
       driver-class-name: com.mysql.cj.jdbc.Driver
-      username: root
-      password: 123456
+      username: blog
+      password: blog
       # 监控页面的用户名和密码 以及页面地址
       stat-view-servlet:
         login-username: blog

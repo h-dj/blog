@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -49,6 +50,7 @@ public class TagController {
         return ResultVO.successJson(tagList);
     }
 
+    @RequiresPermissions("article:tag:search")
     @SysLog("标签列表")
     @ApiOperation(value = "标签列表", httpMethod = "GET", response = ResultVO.class)
     @GetMapping("/list")
@@ -61,6 +63,7 @@ public class TagController {
     }
 
 
+    @RequiresPermissions("article:tag:info")
     @SysLog("标签详情")
     @ApiOperation(value = "标签详情", httpMethod = "GET", response = ResultVO.class)
     @GetMapping("/info/{id}")
@@ -69,6 +72,7 @@ public class TagController {
     }
 
 
+    @RequiresPermissions("article:tag:add")
     @SysLog("添加标签")
     @ApiOperation(value = "添加标签", httpMethod = "POST", response = ResultVO.class)
     @PostMapping("/save")
@@ -82,6 +86,7 @@ public class TagController {
     }
 
 
+    @RequiresPermissions("article:tag:edit")
     @SysLog("更新标签")
     @ApiOperation(value = "更新标签", httpMethod = "PUT", response = ResultVO.class)
     @PutMapping("/update/{id}")
@@ -96,6 +101,7 @@ public class TagController {
     }
 
 
+    @RequiresPermissions("article:tag:delete")
     @SysLog("删除标签")
     @ApiOperation(value = "删除标签", httpMethod = "DELETE", response = ResultVO.class)
     @DeleteMapping("/delete")

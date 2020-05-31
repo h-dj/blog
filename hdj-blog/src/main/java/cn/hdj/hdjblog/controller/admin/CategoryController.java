@@ -19,6 +19,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -48,6 +49,7 @@ public class CategoryController {
     private ArticleService articleService;
 
 
+    @RequiresPermissions("article:category:search")
     @SysLog("分类列表")
     @ApiOperation(value = "分类列表", httpMethod = "GET", response = ResultVO.class)
     @GetMapping("/list")
@@ -66,6 +68,7 @@ public class CategoryController {
         return ResultVO.successJson(list);
     }
 
+    @RequiresPermissions("article:category:info")
     @SysLog("分类详情")
     @ApiOperation(value = "分类详情", httpMethod = "GET", response = ResultVO.class)
     @GetMapping("/info/{id}")
@@ -73,6 +76,7 @@ public class CategoryController {
         return ResultVO.successJson(service.getById(categoryId));
     }
 
+    @RequiresPermissions("article:category:add")
     @SysLog("添加分类")
     @ApiOperation(value = "添加分类", httpMethod = "POST", response = ResultVO.class)
     @PostMapping("/save")
@@ -85,6 +89,7 @@ public class CategoryController {
         return ResultVO.successJson();
     }
 
+    @RequiresPermissions("article:category:edit")
     @SysLog("更新分类")
     @ApiOperation(value = "更新分类", httpMethod = "PUT", response = ResultVO.class)
     @PutMapping("/update/{id}")
@@ -98,6 +103,8 @@ public class CategoryController {
         return ResultVO.successJson();
     }
 
+
+    @RequiresPermissions("article:category:delete")
     @SysLog("删除分类")
     @DeleteMapping("/delete")
     @CacheEvict(allEntries = true)

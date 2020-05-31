@@ -102,7 +102,6 @@ public class ShiroConfig {
         filters.put("authToken", jwtFilter());
         factoryBean.setFilters(filters);
 
-
         // 自定义url规则使用LinkedHashMap有序Map
         Map<String, String> filterMap = new LinkedHashMap<>();
         // 两个url规则都可以匹配同一个url，只执行第一个

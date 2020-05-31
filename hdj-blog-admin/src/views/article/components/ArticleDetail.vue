@@ -93,6 +93,13 @@
             </el-radio-group>
           </el-form-item>
 
+          <el-form-item label="置顶">
+            <el-radio-group v-model="article.top" size="mini">
+              <el-radio-button :label="true">开启</el-radio-button>
+              <el-radio-button :label="false">关闭</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
           <el-form-item label="状态">
             <el-radio-group v-model="article.status" size="mini">
               <el-radio-button :label="1">发布</el-radio-button>
@@ -156,6 +163,7 @@ export default {
         recommend: false,
         categoryId: null,
         cover: '',
+        top: false,
         slug: '',
         tagList: []
       },
@@ -182,6 +190,7 @@ export default {
         }
       },
       defaultForm: {
+        top: false,
         id: '',
         title: '',
         description: '',
@@ -213,7 +222,6 @@ export default {
     }
   },
   created() {
-    console.log(this.article)
     if (this.isEdit) {
       const articleId = this.$route.params.id
       detail(articleId).then(r => {

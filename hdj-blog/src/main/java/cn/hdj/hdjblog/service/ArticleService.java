@@ -2,6 +2,8 @@ package cn.hdj.hdjblog.service;
 
 import cn.hdj.hdjblog.entity.ArticleDO;
 import cn.hdj.hdjblog.model.params.ArticleForm;
+import cn.hdj.hdjblog.model.params.ArticleSearchForm;
+import cn.hdj.hdjblog.model.vo.ResultVO;
 import cn.hdj.hdjblog.model.vo.TimeLineVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -53,4 +55,18 @@ public interface ArticleService extends IService<ArticleDO> {
      */
     List<TimeLineVO> archive(String tag);
 
+    /**
+     * 文章列表
+     *
+     * @param form
+     * @return
+     */
+    ResultVO articleList(ArticleSearchForm form);
+
+    /**
+     * 发布文章
+     *
+     * @param articleId
+     */
+    void publishArticle(Long articleId);
 }

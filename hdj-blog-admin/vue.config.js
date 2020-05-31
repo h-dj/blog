@@ -1,7 +1,7 @@
 'use strict'
+
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
-// const CompressionPlugin = require('compression-webpack-plugin')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -67,29 +67,9 @@ module.exports = {
       alias: {
         '@': resolve('src')
       }
-    },
-    externals: {
-      vue: 'Vue',
-      'element-ui':'ELEMENT'
     }
   },
   chainWebpack(config) {
-    const cdn = {
-      css: [
-        // element-ui css
-        'https://unpkg.com/element-ui/lib/theme-chalk/index.css'
-      ],
-      js: [
-        // vue must at first!
-        'https://unpkg.com/vue/dist/vue.js',
-        // element-ui js
-        'https://unpkg.com/element-ui/lib/index.js'
-      ]
-    }
-    config.plugin('html').tap(args => {
-      args[0].cdn = cdn
-      return args
-    })
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
 
@@ -128,7 +108,6 @@ module.exports = {
       )
 
     config.when(process.env.NODE_ENV !== 'development', config => {
-
       config
         .plugin('ScriptExtHtmlWebpackPlugin')
         .after('html')

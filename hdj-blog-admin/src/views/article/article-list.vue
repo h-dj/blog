@@ -24,15 +24,6 @@
         icon="el-icon-delete"
         @click="handleRemoves"
       >批量删除</el-button>
-
-      <el-button
-        style="margin-left: 10px;"
-        size="mini"
-        class="filter-item"
-        type="success"
-        icon="el-icon-import"
-        @click="handleImport"
-      >导入</el-button>
     </div>
     <el-table
       v-loading="listLoading"
@@ -67,7 +58,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column min-width="300px" label="标题">
+      <el-table-column label="标题">
         <template slot-scope="{row}">
           <router-link :to="'/article/edit/'+row.id" class="link-type">
             <el-link type="primary">{{ row.title }}</el-link>
@@ -77,10 +68,11 @@
 
       <el-table-column align="center" label="操作">
         <template slot-scope="{row}">
+          <el-button v-if="row.status ==0 " :loading="publishLoading" type="success" size="mini" plain @click="handlePublish(row.id)">发布</el-button>
           <router-link :to="'/article/edit/'+row.id">
-            <el-button type="primary" size="mini" icon="el-icon-edit" />
+            <el-button type="primary" size="mini" plain>编辑</el-button>
           </router-link>
-          <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(row)" />
+          <el-button type="danger" size="mini" plain @click="handleDelete(row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -97,7 +89,7 @@
 
 <script>
 import { parseTime } from '@/utils'
-import { fetchList, deleteArticle } from '@/api/article'
+import { fetchList, deleteArticle, publishArticle } from '@/api/article'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 export default {
   name: 'ArticleList',
@@ -120,6 +112,7 @@ export default {
       list: [],
       total: 0,
       listLoading: true,
+      publishLoading: false,
       listQuery: {
         page: 1,
         limit: 20,
@@ -210,6 +203,19 @@ export default {
     },
     handleImport() {
 
+    },
+    handlePublish(articleId) {
+      this.publishLoading = true
+      publishArticle(articleId)
+        .then(res => {
+          if (res.success) {
+            this.$message({
+              message: '发布文章!',
+              type: 'success'
+            })
+          }
+          this.publishLoading = false
+        })
     }
   }
 }

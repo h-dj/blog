@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * @author hdj
  */
-@SuppressWarnings({"-Xlint:unchecked"})
+@SuppressWarnings({"unchecked"})
 public class ArticleServiceImplTest extends HdjBlogApplicationTests {
 
     @Autowired

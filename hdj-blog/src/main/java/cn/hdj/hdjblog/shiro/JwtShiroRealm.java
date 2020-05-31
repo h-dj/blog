@@ -6,9 +6,7 @@ import cn.hdj.hdjblog.exception.MyException;
 import cn.hdj.hdjblog.model.dto.UserDetailDTO;
 import cn.hdj.hdjblog.shiro.service.ShiroService;
 import cn.hdj.hdjblog.util.JwtUtils;
-import cn.hutool.core.util.StrUtil;
 import lombok.extern.log4j.Log4j2;
-
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
@@ -18,7 +16,6 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -66,16 +63,10 @@ public class JwtShiroRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         UserDetailDTO account = (UserDetailDTO) principals.getPrimaryPrincipal();
         Set<String> permissions = shiroService.queryAllPerms(account.getId());
+        Set<String> rokeKeys = shiroService.queryAllRoles(account.getId());
         account.setPermissions(permissions);
-        // 设置权限值
-        Optional.ofNullable(account.getPermissions())
-                .ifPresent(list -> {
-                    list.stream().forEach(v -> {
-                        if (StrUtil.isNotEmpty(v)) {
-                            simpleAuthorizationInfo.addStringPermission(v);
-                        }
-                    });
-                });
+        simpleAuthorizationInfo.setRoles(rokeKeys);
+        simpleAuthorizationInfo.setStringPermissions(permissions);
         return simpleAuthorizationInfo;
     }
 }

@@ -38,3 +38,9 @@ export function deleteArticle(articleIds) {
   })
 }
 
+export function publishArticle(articleId) {
+  return request({
+    url: '/admin/article/publish/' + articleId,
+    method: 'put'
+  })
+}

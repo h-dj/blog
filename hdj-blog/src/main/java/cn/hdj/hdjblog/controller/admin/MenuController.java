@@ -41,7 +41,7 @@ public class MenuController {
         return ResultVO.successJson(service.listForUser(MyWebUtils.getCurrentUserId()));
     }
 
-    @RequiresPermissions("admin:sys:menu:all")
+    @RequiresPermissions("sys:menu:search")
     @SysLog("菜单列表")
     @GetMapping(value = "/all")
     @ApiOperation(value = "菜单列表", httpMethod = "GET", response = ResultVO.class)

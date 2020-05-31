@@ -76,3 +76,14 @@ export function searchArticles(query) {
     params:query
   })
 }
+
+/**
+ * 搜索文章
+ * @param {*} data
+ */
+export function articleLike(articleId) {
+  return request({
+    url: "/articles/like/"+articleId,
+    method: 'put'
+  })
+}

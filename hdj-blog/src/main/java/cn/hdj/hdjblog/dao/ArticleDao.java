@@ -32,5 +32,19 @@ public interface ArticleDao extends BaseMapper<ArticleDO> {
      * @param month
      * @return
      */
-    List<TimelinePostVO> listTimelinePost(@Param("year") Integer year, @Param("month") Integer month,@Param("tag") String tag);
+    List<TimelinePostVO> listTimelinePost(@Param("year") Integer year, @Param("month") Integer month, @Param("tag") String tag);
+
+    /**
+     * 更新阅读数
+     *
+     * @param slug
+     */
+    void updateReadNum(@Param("slug") String slug);
+
+    /**
+     * 更新点赞数
+     *
+     * @param slug
+     */
+    void updateLikeNum(@Param("slug") String slug);
 }

@@ -35,6 +35,7 @@ public enum ResponseCodeEnum {
     TOKEN_GENERATOR_EXPIRE(500001, "token 过期"),
     TOKEN_GENERATOR_ILLEGAL(500002, "非法token");
 
+
     private Integer code;
     private String msg;
 

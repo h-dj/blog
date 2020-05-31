@@ -10,6 +10,7 @@ import java.io.Serializable;
  * @Date: 2019/6/2 16:19
  * @Description: 响应结果json
  */
+@SuppressWarnings("unchecked")
 @Data
 public class ResultVO<T> implements Serializable {
 

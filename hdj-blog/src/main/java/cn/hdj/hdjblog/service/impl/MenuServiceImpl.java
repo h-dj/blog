@@ -52,7 +52,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuDao, MenuDO> implements Men
     private List<MenuDO> getAllMenuList(List<Long> menuIdList) {
         return list(Wrappers.<MenuDO>lambdaQuery()
                 .eq(MenuDO::getDeleted, false)
-                .eq(MenuDO::getHidden, false)
                 .in(CollectionUtil.isNotEmpty(menuIdList), MenuDO::getId, menuIdList)
                 .orderByAsc(MenuDO::getSort, MenuDO::getCreateTime)
         );

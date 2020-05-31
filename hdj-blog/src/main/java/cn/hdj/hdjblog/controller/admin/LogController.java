@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class LogController{
     @Autowired
     private LogService service;
 
+    @RequiresPermissions("admin:monitor:log")
     @GetMapping("list")
     @ApiOperation(value = "系统日志列表", httpMethod = "GET", response = ResultVO.class)
     public ResultVO listPage(String level, BaseForm pageForm) {

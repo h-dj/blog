@@ -16,11 +16,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ import java.util.List;
 @Api(tags = "文章管理")
 @RestController
 @RequestMapping("/api/admin/article")
-@CacheConfig(cacheNames = {RedisCacheNames.ARTICLE, RedisCacheNames.ARCHIVE, RedisCacheNames.TAG, RedisCacheNames.CATEGORY})
+@CacheConfig(cacheNames = {RedisCacheNames.ARTICLE, RedisCacheNames.ARCHIVE})
 public class ArticleController {
 
     @Autowired
@@ -46,6 +46,7 @@ public class ArticleController {
      *
      * @return
      */
+    @RequiresPermissions("article:info")
     @SysLog("文章详情")
     @GetMapping("/info/{id:\\d+}")
     @ApiOperation(value = "文章详情", httpMethod = "GET", response = ResultVO.class)
@@ -58,6 +59,7 @@ public class ArticleController {
      *
      * @return
      */
+    @RequiresPermissions("article:search")
     @SysLog("文章列表")
     @GetMapping("/list")
     @ApiOperation(value = "文章列表", httpMethod = "GET", response = ResultVO.class)
@@ -90,6 +92,7 @@ public class ArticleController {
      *
      * @return
      */
+    @RequiresPermissions("article:add")
     @RefreshEsMqSender(msg = "blog-add-article")
     @SysLog(value = "保存文章", ignoreParams = true)
     @PostMapping("/save")
@@ -106,6 +109,7 @@ public class ArticleController {
      *
      * @return
      */
+    @RequiresPermissions("article:edit")
     @RefreshEsMqSender(msg = "blog-update-article")
     @SysLog(value = "修改文章", ignoreParams = true)
     @PutMapping("/edit/{id:\\d+}")
@@ -117,6 +121,8 @@ public class ArticleController {
         return ResultVO.successJson();
     }
 
+
+    @RequiresPermissions("article:delete")
     @RefreshEsMqSender(msg = "blog-delete-article")
     @SysLog("删除文章")
     @DeleteMapping("/delete")
@@ -128,12 +134,12 @@ public class ArticleController {
     }
 
 
-    @SysLog("导入文章")
-    @PostMapping("/import")
+    @SysLog("发布文章")
+    @PutMapping("/publish/{id}")
     @CacheEvict(allEntries = true)
     @ApiOperation(value = "删除文章", httpMethod = "POST", response = ResultVO.class)
-    public ResultVO importArticle(@RequestBody List<MultipartFile> files) {
-
+    public ResultVO publishArticle(@PathVariable("id") Long articleId) {
+        this.service.publishArticle(articleId);
         return ResultVO.successJson();
     }
 }

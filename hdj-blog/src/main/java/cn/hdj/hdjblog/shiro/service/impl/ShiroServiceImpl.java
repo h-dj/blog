@@ -2,9 +2,13 @@ package cn.hdj.hdjblog.shiro.service.impl;
 
 import cn.hdj.hdjblog.constaint.ConfigConstaint;
 import cn.hdj.hdjblog.dao.MenuDao;
+import cn.hdj.hdjblog.dao.RoleDao;
 import cn.hdj.hdjblog.dao.UserDao;
+import cn.hdj.hdjblog.dao.UserRoleDao;
 import cn.hdj.hdjblog.entity.MenuDO;
+import cn.hdj.hdjblog.entity.RoleDO;
 import cn.hdj.hdjblog.entity.UserDO;
+import cn.hdj.hdjblog.entity.UserRoleDO;
 import cn.hdj.hdjblog.model.dto.UserDetailDTO;
 import cn.hdj.hdjblog.shiro.service.ShiroService;
 import cn.hdj.hdjblog.util.JwtUtils;
@@ -16,8 +20,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,6 +39,12 @@ public class ShiroServiceImpl implements ShiroService {
 
     @Autowired
     private MenuDao menuDao;
+
+    @Autowired
+    private RoleDao roleDao;
+
+    @Autowired
+    private UserRoleDao userRoleDao;
 
     @Autowired
     private RedisUtils redisUtils;
@@ -75,17 +83,17 @@ public class ShiroServiceImpl implements ShiroService {
         List<String> permsList;
         //超级用户查询全部权限
         if (ConfigConstaint.SUPER_ADMIN.equals(userId)) {
-            List<MenuDO> menuList = menuDao.selectList(null);
-            permsList = new ArrayList<>(menuList.size());
-            menuList.forEach(menu -> permsList.add(menu.getPermission()));
+            permsList = menuDao.selectList(Wrappers.<MenuDO>lambdaQuery()
+                    .eq(MenuDO::getDeleted, false)
+            ).stream()
+                    .map(menuDO -> menuDO.getPermission())
+                    .collect(Collectors.toList());
         } else {
             permsList = userDao.queryAllPerms(userId);
         }
         return permsList.stream()
                 // 过滤空置的字符串
-                .filter(perms -> !StrUtil.isEmpty(perms))
-                // 把小的list合并成大的list
-                .flatMap(perms -> Arrays.stream(perms.split(",")))
+                .filter(perms -> StrUtil.isNotEmpty(perms))
                 // 转换成set集合
                 .collect(Collectors.toSet());
     }
@@ -93,5 +101,26 @@ public class ShiroServiceImpl implements ShiroService {
     @Override
     public void logout() {
         redisUtils.expire(JwtUtils.genKey(MyWebUtils.getCurrentUserName()), 0);
+    }
+
+    @Override
+    public Set<String> queryAllRoles(Long userId) {
+        if (ConfigConstaint.SUPER_ADMIN.equals(userId)) {
+            return roleDao.selectList(null).stream()
+                    .map(RoleDO::getRoleCode)
+                    .collect(Collectors.toSet());
+        }
+
+        Set<Long> roleIds = userRoleDao.selectList(Wrappers.<UserRoleDO>lambdaQuery()
+                .select(UserRoleDO::getRoleId)
+                .eq(UserRoleDO::getUserId, userId)
+        ).stream().map(ur -> ur.getRoleId()).collect(Collectors.toSet());
+
+        return roleDao.selectBatchIds(roleIds)
+                .stream()
+                .map(RoleDO::getRoleCode)
+                .collect(Collectors.toSet());
+
+
     }
 }

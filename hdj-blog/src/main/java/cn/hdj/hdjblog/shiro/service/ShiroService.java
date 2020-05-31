@@ -49,4 +49,12 @@ public interface ShiroService {
      * 退出登录
      */
     void logout();
+
+    /**
+     * 查询全部的角色标识
+     *
+     * @param userId
+     * @return
+     */
+    Set<String> queryAllRoles(Long userId);
 }

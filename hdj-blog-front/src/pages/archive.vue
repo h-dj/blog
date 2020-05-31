@@ -11,7 +11,11 @@
         placement="top"
         @mouseenter="hoverLine(activity)"
       >
-        <el-timeline>
+        <el-card>
+          <h4>更新 Github 模板</h4>
+          <p>王小虎 提交于 2018/4/12 20:46</p>
+        </el-card>
+        <!-- <el-timeline>
           <el-timeline-item
             size="normal"
             v-for="(m, mIndex) in activity.months"
@@ -24,10 +28,15 @@
               v-for="(p,pIndex) in m.posts"
               :key="pIndex"
             >
-            <el-button type="text" @click="goto(p.slug)">{{ p.createTime | formatTime }} {{ p.title }}</el-button>
+              <el-button
+                type="text"
+                @click="goto(p.slug)"
+              >
+                {{ p.createTime | formatTime }} {{ p.title }}
+              </el-button>
             </p>
           </el-timeline-item>
-        </el-timeline>
+        </el-timeline> -->
       </el-timeline-item>
     </el-timeline>
   </div>

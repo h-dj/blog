@@ -11,6 +11,6 @@
         select  tm.permission from  t_user_role as tur
         left join t_role_menu as trm on trm.role_id = tur.role_id
         left join t_menu as tm on tm.id = trm.menu_id
-        where tur.user_id =  #{userId}
+        where tur.user_id =  #{userId} and tm.deleted = 0
     </select>
 </mapper>

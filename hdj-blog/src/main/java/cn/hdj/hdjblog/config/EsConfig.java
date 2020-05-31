@@ -11,6 +11,9 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.elasticsearch.client.ClientConfiguration;
+import org.springframework.data.elasticsearch.client.RestClients;
+import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfiguration;
 
 /**
  * @author hdj
@@ -18,8 +21,8 @@ import org.springframework.context.annotation.Configuration;
  * @date 19/01/2020 13:38
  * @description: 搜索引擎配置
  */
-@Configuration
-public class EsConfig {
+//@Configuration
+public class EsConfig  {
 
     @Autowired
     private SystemProperties systemProperties;
@@ -44,4 +47,5 @@ public class EsConfig {
                         httpAsyncClientBuilder.setDefaultCredentialsProvider(credentialsProvider));
         return new RestHighLevelClient(builder);
     }
+
 }

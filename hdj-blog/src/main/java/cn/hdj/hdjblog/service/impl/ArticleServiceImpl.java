@@ -5,9 +5,8 @@ import cn.hdj.hdjblog.dao.ArticleDao;
 import cn.hdj.hdjblog.entity.ArticleDO;
 import cn.hdj.hdjblog.exception.MyException;
 import cn.hdj.hdjblog.model.params.ArticleForm;
-import cn.hdj.hdjblog.model.vo.TimeLineVO;
-import cn.hdj.hdjblog.model.vo.TimelineMonthVO;
-import cn.hdj.hdjblog.model.vo.TimelinePostVO;
+import cn.hdj.hdjblog.model.params.ArticleSearchForm;
+import cn.hdj.hdjblog.model.vo.*;
 import cn.hdj.hdjblog.service.ArticleService;
 import cn.hdj.hdjblog.service.CategoryService;
 import cn.hdj.hdjblog.service.TagService;
@@ -17,6 +16,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,6 +140,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleDO> imple
         ArticleForm articleForm = new ArticleForm();
         BeanUtil.copyProperties(articleDO, articleForm);
         articleForm.setTagList(tagService.getTagListByArticleId(articleDO.getId()));
+        articleForm.setCategoryName(categoryService.getById(articleDO.getCategoryId()).getCategoryName());
         return articleForm;
     }
 
@@ -163,6 +164,41 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleDO> imple
             timeline.setMonths(timelineMonthList);
         }
         return timeLineList;
+    }
+
+    @Override
+    public ResultVO articleList(ArticleSearchForm form) {
+        IPage<ArticleDO> page = this.page(
+                form.getIPage(),
+                Wrappers.<ArticleDO>lambdaQuery()
+                        .select(ArticleDO::getId,
+                                ArticleDO::getTitle,
+                                ArticleDO::getAuthorName,
+                                ArticleDO::getReadNum,
+                                ArticleDO::getRecommend,
+                                ArticleDO::getTags,
+                                ArticleDO::getPublishTime,
+                                ArticleDO::getDescription,
+                                ArticleDO::getCover,
+                                ArticleDO::getSlug
+                        )
+                        .eq(ArticleDO::getStatus, 1)
+        );
+
+        return ResultVO.successJson(PageVO.build(page));
+    }
+
+    @Override
+    public void publishArticle(Long articleId) {
+        ArticleDO articleDO = this.baseMapper.selectById(articleId);
+        if (articleDO == null || articleDO.getStatus().equals(2)) {
+            throw new MyException("文章不存在!");
+        }
+        if (articleDO.getStatus().equals(1)) {
+            throw new MyException("文章已发布!");
+        }
+        articleDO.setStatus(1);
+        this.baseMapper.updateById(articleDO);
     }
 
 }
