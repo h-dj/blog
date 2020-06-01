@@ -21,6 +21,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
+import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.data.elasticsearch.core.query.StringQuery;
 
 import java.io.IOException;
@@ -79,8 +80,6 @@ public class RestHighLevelClientServiceTest extends HdjBlogApplicationTests {
     @Autowired
     private ElasticsearchRestTemplate restTemplate;
 
-    @Autowired
-    private ElasticsearchOperations elasticsearchOperations;
 
     @Test
     public void searchDoc() {
@@ -108,4 +107,5 @@ public class RestHighLevelClientServiceTest extends HdjBlogApplicationTests {
                     System.out.println(articleDTOSearchHit);
                 });
     }
+
 }

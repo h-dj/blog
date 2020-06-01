@@ -5,7 +5,7 @@ server:
   tomcat:
     uri-encoding: UTF-8
     max-threads: 1000
-    min-spare-threads: 10
+    min-spare-threads: 3
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -117,13 +117,19 @@ spring:
     listener:
       simple:
         #消费端
-        concurrency: 5
+        concurrency: 3
         #最大消费端数
         max-concurrency: 10
         #自动签收auto  手动 manual
         acknowledge-mode: manual
         #限流（海量数据，同时只能过来一条）
         prefetch: 1
+  elasticsearch:
+    rest:
+      uris:
+        - ${BLOG-ES-HOSTS}
+      connection-timeout: 2000
+      read-timeout: 60000
 blog:
   cors-allowed-origins:
     - "*"
@@ -133,8 +139,3 @@ blog:
   file-upload-dir: /tmp/upload/
   # 文件访问路径
   file-base-url: /upload/
-  elasticsearch:
-    userName:
-    password:
-    cluster-nodes:
-      - http://172.16.0.4:9200

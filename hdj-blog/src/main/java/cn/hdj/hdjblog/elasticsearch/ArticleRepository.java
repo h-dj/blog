@@ -19,6 +19,7 @@ import org.springframework.data.elasticsearch.core.query.StringQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -42,6 +43,7 @@ public class ArticleRepository {
      * @return
      */
     public PageVO pageSearch(String keywords, Integer page, Integer pageSize) {
+        keywords = Optional.ofNullable(keywords).orElse(StrUtil.EMPTY);
         //多字段检索
         QueryBuilder queryBuilder = QueryBuilders.queryStringQuery(keywords)
                 .field("description")

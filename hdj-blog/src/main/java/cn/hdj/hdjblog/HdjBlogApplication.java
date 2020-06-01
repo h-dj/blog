@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
+import java.util.Arrays;
+
 
 /**
  * @author hdj
@@ -19,6 +21,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 public class HdjBlogApplication {
 
     public static void main(String[] args) {
+        System.out.println(Arrays.toString(args));
         SpringApplication.run(HdjBlogApplication.class, args);
     }
 }

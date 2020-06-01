@@ -81,8 +81,9 @@ scp ./target/hdj-blog-0.0.1-SNAPSHOT.jar  ./Dockerfile  username@host:/opt/blog/
 rsync -Wvc --progress -e "ssh -p 端口" ./target/hdj-blog-0.0.1-SNAPSHOT.jar  ./Dockerfile   username@host:/opt/blog/app 
 
 
- 
 
+
+ 
 ```
 
 6. 拷贝docker-compose.yaml 文件到./blog目录下, 启动
