@@ -68,8 +68,8 @@
 </template>
 
 <script>
-import VditorPreview from "vditor/dist/method.min";
-import "vditor/dist/index.classic.css";
+import VditorPreview from 'vditor/dist/method.min'
+import "vditor/dist/index.css";
 import { articleInfo ,articleLike} from "@/api/article";
 import { formatTime } from "@/utils";
 

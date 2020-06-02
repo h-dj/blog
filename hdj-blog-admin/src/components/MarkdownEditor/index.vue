@@ -7,7 +7,7 @@
 <script>
 import { uploadImage } from '@/api/upload'
 import Vditor from 'vditor'
-import 'vditor/dist/index.classic.css'
+import "vditor/dist/index.css"
 import defaultOptions from './default.option'
 import { formatFileSize } from '@/utils/index'
 export default {

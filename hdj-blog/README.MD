@@ -26,6 +26,9 @@ mvn clean compile package -P prod
 #上传 
 rsync -vcr --progress -e "ssh -p 端口" ./target/hdj-blog-0.0.1-SNAPSHOT.jar ./target/lib ./Dockerfile   username@host:/opt/blog/app 
 
+
+
+
 #启动
 docker-compose -f /opt/blog/docker-compose.yml up -d blog-api  --build
 ```

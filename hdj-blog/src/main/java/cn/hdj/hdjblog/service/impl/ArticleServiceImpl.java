@@ -3,6 +3,7 @@ package cn.hdj.hdjblog.service.impl;
 
 import cn.hdj.hdjblog.dao.ArticleDao;
 import cn.hdj.hdjblog.entity.ArticleDO;
+import cn.hdj.hdjblog.entity.CategoryDO;
 import cn.hdj.hdjblog.exception.MyException;
 import cn.hdj.hdjblog.model.params.ArticleForm;
 import cn.hdj.hdjblog.model.params.ArticleSearchForm;
@@ -140,7 +141,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleDO> imple
         ArticleForm articleForm = new ArticleForm();
         BeanUtil.copyProperties(articleDO, articleForm);
         articleForm.setTagList(tagService.getTagListByArticleId(articleDO.getId()));
-        articleForm.setCategoryName(categoryService.getById(articleDO.getCategoryId()).getCategoryName());
+        CategoryDO categoryDO = categoryService.getById(articleDO.getCategoryId());
+        if (categoryDO != null) {
+            articleForm.setCategoryName(categoryDO.getCategoryName());
+        }
         return articleForm;
     }
 

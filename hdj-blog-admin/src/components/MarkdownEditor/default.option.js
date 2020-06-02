@@ -99,7 +99,7 @@ const defaultOptions = {
     name: '|'
   }, {
     hotkey: '⌘-⇧-m',
-    name: 'wysiwyg',
+    name: 'edit-mode',
     tipPosition: 'nw'
   }, {
     hotkey: '⌘-p',
@@ -132,7 +132,7 @@ const defaultOptions = {
   height: 'auto',
   lang: 'zh_CN',
   placeholder: '输入',
-  mode: 'markdown-show',
+  mode: 'sv',
   preview: {
     delay: 500,
     show: false

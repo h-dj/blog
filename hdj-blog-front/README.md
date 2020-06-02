@@ -44,7 +44,8 @@ const router = new VueRouter({
 ```shell script
 scp -r ./dist/**  username@host:/opt/blog/nginx/www/front
 或者 , 如果修改了ssh端口 -e "ssh -p 端口" 
-rsync -avu --progress  ./dist/**  username@host:/opt/blog/nginx/www/front
+rsync -avur --progress  ./dist/**  username@host:/opt/blog/nginx/www/front
+
 
 ```
 - 启动nginx 

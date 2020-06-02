@@ -134,7 +134,7 @@ blog:
   cors-allowed-origins:
     - "*"
   #禁用swagger
-  swagger-enabled: true
+  swagger-enabled: false
   # 定义文件上传的路径
   file-upload-dir: /tmp/upload/
   # 文件访问路径
