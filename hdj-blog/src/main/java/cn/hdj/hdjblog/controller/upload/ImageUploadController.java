@@ -26,9 +26,9 @@ import javax.servlet.http.HttpServletRequest;
  * @date 12/8/19 11:30 AM
  * @description: 文件上传控制器
  */
-@Api(tags = "图片上传")
-@RestController
-@RequestMapping(value = "/api/admin/images")
+//@Api(tags = "图片上传")
+//@RestController
+//@RequestMapping(value = "/api/admin/images")
 public class ImageUploadController {
 
     @Autowired

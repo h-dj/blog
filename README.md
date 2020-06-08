@@ -1,98 +1,52 @@
-### 开发环境搭建(mysql, redis,es,rabbitmq)
-1. 创建目录(在项目blog 根目录下执行命令)
-```shell script
-mkdir -vp build/{mysql/{init,conf,data},nginx/{conf,wwww},es/{plugins,data},redis/{conf,data}}
-```
-2. 拷贝相关文件
-```shell script
-cp ./docker/mysql/blog_init.sql build/mysql/init
-cp ./docker/mysql/my.cnf  build/mysql/conf
-cp ./docker/redis/redis.conf  build/redis/conf
-cp ./docker/nginx/nginx.conf  build/nginx/conf/nginx.conf
-cp ./docker/docker-compose-dev-env.yaml  build/
+### 简介
 
-#安装分词插件(可选)
-# 也可到gitee 仓库下载自己打包 https://gitee.com/mirrors/elasticsearch-analysis-ik?_from=gitee_search
-wget  https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.1.0/elasticsearch-analysis-ik-7.1.0.zip -O build/es/plugins/elasticsearch-analysis-ik-7.1.0.zip
-cd build/es/plugins/
-unzip elasticsearch-analysis-ik-7.1.0.zip
-```
+这是一个基于Springboot2.x，vue2.x的前后端分离的开源博客系统。创建这个项目的主要目的是为了学习从0到1 开发一款项目，整合自己的技术栈。
 
-3. 启动
-```shell script
-docker-compose -f ./build/docker-compose-dev-env.yaml  up -d
+### 使用技术
+- SpringBoot 2.x 后台基本框架
+- Vue 2.x 前端基本框架
+- ElementUI：后台管理页面UI库
+- ElasticSearch 搜索层
+- RabbitMQ 消息队列
+- Shiro 鉴权层
+- Redis 缓存层
+- Swagger 文档
+- Mybaits-Plus Mybatis增强版框架
+- lombox getter setter插件
+- druid 数据库连接池
+- 七牛云 图床
 
-#卸载
-docker-compose -f ./build/docker-compose-dev-env.yaml  down
-```
+### 站点演示
 
-### 部署项目
-首先需要安装docker 和 docker-compose
-
-1. 下载所需docker镜像
-```shell script
-docker pull mysql:8.0
-docker pull redis:5
-docker pull nginx:1.16-alpine
-docker pull rabbitmq:3.8.2-management-alpine
-docker pull elasticsearch:7.1.0
-```
-2. 到服务器创建存放目录, 并拷贝本地docker 目录下的配置到服务器指定目录
-```shell script
-mkdir -vp /opt/blog/{mysql/{init,conf,data},nginx/{conf,wwww/{front,admin}},es/{plugins,data},redis/{conf,data},app}
-```
-
-3. 拷贝相关文件和下载IK 分词到 es/plugins目录下解压
-```shell script
-
-scp ./docker/mysql/blog_init.sql  username@host:/opt/blog/mysql/init
-scp ./docker/mysql/my.cnf  username@host:/opt/blog/mysql/conf
-scp ./docker/redis/redis.conf  username@host:/opt/blog/redis/conf
-scp ./docker/nginx/nginx.conf  username@host:/opt/blog/nginx/conf/nginx.conf
-scp ./docker/docker-compose.yaml  username@host:/opt/blog
-
-wget  https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.1.0/elasticsearch-analysis-ik-7.1.0.zip -O ./es/plugins/elasticsearch-analysis-ik-7.1.0.zip && unzip ./es/plugins/elasticsearch-analysis-ik-7.1.0.zip
-cd es/plugins/
-unzip elasticsearch-analysis-ik-7.1.0.zip
-
-```
-
-4. 打包前端项目
-```shell script
-npm run build:prod 
-#前台
-scp ./dist/**  username@host:/opt/blog/nginx/wwww/front
-或者 , 如果修改了ssh端口 -e "ssh -p 端口" 
-rsync -avu --progress  ./dist/**  username@host:/opt/blog/nginx/wwww/front
-
-#后台
-scp ./dist/**  username@host:/opt/blog/nginx/wwww/admin
-或者 , 如果修改了ssh端口 -e "ssh -p 端口" 
-rsync -Wvc --progress  ./dist/**  username@host:/opt/blog/nginx/wwww/admin
-```
-
-5. 后台打包
-```shell script
-mvn clean compile package -P prod
-
-### 拷贝Dockerfile 文件 和jar 包到服务器
-scp ./target/hdj-blog-0.0.1-SNAPSHOT.jar  ./Dockerfile  username@host:/opt/blog/app
-或者 , 如果修改了ssh端口 -e "ssh -p 端口" 
-rsync -Wvc --progress -e "ssh -p 端口" ./target/hdj-blog-0.0.1-SNAPSHOT.jar  ./Dockerfile   username@host:/opt/blog/app 
+www.jiajianhuang.cn
 
 
+### 项目开发部署
+
+#### 服务端
+- JDK1.8
+- Mysql8.0
+- Redis6.0
+- IDEA编译器
+- Lombox插件
+- ElasticSearch7.x
+- RabbitMQ3.x
+- Maven3
+
+部署步骤：
+1. 创建数据库blog, 并导入docker -> mysql里的所有sql文件
+2. 修改hdj-blog -> application-*.yml的数据库连接、redis连接、ElasticSearch连接、RabbitMQ连接
+3. 导入项目，并且运行hdj-blog -> HdjBlogApplication里的main方法
+
+#### 前端
+Node.js v12.13.0
+Visual Studio Code编辑器
 
 
- 
-```
-
-6. 拷贝docker-compose.yaml 文件到./blog目录下, 启动
-```shell script
-docker-compose -f /opt/blog/docker-compose.yaml up -d  --build
-#关闭
-docker-compose down
-```
-
+部署步骤：
+1. 导入项目，运行 npm install
+2. 启动项目：npm run dev
+3. 前端地址：localhost:8282 管理界面地址：localhost:8383 账号admin@qq.com，密码123456
 
 ### TODOList
 #### v1.0
@@ -111,3 +65,6 @@ docker-compose down
 - [x] ES搜索文章
 - [ ] 批量导入markdown 文章
 - [ ] 加入文件上传功能(本地和七牛云)
+
+
+### 界面预览

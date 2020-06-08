@@ -12,23 +12,15 @@
 - 消息队列RabbitMQ
 - 搜索引擎ElasticSearch
 - NoSQL Redis
-- Docker化部署
 
 
-### 打包
+### 正式环境打包(分离的依赖jar到lib文件夹)
 ```shell script
 mvn clean compile package -P prod
 ```
 
-### 部署
+### 启动
 ```shell script
-
-#上传 
-rsync -vcr --progress -e "ssh -p 端口" ./target/hdj-blog-0.0.1-SNAPSHOT.jar ./target/lib ./Dockerfile   username@host:/opt/blog/app 
-
-
-
-
-#启动
-docker-compose -f /opt/blog/docker-compose.yml up -d blog-api  --build
+# --mpw.key 使用了Mybatis-Plus 数据安全保护
+java -jar hdj-blog-0.0.1-SNAPSHOT.jar  --mpw.key=秘钥
 ```

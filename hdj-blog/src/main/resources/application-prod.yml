@@ -14,14 +14,11 @@ spring:
       # mysql数据库接地址
       url: ${BLOG-MYSQL-URL}
       driver-class-name: com.mysql.cj.jdbc.Driver
-      username: blog
-      password: blog
+      username: 'mpw:NdjQy6r8+OCXL3OaDVWfVQ=='
+      password: 'mpw:iWqMvsaC90f/xzaHeRWj/A=='
       # 监控页面的用户名和密码 以及页面地址
       stat-view-servlet:
-        login-username: blog
-        login-password: blog
         enabled: false
-        url-pattern: /druid/*
         # 初始化连接大小   默认：0
       initial-size: 5
       # 最小空闲连接数 默认：0
@@ -75,7 +72,7 @@ spring:
     # Redis服务器连接端口
     port: 6379
     # Redis服务器连接密码（默认为空）如果没有配置密码就不要写这个属性了
-    password: 123456
+    password: 'mpw:1mrZFYXZGnTXck8sloalZw=='
     #连接池
     lettuce:
       pool:
@@ -103,8 +100,8 @@ spring:
   rabbitmq:
     host: ${BLOG-MQ-HOST}
     port: 5672
-    username: blog
-    password: blog
+    username: 'mpw:0MvsM2m01mYpDwcOZGei8g=='
+    password: 'mpw:on6I6I1B0wkBiFJhDMSHJA=='
     #虚拟主机地址
     virtual-host: /blog
     #连接超时时间
@@ -117,9 +114,9 @@ spring:
     listener:
       simple:
         #消费端
-        concurrency: 3
+        concurrency: 2
         #最大消费端数
-        max-concurrency: 10
+        max-concurrency: 2
         #自动签收auto  手动 manual
         acknowledge-mode: manual
         #限流（海量数据，同时只能过来一条）
@@ -130,6 +127,8 @@ spring:
         - ${BLOG-ES-HOSTS}
       connection-timeout: 2000
       read-timeout: 60000
+logging:
+  path: 'logs'
 blog:
   cors-allowed-origins:
     - "*"

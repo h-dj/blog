@@ -120,14 +120,13 @@ spring:
     listener:
       simple:
         #消费端
-        concurrency: 5
+        concurrency: 2
         #最大消费端数
-        max-concurrency: 10
+        max-concurrency: 2
         #自动签收auto  手动 manual
         acknowledge-mode: manual
         #限流（海量数据，同时只能过来一条）
         prefetch: 1
-
   elasticsearch:
     rest:
       uris:
@@ -136,7 +135,7 @@ spring:
       read-timeout: 60000
 
 logging:
-  path: './logs'
+  path: 'logs'
 blog:
   cors-allowed-origins:
     - "*"

@@ -7,15 +7,11 @@
         v-for="(activity, index) in activities"
         :key="index"
         :color="activity.color"
-        :timestamp="activity.year + ' 年【'+activity.count +'】篇'"
+        :timestamp="activity.year + ' 年【' + activity.count +'】篇'"
         placement="top"
         @mouseenter="hoverLine(activity)"
       >
-        <el-card>
-          <h4>更新 Github 模板</h4>
-          <p>王小虎 提交于 2018/4/12 20:46</p>
-        </el-card>
-        <!-- <el-timeline>
+        <el-timeline>
           <el-timeline-item
             size="normal"
             v-for="(m, mIndex) in activity.months"
@@ -36,8 +32,15 @@
               </el-button>
             </p>
           </el-timeline-item>
-        </el-timeline> -->
+        </el-timeline>
       </el-timeline-item>
+
+      <el-timeline-item
+        v-if="activities != []"
+        size="large"
+        timestamp="end"
+        placement="top"
+      />
     </el-timeline>
   </div>
 </template>
@@ -49,7 +52,7 @@ export default {
   name: "Archive",
   data() {
     return {
-      activities: [],
+       activities: [],
       query: {
         tag: null
       }
@@ -103,5 +106,8 @@ export default {
 <style scoped>
 .archive .el-timeline {
   margin: 20px auto !important;
+}
+.el-timeline-item__tail{
+  display: block !important;
 }
 </style>

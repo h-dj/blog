@@ -9,7 +9,13 @@
       type="flex"
     >
       <el-menu-item class="mr-auto">
-        HDJ'S BLOG
+        <el-link
+          href="/"
+          :underline="false"
+          style="font-size:1.5em"
+        >
+          黄家健'Blog
+        </el-link>
       </el-menu-item>
       <el-menu-item index="/">
         {{ $t("header.home") }}

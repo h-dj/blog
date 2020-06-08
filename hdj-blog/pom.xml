@@ -23,7 +23,7 @@
         <ip2region.version>1.7.2</ip2region.version>
         <beanutils.version>1.0.11</beanutils.version>
         <swagger.version>2.7.0</swagger.version>
-        <mybatis-plus.version>3.3.0</mybatis-plus.version>
+        <mybatis-plus.version>3.3.2</mybatis-plus.version>
         <druid.version>1.1.10</druid.version>
         <shiro.version>1.4.0</shiro.version>
         <java.jwt.version>3.8.0</java.jwt.version>
@@ -151,7 +151,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.3.0</version>
+            <version>${mybatis-plus.version}</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -201,28 +201,6 @@
 
     <build>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <executable>true</executable>-->
-<!--                    <classesDirectory>./</classesDirectory>-->
-<!--                    <layout>ZIP</layout>-->
-<!--                    <includes>-->
-<!--                        <include>-->
-<!--                            <groupId>non-exists</groupId>-->
-<!--                            <artifactId>non-exists</artifactId>-->
-<!--                        </include>-->
-<!--                    </includes>-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <goals>-->
-<!--                            <goal>repackage</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
 
             <!-- 测试-->
             <plugin>

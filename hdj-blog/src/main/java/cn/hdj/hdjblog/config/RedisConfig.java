@@ -59,8 +59,8 @@ public class RedisConfig extends CachingConfigurerSupport {
         //默认配置
         RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration
                 .defaultCacheConfig()
-                //设置默认超过期时间是7天
-                .entryTtl(Duration.ofDays(7))
+                //设置默认超过期时间是1天
+                .entryTtl(Duration.ofDays(1))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(serializer));
 
         return RedisCacheManager.builder(redisConnectionFactory)

@@ -141,6 +141,7 @@ export default {
       dialogFormVisible: false,
       menuSelectList: [],
       temp: {
+        url: '',
         id: null,
         menuName: '',
         type: 0,
