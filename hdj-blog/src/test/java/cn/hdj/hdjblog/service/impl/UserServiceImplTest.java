@@ -38,6 +38,6 @@ public class UserServiceImplTest extends HdjBlogApplicationTests {
         UserDO userDO = new UserDO();
         userDO.setPassword("1");
         passwordHelper.encryptPassword(userDO);
-        userService.update(userDO, Wrappers.<UserDO>lambdaUpdate().eq(UserDO::getEmail,"hdj2@qq.com"));
+        userService.update(userDO, Wrappers.<UserDO>lambdaUpdate().eq(UserDO::getEmail,"hdj@admin.cn"));
     }
 }

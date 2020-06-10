@@ -20,9 +20,9 @@ services:
       - 3306
   redis:
     container_name: blog-redis
-    image: 'redis:5.0'
+    image: 'redis:6-alpine'
     restart: always
-    privileged: true
+    privileged: false
     volumes:
       - ./redis/data:/data
       - ./redis/conf/redis.conf:/conf/redis.conf
@@ -33,7 +33,7 @@ services:
       - 6379
   mq:
     container_name: blog-rabbitmq
-    image: 'rabbitmq:3.8.2-management-alpine'
+    image: 'rabbitmq:3-alpine'
     restart: always
     privileged: false
     environment:
@@ -52,6 +52,7 @@ services:
     privileged: false
     environment:
       - "discovery.type=single-node"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     volumes:
       - ./es/plugins:/usr/share/elasticsearch/plugins
       - ./es/data:/usr/share/elasticsearch/data
@@ -71,6 +72,7 @@ services:
       - ./nginx/www:/home/www/website
     ports:
       - 80:80
+      - 443:443
     networks:
       - blog-extranet
     depends_on:

@@ -31,7 +31,7 @@ www.jiajianhuang.cn
 - Lombox插件
 - ElasticSearch7.x
 - RabbitMQ3.x
-- Maven3
+- SpringBoot2.x
 
 部署步骤：
 1. 创建数据库blog, 并导入docker -> mysql里的所有sql文件

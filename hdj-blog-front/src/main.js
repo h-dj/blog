@@ -20,7 +20,6 @@ Vue.component("f-footer", fFooter)
 //Vue.use(ElementUI, {
 //i18n: (key, value) => i18n.t(key, value)
 //})
-const isDev = process.env.NODE_ENV === 'development'
 const router = new VueRouter({
 	routes,
 	base: process.env.VUE_APP_BASE_PATH,

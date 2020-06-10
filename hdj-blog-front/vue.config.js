@@ -9,13 +9,14 @@ function resolve(dir) {
 const name = defaultSettings.title || 'my blog' // page title
 
 const isDev = process.env.NODE_ENV === 'development'
+const port = process.env.VUE_APP_PORT
 
 module.exports = {
-  publicPath: isDev ? '/' : '/front/',
+  publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
   devServer: {
-    port: 4567,
+    port: port || 4567,
     proxy: {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
