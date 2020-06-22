@@ -18,9 +18,9 @@ module.exports = {
 		exchange: '互换友链'
 	},
 	footer: {
-		expressLane: '快速通道',
 		gitee: '码云',
-		admin: '后台管理'
+		github: 'Github',
+		juejin: '掘金'
 	},
 	archive: {
 		article: '篇'

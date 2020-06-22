@@ -18,9 +18,9 @@ module.exports = {
 		exchange: 'Exchange'
 	},
 	footer: {
-		expressLane: 'Express Lane',
 		gitee: 'Gitee',
-		admin: 'Backstage Management'
+		github: 'Github',
+		juejin: 'juejin'
 	},
 	archive: {
 		article: 'articles'
