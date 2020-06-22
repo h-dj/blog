@@ -120,9 +120,9 @@ spring:
     listener:
       simple:
         #消费端
-        concurrency: 2
+        concurrency: 1
         #最大消费端数
-        max-concurrency: 2
+        max-concurrency: 1
         #自动签收auto  手动 manual
         acknowledge-mode: manual
         #限流（海量数据，同时只能过来一条）

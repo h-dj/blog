@@ -4,6 +4,7 @@ import cn.hdj.hdjblog.constaint.RabbitMqConstants;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -31,14 +32,14 @@ public class RabbitMqConfig implements RabbitListenerConfigurer {
     }
 
     @Bean
-    public Exchange reIndexExchange(){
+    public Exchange reIndexExchange() {
         return ExchangeBuilder.directExchange(RabbitMqConstants.REFRESH_ES_INDEX_QUEUE)
                 .durable(true)
                 .build();
     }
 
     @Bean
-    public Binding reIndexBinding(Queue reIndexQueue,DirectExchange reIndexExchange){
+    public Binding reIndexBinding(Queue reIndexQueue, DirectExchange reIndexExchange) {
         return BindingBuilder.bind(reIndexQueue)
                 .to(reIndexExchange)
                 .with(RabbitMqConstants.REFRESH_ES_INDEX_QUEUE);
@@ -51,6 +52,12 @@ public class RabbitMqConfig implements RabbitListenerConfigurer {
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
         return rabbitTemplate;
     }
+
+    @Bean
+    public AmqpAdmin amqpAdmin(RabbitTemplate rabbitTemplate) {
+        return new RabbitAdmin(rabbitTemplate);
+    }
+
     /**
      * 配置消息消费处理工厂
      *

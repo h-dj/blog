@@ -71,7 +71,7 @@ const globalRoutes = [
 
 const createRouter = () =>
   new Router({
-    base: isDev ? '/' : '/admin/',
+    base: process.env.VUE_APP_BASE_PATH,
     mode: 'history', // require service support
     scrollBehavior: () => ({ y: 0 }),
     isAddDynamicMenuRoutes: false, // 是否已经添加动态（菜单）路由

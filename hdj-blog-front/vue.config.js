@@ -12,7 +12,7 @@ const isDev = process.env.NODE_ENV === 'development'
 const port = process.env.VUE_APP_PORT
 
 module.exports = {
-  publicPath: '/',
+  publicPath: process.env.VUE_APP_BASE_PATH,
   outputDir: 'dist',
   assetsDir: 'static',
   devServer: {

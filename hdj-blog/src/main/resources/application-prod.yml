@@ -100,10 +100,10 @@ spring:
   rabbitmq:
     host: ${BLOG-MQ-HOST}
     port: 5672
-    username: 'mpw:0MvsM2m01mYpDwcOZGei8g=='
-    password: 'mpw:on6I6I1B0wkBiFJhDMSHJA=='
+    username: blog
+    password: blog
     #虚拟主机地址
-    virtual-host: /blog
+    virtual-host: '/'
     #连接超时时间
     connection-timeout: 15000
     publisher-confirms: true
@@ -114,9 +114,9 @@ spring:
     listener:
       simple:
         #消费端
-        concurrency: 2
+        concurrency: 1
         #最大消费端数
-        max-concurrency: 2
+        max-concurrency: 1
         #自动签收auto  手动 manual
         acknowledge-mode: manual
         #限流（海量数据，同时只能过来一条）

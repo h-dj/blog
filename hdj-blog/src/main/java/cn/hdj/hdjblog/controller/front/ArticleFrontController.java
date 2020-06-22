@@ -3,6 +3,7 @@ package cn.hdj.hdjblog.controller.front;
 import cn.hdj.hdjblog.aspect.annotation.ArticleLike;
 import cn.hdj.hdjblog.aspect.annotation.ArticleView;
 import cn.hdj.hdjblog.aspect.annotation.SysLog;
+import cn.hdj.hdjblog.constaint.RabbitMqConstants;
 import cn.hdj.hdjblog.constaint.RedisCacheNames;
 import cn.hdj.hdjblog.elasticsearch.ArticleRepository;
 import cn.hdj.hdjblog.model.params.ArticleSearchForm;
@@ -12,9 +13,12 @@ import cn.hdj.hdjblog.service.TagService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.PostConstruct;
 
 /**
  * @author hdj
@@ -36,6 +40,14 @@ public class ArticleFrontController {
     private ArticleRepository articleRepository;
 
 
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+
+    @PostConstruct
+    public void initIndex() {
+        rabbitTemplate.convertAndSend(RabbitMqConstants.REFRESH_ES_INDEX_QUEUE, RabbitMqConstants.REFRESH_ES_INDEX_QUEUE, "init index");
+    }
     /**
      * 搜索标题，描述，内容
      *

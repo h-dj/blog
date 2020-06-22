@@ -57,11 +57,11 @@ unzip elasticsearch-analysis-ik-7.1.0.zip -d elasticsearch-analysis-ik-7.1.0
 ```shell script
 npm run build:prod 
 #前台
-scp -r ./dist/**  username@host:/opt/blog/nginx/wwww/front
+scp -r ./dist/**  username@host:/opt/blog/nginx/www/front
 
 
 #后台
-scp -r ./dist/**  username@host:/opt/blog/nginx/wwww/admin
+scp -r ./dist/**  username@host:/opt/blog/nginx/www/admin
 
 ```
 
@@ -71,6 +71,7 @@ mvn clean compile package -P prod
 
 ### 拷贝Dockerfile 文件 和jar 包到服务器
 scp -r ./target/hdj-blog-0.0.1-SNAPSHOT.jar ./target/lib ./Dockerfile  username@host:/opt/blog/app
+
 ```
 
 6. 拷贝docker-compose.yaml 文件到./blog目录下, 启动

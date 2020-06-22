@@ -6,24 +6,19 @@
           :span="10"
           class="item-col"
         >
-          <div class="title">
-          </div>
           <div class>
             <a
-              href="#"
+              href="https://github.com/h-dj"
               class="out-link"
-            ></a>
+              target="_blank"
+            >{{ $t('footer.github') }}</a>
           </div>
           <div class>
             <a
-              href="#"
-              class="out-link"></a>
-          </div>
-          <div class>
-            <a
-              href="#"
+              href="https://juejin.im/user/58aac8de2f301e006c36160a"
               class="out-link"
-            ></a>
+              target="_blank"
+            >{{ $t('footer.juejin') }}</a>
           </div>
         </el-col>
         <el-col
@@ -31,11 +26,16 @@
           class="item-col weside"
         >
           <div class="item">
+            <i class="el-icon-caret-right" />
+            1432517356@qq.com
           </div>
           <div class="item">
-          </div>
-          <div class="item">
-
+            <i class="el-icon-caret-right" />
+            <a
+              href="http://www.beian.miit.gov.cn"
+              class="out-link"
+              target="_blank"
+            >粤ICP备20053312号</a>
           </div>
         </el-col>
       </el-row>
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+
 export default {
   name: "Footer"
 };

@@ -34,13 +34,7 @@ public class ArticleIndexQueue {
     @Autowired
     private ArticleService articleService;
 
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
 
-    @PostConstruct
-    public void initIndex() {
-        rabbitTemplate.convertAndSend(RabbitMqConstants.REFRESH_ES_INDEX_QUEUE, RabbitMqConstants.REFRESH_ES_INDEX_QUEUE, "init index");
-    }
 
     /**
      * 更新文档
