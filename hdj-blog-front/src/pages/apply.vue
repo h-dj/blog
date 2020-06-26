@@ -29,7 +29,7 @@
             />
             <el-step
               :title="$t('apply.step3')"
-              description="等待审核，邮件通知"
+              description="等待审核"
             />
           </el-steps>
           <div
@@ -38,7 +38,7 @@
           >
             <div class="statement">
               <div class="item">
-                {{ $t('apply.blogLink') }}：{{ statement.originalLink }}
+                {{ $t('apply.blogLink') }}：{{ statement.blogLink }}
               </div>
               <div class="item">
                 {{ $t('apply.nickName') }}：{{ statement.author }}
@@ -63,19 +63,28 @@
                 :label="$t('apply.nickName')"
                 prop="title"
               >
-                <el-input v-model="formLabelAlign.title" />
+                <el-input
+                  v-model="formLabelAlign.title"
+                  placeholder="name"
+                />
               </el-form-item>
               <el-form-item
                 :label="$t('apply.email')"
                 prop="email"
               >
-                <el-input v-model="formLabelAlign.email" />
+                <el-input
+                  v-model="formLabelAlign.email"
+                  placeholder="test@gmail.com"
+                />
               </el-form-item>
               <el-form-item
                 :label="$t('apply.blogLink')"
                 prop="url"
               >
-                <el-input v-model="formLabelAlign.url" />
+                <el-input
+                  v-model="formLabelAlign.url"
+                  placeholder="https://www.jiajianhuang.cn/"
+                />
               </el-form-item>
               <el-form-item
                 :label="$t('apply.notes')"
@@ -97,7 +106,7 @@
                 class="el-icon-success"
                 style="color: #409EFF;font-size: 30px;"
               />
-              <br>感谢您对本站的信赖，审核成功后我将以邮件的方式通知您。
+              <br>感谢您对本站的信赖。
             </p>
           </div>
           <el-row

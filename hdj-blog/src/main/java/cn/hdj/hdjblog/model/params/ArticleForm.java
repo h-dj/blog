@@ -4,6 +4,7 @@ import cn.hdj.hdjblog.entity.TagDO;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @date 8/13/19
  */
 @Data
-public class ArticleForm {
+public class ArticleForm implements Serializable {
 
     private Long id;
 
@@ -105,5 +106,19 @@ public class ArticleForm {
      */
     private String cover;
 
+    /**
+     * 阅读量
+     */
+    private Integer readNum;
+
+    /**
+     * 评论数
+     */
+    private Integer commentNum;
+
+    /**
+     * 点赞数
+     */
+    private Integer likeNum;
 
 }

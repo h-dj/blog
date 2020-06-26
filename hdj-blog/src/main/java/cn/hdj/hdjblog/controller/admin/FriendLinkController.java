@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,7 @@ public class FriendLinkController {
     private FriendLinkService friendLinkService;
 
 
+    @RequiresPermissions("friends:search")
     @GetMapping(value = "/list")
     @ApiOperation(value = "友链列表", httpMethod = "GET", response = ResultVO.class)
     public ResultVO list(@ApiParam FriendLinkSearchForm roleForm) {
@@ -46,6 +48,7 @@ public class FriendLinkController {
         return ResultVO.successJson(PageVO.build(page));
     }
 
+    @RequiresPermissions("friends:add")
     @PostMapping(value = "/add")
     @ApiOperation(value = "友链列表", httpMethod = "POST", response = ResultVO.class)
     public ResultVO add(@ApiParam @RequestBody FriendLinkForm form) {
@@ -56,6 +59,7 @@ public class FriendLinkController {
         return ResultVO.successJson();
     }
 
+    @RequiresPermissions("friends:examine")
     @PutMapping("/examine")
     @ApiOperation(value = "审核友链", httpMethod = "PUT", response = ResultVO.class)
     public ResultVO examine(@ApiParam @RequestBody FriendLinkForm form) {
@@ -66,6 +70,7 @@ public class FriendLinkController {
         return ResultVO.successJson();
     }
 
+    @RequiresPermissions("friends:delete")
     @DeleteMapping("/delete")
     @ApiOperation(value = "删除链接", httpMethod = "DELETE", response = ResultVO.class)
     public ResultVO delete(@RequestBody List<Long> ids) {

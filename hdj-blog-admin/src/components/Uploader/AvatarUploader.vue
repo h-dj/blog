@@ -8,7 +8,7 @@
       :before-upload="beforeAvatarUpload"
       :headers="headers"
     >
-      <img v-if="imgUrl" :src="imgUrl" class="avatar">
+      <img v-if="imgUrl" :src="imgUrl +'?imageView2/1/w/178/h/178'" class="avatar">
       <i v-else class="el-icon-plus avatar-uploader-icon" />
     </el-upload>
   </div>

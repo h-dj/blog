@@ -179,6 +179,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleDO> imple
                                 ArticleDO::getTitle,
                                 ArticleDO::getAuthorName,
                                 ArticleDO::getReadNum,
+                                ArticleDO::getLikeNum,
                                 ArticleDO::getRecommend,
                                 ArticleDO::getTags,
                                 ArticleDO::getPublishTime,

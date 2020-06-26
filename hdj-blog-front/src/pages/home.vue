@@ -27,7 +27,7 @@
                 tag="span"
                 class="art-title"
               >
-                {{ item.title }}
+                <span v-html="item.title" />
               </router-link>
             </h5>
             <el-row class="art-info">
@@ -70,12 +70,12 @@
               >
                 <img
                   class="art-banner"
-                  :src="item.cover"
+                  :src="item.cover+'?imageView2/2/w/270/h/150'"
                 >
               </div>
               <div class="side-abstract">
                 <div class="art-abstract">
-                  {{ item.description }}
+                  <span v-html="item.description" />
                 </div>
                 <div class="art-more">
                   <router-link
@@ -160,6 +160,7 @@ export default {
         page: 1,
         limit: 10,
         title: null,
+        tag:null
       },
       search: {
         keyword: '',
@@ -233,6 +234,11 @@ export default {
   },
 };
 </script>
+<style>
+#artList .hdj-hl{
+  color: red;
+}
+</style>
 
 <style scoped>
 #side .item {

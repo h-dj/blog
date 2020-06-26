@@ -169,7 +169,7 @@ export default {
                 return
               }
               if (!validPassword(value)) {
-                callback(new Error('密码只能是数字字符下划线6~8位'))
+                callback(new Error('密码只能是数字字符下划线@&$ 6~8位'))
               } else {
                 if (this.temp.confirmPassword) {
                   this.$refs.dataForm.validateField('confirmPassword')

@@ -27,7 +27,7 @@
         />
       </el-form-item>
 
-      <el-form-item prop="passWord">
+      <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
@@ -78,7 +78,7 @@ export default {
     }
     return {
       loginForm: {
-        account: 'hdj@admin.cn',
+        account: '',
         password: null
       },
       loginRules: {

@@ -5,7 +5,7 @@
 ### 使用技术
 - SpringBoot 2.x 后台基本框架
 - Vue 2.x 前端基本框架
-- ElementUI：后台管理页面UI库
+- ElementUI：页面UI库
 - ElasticSearch 搜索层
 - RabbitMQ 消息队列
 - Shiro 鉴权层
@@ -63,8 +63,13 @@ Visual Studio Code编辑器
 - [x] 分类管理
 - [x] 加入缓存
 - [x] ES搜索文章
-- [ ] 批量导入markdown 文章
-- [ ] 加入文件上传功能(本地和七牛云)
-
+- [x] 加入文件上传功能(七牛云)
 
 ### 界面预览
+![博文图片1](./images/博文图片2.png)
+
+
+![博文图片1](./images/博文图片1.png)
+
+
+![博文图片1](./images/博文图片3.png)

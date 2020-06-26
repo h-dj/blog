@@ -159,15 +159,15 @@ export function message(vm, message, type = 'info') {
  */
 export function formatFileSize(size) {
   if (size < 1024) {
-    return size + 'B'
+    return (size).toFixed(2) + 'B'
   }
   if (size < 1024 * 1024) {
-    return size / 1024 + 'KB'
+    return (size / 1024).toFixed(2) + 'KB'
   }
   if (size < 1024 * 1024 * 1024) {
-    return size / 1024 / 1024 + 'MB'
+    return (size / 1024 / 1024).toFixed(2) + 'MB'
   }
-  return size / 1024 / 1024 / 1024 + 'GB'
+  return (size / 1024 / 1024 / 1024).toFixed(2) + 'GB'
 }
 
 /**
@@ -209,3 +209,4 @@ export function debounce(func, wait, immediate) {
     return result
   }
 }
+

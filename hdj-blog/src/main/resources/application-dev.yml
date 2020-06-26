@@ -1,14 +1,3 @@
-server:
-  port: 8181
-  servlet:
-    context-path: /
-  error:
-    path: /error
-  tomcat:
-    uri-encoding: UTF-8
-    max-threads: 1000
-    min-spare-threads: 10
-
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -92,17 +81,6 @@ spring:
         min-idle: 0
     #连接超时时间（毫秒）
     timeout: 6000
-  # 开启 multipart 上传功能
-  servlet:
-    multipart:
-      #开启文件上传
-      enabled: true
-      # 文件写入磁盘的阈值
-      file-size-threshold: 1KB
-      # 最大文件大小
-      max-file-size: 10MB
-      # 最大请求大小
-      max-request-size: 10MB
   rabbitmq:
     host: 127.0.0.1
     port: 5672
@@ -133,15 +111,15 @@ spring:
         - http://127.0.0.1:9200
       connection-timeout: 2000
       read-timeout: 60000
-
-logging:
-  path: 'logs'
 blog:
   cors-allowed-origins:
     - "*"
   #禁用swagger
   swagger-enabled: true
-  # 定义文件上传的路径
-  file-upload-dir: /home/hdj/blog/upload/
-  # 文件访问路径
-  file-base-url: /upload/
+  oss:
+    qiniu:
+      domain: http://cdn.jiajianhuang.cn
+      prefix: images
+      accessKey: 'mpw:c7939useX1qUlv3YwVjeeHLw1NtEFMuFLNCo4ONiH22w2KGkMIhaL0oS3u/XMTBT'
+      secretKey: 'mpw:ksG81rG8waFqTZt/sloSs2ONKM9xN25UKqprOBGfZv/kVUFwEAS5g1rd84incjsW'
+      bucketName: hdj-test

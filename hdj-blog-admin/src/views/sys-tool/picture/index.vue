@@ -10,12 +10,12 @@
         @keyup.enter.native="handleFilter"
       />
       <el-date-picker
-        v-model="listQuery.date"
+        v-model="date"
+        size="mini"
         type="daterange"
         range-separator=":"
-        class="el-range-editor--small filter-item"
-        style="height: 30.5px;width: 220px"
-        value-format="yyyy-MM-dd HH:mm:ss"
+        style="width: 200px"
+        value-format="yyyy-MM-dd"
         start-placeholder="开始日期"
         end-placeholder="结束日期"
       />
@@ -40,9 +40,9 @@
       v-loading="listLoading"
       :data="list"
       border
-      fit
       highlight-current-row
       style="width: 100%;"
+      size="mini"
       @sort-change="sortChange"
     >
       <el-table-column label="ID" prop="id" align="center" width="55" type="index" />
@@ -51,16 +51,11 @@
           <span>{{ row.fileName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="创建人" width="80">
-        <template slot-scope="{row}">
-          <el-tag>{{ row.createBy }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="缩略图" width="80" align="center">
+      <el-table-column label="缩略图" align="center">
         <template slot-scope="{row}">
           <el-image
-            style="width: 60px; height: 60px"
-            :src="row.url"
+            style="width: 45px; height: 45px"
+            :src="row.url+'?imageView2/1/w/45/h/45'"
             fit="contain"
             lazy
             :preview-src-list="srcList"
@@ -71,32 +66,26 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="文件类型" width="80">
+      <el-table-column label="文件类型">
         <template slot-scope="scope">
           <span>{{ scope.row.fileSuffix }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="文件大小" width="80">
+      <el-table-column label="文件大小">
         <template slot-scope="{row}">
-          <el-tag>{{ row.fileSize }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="文件位置">
-        <template slot-scope="{row}">
-          <span>{{ row.path }}</span>
+          <el-tag>{{ row.fileSize | formatFileSize }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
         label="操作"
         align="center"
-        width="80"
       >
         <template slot-scope="{row}">
           <el-button
             size="mini"
-            type="danger"
-            @click="handleDelete(row)"
-          >删除</el-button>
+            type="success"
+            @click="handleCopy(row.url,$event)"
+          >复制外链</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -114,7 +103,8 @@
 </template>
 
 <script>
-import { parseTime } from '@/utils'
+import clip from '@/utils/clipboard'
+import { parseTime, formatFileSize } from '@/utils'
 import { fetchList } from '@/api/picture'
 import Pagination from '@/components/Pagination'
 import DragUploader from '@/components/Uploader/DragUploader'
@@ -124,7 +114,7 @@ export default {
     DragUploader
   },
   filters: {
-    parseTime
+    parseTime, formatFileSize
   },
   data() {
     return {
@@ -133,6 +123,7 @@ export default {
       list: [],
       total: 0,
       listLoading: true,
+      date: [],
       listQuery: {
         page: 1,
         pageSize: 5,
@@ -157,6 +148,11 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
+      if (this.date && this.date.length > 1) {
+        this.listQuery.uploadTimeFrom = this.date[0]
+        this.listQuery.uploadTimeTo = this.date[1]
+      }
+
       fetchList(this.listQuery)
         .then(response => {
           this.list = response.data.list
@@ -206,8 +202,9 @@ export default {
 
     },
 
-    handleDelete(row) {
-
+    handleCopy(text, event) {
+      console.log(text)
+      clip(text, event)
     }
   }
 }

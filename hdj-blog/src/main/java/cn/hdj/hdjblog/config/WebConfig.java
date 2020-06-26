@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
@@ -28,18 +27,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     public WebConfig(SystemProperties systemProperties) {
         this.systemProperties = systemProperties;
-    }
-
-    /**
-     * 静态资源处理
-     *
-     * @param registry
-     */
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
-//        registry.addResourceHandler(systemProperties.getFileBaseUrl() + "/**")
-//                .addResourceLocations("file:" + systemProperties.getFileUploadDir());
     }
 
 

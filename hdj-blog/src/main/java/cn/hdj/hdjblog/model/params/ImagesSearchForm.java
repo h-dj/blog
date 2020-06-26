@@ -4,6 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  * @author hdj
@@ -20,8 +23,10 @@ public class ImagesSearchForm extends BaseForm {
     private String fileName;
 
     @ApiModelProperty(value = "上传时间开始")
-    private Data uploadTimeFrom;
+    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
+    private Date uploadTimeFrom;
 
     @ApiModelProperty(value = "上传时间结束")
-    private Data uploadTimeTo;
+    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
+    private Date uploadTimeTo;
 }

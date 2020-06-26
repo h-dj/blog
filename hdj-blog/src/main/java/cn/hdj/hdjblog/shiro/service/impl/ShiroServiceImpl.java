@@ -62,7 +62,7 @@ public class ShiroServiceImpl implements ShiroService {
         UserDO userDO = findByUserName(account);
         UserDetailDTO user = new UserDetailDTO();
         BeanUtil.copyProperties(userDO, user);
-        if (user != null && StrUtil.isNotEmpty(tokenSalt)) {
+        if (userDO != null && StrUtil.isNotEmpty(tokenSalt)) {
             user.setTokenSalt(tokenSalt);
             return user;
         }

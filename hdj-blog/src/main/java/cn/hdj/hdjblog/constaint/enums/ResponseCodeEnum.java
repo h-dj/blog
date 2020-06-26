@@ -31,9 +31,14 @@ public enum ResponseCodeEnum {
     LOCK_ACCOUNT(10004, "账户被锁定或禁用,请稍后再试！"),
     UNKNOWN_ACCOUNT(10005, "账号不存在"),
 
+    //七牛OSS错误
+    OSS_CONFIG_ERROR(10006,"七牛配置信息错误"),
+
     //用户权限错误
     TOKEN_GENERATOR_EXPIRE(500001, "token 过期"),
     TOKEN_GENERATOR_ILLEGAL(500002, "非法token");
+
+
 
 
     private Integer code;

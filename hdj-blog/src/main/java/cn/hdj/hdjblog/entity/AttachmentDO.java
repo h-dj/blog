@@ -19,49 +19,22 @@ import lombok.EqualsAndHashCode;
 public class AttachmentDO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-
     /**
      * 附件名称
      */
     private String fileName;
-
-
     /**
      * 大小
      */
     private String fileSize;
-
     /**
      * 访问路径
      */
     private String url;
-
-
     /**
      * 后缀
      */
     private String fileSuffix;
-
-    /**
-     * 附件上传类型(0:本地)
-     */
-    private Integer type;
-
-    /**
-     * 宽
-     */
-    private Integer width;
-
-    /**
-     * 高
-     */
-    private Integer height;
-
-    /**
-     * 文件存放位置
-     */
-    private String path;
-
     /**
      * 创建人
      */

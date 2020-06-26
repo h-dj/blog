@@ -1,6 +1,12 @@
 <template>
   <div class="app">
-    <f-header :class="{'navBarWrap':navBarFixed}" />
+    <div
+      class="title_box"
+      ref="pride_tab_fixed"
+    >
+      <f-header :class="{'navBarWrap':navBarFixed}" />
+    </div>
+    
     <el-row
       type="flex"
       justify="center"
@@ -42,12 +48,10 @@ export default {
   components: {BackToTop},
   methods: {
     watchScroll() {
-      var scrollTop =
-        window.pageYOffset ||
-        document.documentElement.scrollTop ||
-        document.body.scrollTop;
-      //  当滚动超过 50 时，实现吸顶效果
-      if (scrollTop > 50) {
+      //修复吸顶抖动问题
+      //https://juejin.im/post/5caa0c2d51882543fa41e478#heading-11
+      let scrollTop= this.$refs.pride_tab_fixed.getBoundingClientRect().top;
+      if (scrollTop < 0) {
         this.navBarFixed = true;
       } else {
         this.navBarFixed = false;
@@ -76,7 +80,7 @@ export default {
 .navBarWrap {
   position: fixed;
   top: 0;
-  z-index: 999;
+  z-index: 9999;
   width: 100%;
 }
 </style>

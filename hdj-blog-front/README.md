@@ -1,6 +1,6 @@
 ## 博客前台项目
 
-> 基于https://gitee.com/fengziy/Fblog模板 开发
+> 基于https://gitee.com/fengziy/Fblog   模板开发
 
 ## 安装
 ```

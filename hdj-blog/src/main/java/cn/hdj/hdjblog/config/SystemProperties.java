@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.Serializable;
+
 /**
  * @author hdj
  * @version 1.0
@@ -25,20 +27,38 @@ public class SystemProperties {
     private boolean swaggerEnabled;
 
     /**
-     * 文件上传存放路径
+     * Oss存储
      */
-    private String fileUploadDir;
-    /**
-     * 文件访问基础路径
-     */
-    private String fileBaseUrl;
-
-    private Elasticsearch elasticsearch = new Elasticsearch();
+    private Oss oss;
 
     @Data
-    public class Elasticsearch {
-        String userName;
-        String password;
-        String[] clusterNodes;
+    public static class Oss implements Serializable {
+        private Qiniu qiniu;
     }
+
+    @Data
+    public static class Qiniu implements Serializable {
+        /**
+         * 域名
+         */
+        private String domain;
+        /**
+         * 前缀
+         */
+        private String prefix;
+        /**
+         * 访问key
+         */
+        private String accessKey;
+        /**
+         * 秘钥
+         */
+        private String secretKey;
+        /**
+         * 桶名称
+         */
+        private String bucketName;
+    }
+
+
 }

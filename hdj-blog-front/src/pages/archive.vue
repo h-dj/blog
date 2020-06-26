@@ -24,12 +24,12 @@
               v-for="(p,pIndex) in m.posts"
               :key="pIndex"
             >
-              <el-button
-                type="text"
-                @click="goto(p.slug)"
-              >
-                {{ p.createTime | formatTime }} {{ p.title }}
-              </el-button>
+              <el-link @click="goto(p.slug)">
+                <el-tag type="info">
+                  {{ p.createTime | formatTime }}
+                </el-tag>
+                {{ p.title }}
+              </el-link>
             </p>
           </el-timeline-item>
         </el-timeline>
@@ -105,9 +105,11 @@ export default {
 
 <style scoped>
 .archive .el-timeline {
-  margin: 20px auto !important;
+  margin: 10px 0;
+  padding: 0px;
 }
-.el-timeline-item__tail{
-  display: block !important;
-}
+
+ .el-link{
+    padding-top: 5px;
+  }
 </style>

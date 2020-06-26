@@ -60,6 +60,7 @@ npm run build:prod
 scp -r ./dist/**  username@host:/opt/blog/nginx/www/front
 
 
+
 #后台
 scp -r ./dist/**  username@host:/opt/blog/nginx/www/admin
 

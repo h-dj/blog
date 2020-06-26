@@ -7,18 +7,23 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
+import org.springframework.data.elasticsearch.core.query.HighlightQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.StringQuery;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -58,14 +63,42 @@ public class ArticleRepository {
         query.setPageable(pageRequest);
 
 
+        HighlightBuilder highlightBuilder = new HighlightBuilder();
+        highlightBuilder.field("description")
+                .field("content")
+                .field("title")
+                .postTags("</i>")
+                .preTags("<i class='hdj-hl'>");
+        HighlightQuery highlightQuery = new HighlightQuery(highlightBuilder);
+        query.setHighlightQuery(highlightQuery);
+
+
         SearchHits<ArticleDO> search = restTemplate.search(query,
                 ArticleDO.class,
                 IndexCoordinates.of(EsConstaints.ES_INDEX_ARTICLE));
 
-        List<ArticleDO> list = search.get()
-                .map(articleDTOSearchHit -> articleDTOSearchHit.getContent())
+        List<SearchHit<ArticleDO>> searchHits = search.getSearchHits();
+        if (CollectionUtil.isEmpty(searchHits)) {
+            return PageVO.build(Collections.EMPTY_LIST, 0, pageSize, page);
+        }
+
+        List<ArticleDO> list = searchHits.stream()
+                .map(articleDOSearchHit -> {
+                    Map<String, List<String>> highlightFields = articleDOSearchHit.getHighlightFields();
+                    articleDOSearchHit.getContent().setContent(null);
+                    if (CollectionUtil.isNotEmpty(highlightFields.get("title"))) {
+                        articleDOSearchHit.getContent().setTitle(highlightFields.get("title").get(0));
+                    }
+                    if (CollectionUtil.isNotEmpty(highlightFields.get("description"))) {
+                        articleDOSearchHit.getContent().setDescription(highlightFields.get("description").get(0));
+                    } else if (CollectionUtil.isNotEmpty(highlightFields.get("content"))) {
+                        articleDOSearchHit.getContent().setDescription(highlightFields.get("content").get(0));
+                    }
+                    return articleDOSearchHit.getContent();
+                })
                 .collect(Collectors.toList());
-        return PageVO.build(list, search.getTotalHits(), pageSize, pageSize);
+
+        return PageVO.build(list, search.getTotalHits(), pageSize, page);
     }
 
     /**

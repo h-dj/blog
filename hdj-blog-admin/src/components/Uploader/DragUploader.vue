@@ -10,14 +10,14 @@
         :action="url"
         :multiple="false"
         :on-success="handleAvatarSuccess"
+        :on-error="handleError"
         :before-upload="beforeAvatarUpload"
         :headers="headers"
       >
         <i class="el-icon-upload" />
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
         <div slot="tip" class="el-upload__tip">
-          <p>只能上传['image/png', 'image/gif', 'image/jpeg', 'image,jpg']文件</p>
-          <p>且不超过2M</p>
+          <p>上传文件不能超过10M</p>
         </div>
       </el-upload>
     </el-dialog>
@@ -37,8 +37,7 @@ export default {
       headers: {
         'x-auth-token': getToken()
       },
-      accepts: ['image/png', 'image/gif', 'image/jpeg', 'image,jpg'],
-      max: 2 * 1024 * 1024
+      max: 10 * 1024 * 1024
     }
   },
   methods: {
@@ -51,14 +50,17 @@ export default {
     handleAvatarSuccess(response, file, fileList) {
       this.$emit('onSuccess', response, file, fileList)
     },
-    beforeAvatarUpload(file) {
-      if (!this.accepts.includes(file.type.toLowerCase())) {
+    handleError(err, file, fileList) {
+      this.$message.error('上传失败！', err)
+    },
+    beforeAvatarUpload(file, accepts = []) {
+      if (accepts.length > 0 && !accepts.includes(file.type.toLowerCase())) {
         this.$message.error('不支持该文件类型！ ' + file.type)
         return false
       }
       const size = file.size
       if (size > this.max) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
+        this.$message.error('上传文件大小不能超过 10MB!')
         return false
       }
       return true

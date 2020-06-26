@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResultVO handlerNoFoundException(NoHandlerFoundException e) {
-        log.error("错误详情：" + e.getMessage(), e);
+        log.error("错误详情：" + e.getMessage());
         return ResultVO.errorJson(ResponseCodeEnum.PATH_NOT_FOUND);
     }
 
@@ -75,7 +75,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(DuplicateKeyException.class)
     public ResultVO handleDuplicateKeyException(DuplicateKeyException e) {
-        log.error("错误详情：" + e.getMessage(), e);
+        log.error("错误详情：" + e.getMessage());
         return ResultVO.errorJson(ResponseCodeEnum.DUPLICATE_KEY);
     }
 
@@ -86,10 +86,10 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AuthorizationException.class)
     public ResultVO handleAuthorizationException(AuthorizationException e) {
-        log.error("错误详情：" + e.getMessage(), e);
+        log.error("错误详情：" + e.getMessage());
         return ResultVO.errorJson(ResponseCodeEnum.NO_AUTH);
     }
 
@@ -101,7 +101,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(AuthenticationException.class)
     public ResultVO handleUnknownAccountException(AuthenticationException e) {
-        log.error("错误详情：" + e.getMessage(), e);
+        log.error("错误详情：" + e.getMessage());
         if (e instanceof UnknownAccountException) {
             return ResultVO.errorJson(ResponseCodeEnum.USERNAME_OR_PASSWORD_WRONG);
         }

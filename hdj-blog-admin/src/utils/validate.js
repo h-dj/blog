@@ -23,7 +23,7 @@ export function validEmail(email) {
  * @returns {Boolean}
  */
 export function validPassword(password) {
-  return /^([0-9A-Za-z_]{6,8})$/.test(password)
+  return /^([0-9A-Za-z_@&$]{6,8})$/.test(password)
 }
 
 /**

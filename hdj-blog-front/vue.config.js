@@ -6,9 +6,8 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || 'my blog' // page title
+const name = defaultSettings.title
 
-const isDev = process.env.NODE_ENV === 'development'
 const port = process.env.VUE_APP_PORT
 
 module.exports = {

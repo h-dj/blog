@@ -10,8 +10,6 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 Vue.use(Router)
 
-const isDev = process.env.NODE_ENV === 'development'
-
 /* Layout */
 import Layout from '@/layout'
 import Login from '@/views/login'
@@ -126,7 +124,6 @@ router.afterEach(() => {
 function parseRouters(data) {
   // 把后台菜单转换为路由对象
   const treeData = treeDataTranslate(data)
-  console.log(treeData)
   const routes = convertRoute(generateRoute(treeData))
   routes.push({ path: '*', redirect: '/404', hidden: true })
   const ayncRouters = []
@@ -145,11 +142,12 @@ function parseRouters(data) {
  */
 function convertRoute(routes = []) {
   return routes.map(r => {
-    if (r.children) {
+    if (r.children && r.component === Layout) {
       return r
     }
+    r.children = null
     return {
-      path: r.path,
+      path: r.path + '-p',
       component: Layout,
       redirect: r.path,
       meta: r.meta,

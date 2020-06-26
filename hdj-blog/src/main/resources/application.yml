@@ -9,10 +9,32 @@ spring:
       charset: utf-8
       force: true
       enabled: true
+  servlet:
+    multipart:
+      #文件上传大小配置
+      max-file-size: 100MB
+      max-request-size: 100MB
+  mvc:
+    #restFul风格：当找不到页面时，正常抛出错误，不跳转页面
+    throw-exception-if-no-handler-found: true
+    resources:
+      #restFul风格: 不要为资源文件建立映射
+      add-mappings: false
+server:
+  port: 8181
+  servlet:
+    context-path: /
+  error:
+    path: /error
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
 mybatis-plus:
   mapper-locations: classpath*:/mappers/*
   #type-aliases-package:
   # 数据库表与实体类的驼峰命名自动转换
   configuration:
     map-underscore-to-camel-case: true
-
+logging:
+  path: 'logs'

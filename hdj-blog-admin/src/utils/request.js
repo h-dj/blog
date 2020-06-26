@@ -86,15 +86,15 @@ service.interceptors.response.use(
   },
   error => {
     console.error(error)
-    let msg = 'Error'
+    let msg
     if (error.response && error.response.data) {
-      msg = error.response.data.msg
+      msg = error.response.data.msg || 'Error'
     } else {
-      msg = error.message
+      msg = error.message || 'Error'
     }
     if (document.querySelectorAll('.el-message--error').length <= 0) {
       Message({
-        message: msg ||  'Error',
+        message: msg,
         type: 'error',
         duration: 5 * 1000
       })
