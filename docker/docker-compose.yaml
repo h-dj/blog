@@ -13,8 +13,8 @@ services:
     privileged: false
     networks:
       - blog-extranet
-    ports:
-      - 44064:3306
+    expose:
+      - 3306
   redis:
     container_name: blog-redis
     image: 'redis:6-alpine'

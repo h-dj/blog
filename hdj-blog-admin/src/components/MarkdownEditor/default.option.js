@@ -138,7 +138,7 @@ const defaultOptions = {
     show: false
   },
   upload: {
-    max: 5 * 1024 * 1024,
+    max: 10 * 1024 * 1024,
     accept: ['image/gif', 'image/png', 'image/jpeg', 'image/jpg']
   }
 }

@@ -1,6 +1,6 @@
 
 module.exports = {
-  title: '黄家健‘Blog',
+  title: '黄家健\'Blog',
   statement:{
     blogLink:'https://www.jiajianhuang.cn',
     author: "黄家健",

@@ -8,12 +8,18 @@
         WHERE ta.article_id = #{articleId}
     </select>
     <select id="groupCount" resultType="java.util.Map">
-        SELECT
-        t.tag_name as tag,
-        COUNT(t.tag_name) as num
-        FROM
-        t_tag t
-        INNER JOIN t_tag_article ta ON t.id = ta.tag_id
-        GROUP BY t.tag_name
+        select
+            t.tag_name as tag,
+            count(t.tag_name) as num
+        from
+            t_tag t
+        inner join t_tag_article tta on
+            t.id = tta.tag_id
+        inner join t_article ta on
+            ta.id = tta.article_id
+        where
+            ta.status = 1
+        group by
+            t.tag_name
     </select>
 </mapper>

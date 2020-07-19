@@ -110,7 +110,7 @@ export default {
     },
     articleLike(){
         articleLike(this.article.slug)
-        .then(res=>{
+        .then(()=>{
             this.article.likeNum+=1
             this.$message({
                 type:'success',

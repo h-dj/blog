@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 /**
@@ -17,7 +18,7 @@ import java.util.Optional;
  * @Description:
  */
 @Data
-public class BaseForm {
+public class BaseForm implements Serializable {
     @JsonIgnore
     @ApiModelProperty(hidden = true)
     private final static String ASC = "ascending";

@@ -13,4 +13,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface LogService extends IService<LogDO> {
 
+    /**
+     * 保存日志
+     *
+     * @param logDO
+     */
+    void saveLog(LogDO logDO);
 }

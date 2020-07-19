@@ -5,7 +5,8 @@ module.exports = {
 		about: 'About',
 		language: 'Language',
 		chinaese: '中文',
-		english: 'English'
+		english: 'English',
+		category: 'categorys'
 	},
 	home: {
 		readMore: 'READ MORE'

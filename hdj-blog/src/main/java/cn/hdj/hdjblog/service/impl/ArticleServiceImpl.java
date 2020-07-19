@@ -188,6 +188,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleDO> imple
                                 ArticleDO::getSlug
                         )
                         .eq(ArticleDO::getStatus, 1)
+                        .eq(form.getCategoryId() != null, ArticleDO::getCategoryId, form.getCategoryId())
+
         );
 
         return ResultVO.successJson(PageVO.build(page));

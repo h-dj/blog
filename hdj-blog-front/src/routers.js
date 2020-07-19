@@ -7,12 +7,12 @@ import apply from './pages/apply'
 const routes = [
 {
 	path:'/',
-    component:home
+    component:home,
 },
 {
 	path:'/home',
 	name:'home',
-    component:home
+    component:home,
 },
 {
     path:'/about',

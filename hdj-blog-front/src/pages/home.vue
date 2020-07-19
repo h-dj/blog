@@ -15,6 +15,14 @@
         >
           搜索结果：{{ total }} 条
         </el-alert>
+        <el-alert
+          v-show="listQuery.categoryId !=null"
+          class="search-hit"
+          type="success"
+          :closable="false"
+        >
+          当前分类：{{ currentCategory }}
+        </el-alert>
         <el-row
           v-for="(item, index) in list"
           :key="index"
@@ -156,11 +164,13 @@ export default {
       totalPage: 0,
       currPage: 0,
       listLoading: true,
+      currentCategory:'',
       listQuery: {
         page: 1,
         limit: 10,
         title: null,
-        tag:null
+        tag:null,
+        categoryId:null
       },
       search: {
         keyword: '',
@@ -170,6 +180,11 @@ export default {
       },
       tagWall: [],
     };
+  },
+  watch: {
+    $route() {
+       this.getList();
+    }
   },
   created() {
     this.getList();
@@ -206,6 +221,9 @@ export default {
       }
     },
     getList() {
+      this.listQuery.categoryId = this.$route.query.categoryId || null
+      this.currentCategory = this.$route.query.categoryName || null
+      
       this.listLoading = true;
       fetchList(this.listQuery)
         .then(resp => {

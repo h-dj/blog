@@ -34,6 +34,18 @@ export function tags() {
     method: 'get'
   })
 }
+
+/**
+ * 标签
+ * @param {Object} data 
+ */
+export function categorys() {
+  return request({
+    url: "/articles/categorys",
+    method: 'get'
+  })
+}
+
 /**
  * 归档
  * @param {*} query 

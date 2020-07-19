@@ -4,7 +4,7 @@
 
 <script>
 // 按需引入 引入 ECharts 主模块
-var echarts = require('echarts/lib/echarts')
+const echarts = require('echarts')
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
 export default {

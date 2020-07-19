@@ -1,5 +1,7 @@
 package cn.hdj.hdjblog.utils;
 
+import cn.hutool.crypto.SecureUtil;
+import com.baomidou.mybatisplus.core.toolkit.AES;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -15,5 +17,13 @@ public class BeanUtilTest {
 
     @Test
     public void testHutoolBeanUtil() throws UnsupportedEncodingException {
+
+        String s = AES.generateRandomKey();
+
+        String a = AES.encrypt("A", s);
+        System.out.println(a);
+
+
+        SecureUtil.aes(s.getBytes("utf-8"));
     }
 }

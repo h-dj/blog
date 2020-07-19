@@ -39,7 +39,7 @@
       </el-menu-item>
 
       <el-submenu
-        index="#"
+        index="#language"
         class="hidden-md-and-down"
       >
         <template slot="title">
@@ -57,6 +57,26 @@
         </el-menu-item>
       </el-submenu>
 
+      <el-submenu
+        index="#category"
+        class="hidden-md-and-down"
+      >
+        <template slot="title">
+          {{ $t("header.category") }}
+        </template>
+        <el-menu-item
+          @click="goto('/home')"
+        >
+          全部
+        </el-menu-item>
+        <el-menu-item
+          :key="index"
+          v-for="(item,index) in categoryList"
+          @click="goto(`/?categoryId=${item.id}&categoryName=${item.categoryName}`)"
+        >
+          {{ item.categoryName }}
+        </el-menu-item>
+      </el-submenu>
       <el-menu-item class="hidden-md-and-up">
         <i
           class="el-icon-s-fold "
@@ -93,7 +113,7 @@
           </el-menu-item>
 
           <el-submenu
-            index="#"
+            index="#language"
           >
             <template slot="title">
               {{ $t("header.language") }}
@@ -109,6 +129,26 @@
               {{ $t("header.english") }}
             </el-menu-item>
           </el-submenu>
+
+          <el-submenu
+            index="#category"
+          >
+            <template slot="title">
+              {{ $t("header.category") }}
+            </template>
+            <el-menu-item
+              @click="goto('/home')"
+            >
+              全部
+            </el-menu-item>
+            <el-menu-item
+              :key="index"
+              v-for="(item,index) in categoryList"
+              @click="goto(`/?categoryId=${item.id}&categoryName=${item.categoryName}`)"
+            >
+              {{ item.categoryName }}
+            </el-menu-item>
+          </el-submenu>
         </el-menu>
       </div>
     </el-drawer>
@@ -117,16 +157,22 @@
 
 <script>
 const defaultSettings = require('@/settings.js')
+import {categorys} from '@/api/article'
+
 export default {
   data() {
     return {
       activeIndex: this.$route.path || "/",
       title:defaultSettings.title,
-      drawer:false
+      drawer:false,
+      categoryList:[]
     };
   },
+  created(){
+    this.getCategoryList()
+  },
   watch: {
-    $route(to, from) {
+    $route(to) {
       this.activeIndex = to.path
     }
   },
@@ -140,11 +186,17 @@ export default {
         this.$i18n.locale = localStorage.getItem("locale");
       }
     },
+    getCategoryList(){
+        categorys()
+        .then(res=>{
+          this.categoryList = res.data
+        })
+    },
     goto(url){
       if(this.activeIndex != url){
         this.$router.push(url)
       }
-    }
+    },
   }
 };
 </script>

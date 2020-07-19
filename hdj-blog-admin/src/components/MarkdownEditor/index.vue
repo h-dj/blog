@@ -114,11 +114,16 @@ export default {
     },
     startAutoSave() {
       if (this.autoSave) {
-        this.taskId = setInterval(() => {
+        this.taskId = setTimeout(() => {
           if (this.vditor.getValue()) {
-            this.$emit('autoSubmit')
+            try {
+              this.$emit('autoSubmit')
+              this.startAutoSave()
+            } catch (e) {
+              clearTimeout(this.taskId)
+            }
           }
-        }, 10000)
+        }, 3000)
       }
     }
   }

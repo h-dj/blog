@@ -4,6 +4,7 @@ import cn.hdj.hdjblog.dao.LogDao;
 import cn.hdj.hdjblog.entity.LogDO;
 import cn.hdj.hdjblog.service.LogService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +18,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class LogServiceImpl extends ServiceImpl<LogDao, LogDO> implements LogService {
 
+    @Async
+    @Override
+    public void saveLog(LogDO logDO) {
+        this.baseMapper.insert(logDO);
+    }
 }

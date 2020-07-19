@@ -31,7 +31,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: process.env.VUE_APP_BASE_PATH,
+  publicPath: process.env.VUE_APP_BASE_PATH || '/',
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: isDev,
@@ -70,6 +70,40 @@ module.exports = {
     }
   },
   chainWebpack(config) {
+    const cdn = {
+      css: [
+        // element-ui css
+        'https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/theme-chalk/index.css'
+      ],
+      js: [
+        // vue must at first!
+        'https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js',
+        // element-ui js
+        'https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js',
+        'https://cdn.bootcss.com/js-cookie/2.2.0/js.cookie.min.js',
+        'https://cdn.jsdelivr.net/npm/axios@0.18.1/dist/axios.min.js',
+        'https://cdn.bootcdn.net/ajax/libs/echarts/4.6.0/echarts.min.js'
+      ],
+
+      // cdn预加载使用
+      externals: {
+        vue: 'Vue',
+        'element-ui': 'ELEMENT',
+        'js-cookie': 'Cookies',
+        echarts: 'echarts',
+        axios: 'axios'
+      }
+    }
+    /**
+     * 添加CDN参数到htmlWebpackPlugin配置中， 详见public/index.html 修改
+     */
+    config.plugin('html').tap((args) => {
+      args[0].cdn = cdn
+      return args
+    })
+    // 排除依赖
+    config.externals(cdn.externals)
+
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
 

@@ -5,7 +5,8 @@ module.exports = {
 		about: '关于',
 		language: '语言',
 		chinaese: '中文',
-		english: 'English'
+		english: 'English',
+		category: '分类'
 	},
 	home: {
 		readMore: '阅读全文'

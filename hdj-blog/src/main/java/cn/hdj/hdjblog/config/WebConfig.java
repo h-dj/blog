@@ -29,7 +29,6 @@ public class WebConfig implements WebMvcConfigurer {
         this.systemProperties = systemProperties;
     }
 
-
     /**
      * json 消息转换器
      *

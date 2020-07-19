@@ -18,6 +18,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,15 +35,16 @@ import java.util.stream.Collectors;
 public class ShiroServiceImpl implements ShiroService {
 
 
+    @Lazy
     @Autowired
     private UserDao userDao;
-
+    @Lazy
     @Autowired
     private MenuDao menuDao;
-
+    @Lazy
     @Autowired
     private RoleDao roleDao;
-
+    @Lazy
     @Autowired
     private UserRoleDao userRoleDao;
 

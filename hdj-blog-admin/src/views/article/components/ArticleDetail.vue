@@ -18,7 +18,7 @@
         <markdown-editor
           ref="vditor"
           v-model="article.content"
-          :auto-save="false"
+          :auto-save="true"
           @autoSubmit="saveArticleHandler"
           @submit="saveArticleHandler"
           @openSetting="openSetting"
@@ -278,6 +278,10 @@ export default {
     },
     // 保存文章
     saveArticleHandler() {
+      if (this.submitLoading) {
+        this.$message('正在提交...')
+        return
+      }
       if (!this.article.content) {
         this.$message('文章内容不能为空！')
         return
@@ -312,6 +316,14 @@ export default {
       }
     },
     updateArticleHandler() {
+      if (this.submitLoading) {
+        this.$message('正在提交...')
+        return
+      }
+      if (!this.article.content) {
+        this.$message('文章内容不能为空！')
+        return
+      }
       this.$refs['articleForm'].validate(valid => {
         if (valid) {
           this.submitLoading = true

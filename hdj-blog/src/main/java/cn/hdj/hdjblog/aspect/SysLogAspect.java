@@ -6,7 +6,6 @@ import cn.hdj.hdjblog.constaint.enums.LevelEnum;
 import cn.hdj.hdjblog.entity.LogDO;
 import cn.hdj.hdjblog.service.LogService;
 import cn.hdj.hdjblog.util.MyWebUtils;
-import cn.hutool.core.codec.Base64;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.useragent.UserAgent;
@@ -127,7 +126,7 @@ public class SysLogAspect {
             if (logDO != null) {
                 long time = System.currentTimeMillis() - logDO.getTime();
                 logDO.setTime(time);
-                logService.save(logDO);
+                logService.saveLog(logDO);
             }
         } finally {
             if (logDO != null) {
@@ -150,7 +149,7 @@ public class SysLogAspect {
                 String message = ExceptionUtil.getMessage(exception);
                 logDO.setLevel(LevelEnum.ERROR.name());
                 logDO.setException(message);
-                logService.save(logDO);
+                logService.saveLog(logDO);
             }
         } finally {
             clearCache();

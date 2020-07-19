@@ -6,10 +6,13 @@ import cn.hdj.hdjblog.aspect.annotation.SysLog;
 import cn.hdj.hdjblog.constaint.RabbitMqConstants;
 import cn.hdj.hdjblog.constaint.RedisCacheNames;
 import cn.hdj.hdjblog.elasticsearch.ArticleRepository;
+import cn.hdj.hdjblog.entity.CategoryDO;
 import cn.hdj.hdjblog.model.params.ArticleSearchForm;
 import cn.hdj.hdjblog.model.vo.ResultVO;
 import cn.hdj.hdjblog.service.ArticleService;
+import cn.hdj.hdjblog.service.CategoryService;
 import cn.hdj.hdjblog.service.TagService;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -35,6 +38,9 @@ public class ArticleFrontController {
 
     @Autowired
     private TagService tagService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @Autowired
     private ArticleRepository articleRepository;
@@ -95,6 +101,18 @@ public class ArticleFrontController {
     @ApiOperation(value = "标签墙", httpMethod = "GET", response = ResultVO.class)
     public ResultVO tags() {
         return ResultVO.successJson(tagService.groupCount());
+    }
+
+    @SysLog("front:分类")
+    @GetMapping("/categorys")
+    @Cacheable(cacheNames = RedisCacheNames.CATEGORY)
+    @ApiOperation(value = "标签墙", httpMethod = "GET", response = ResultVO.class)
+    public ResultVO categorys() {
+        return ResultVO.successJson(
+               categoryService.list(Wrappers.<CategoryDO>lambdaQuery()
+                       .select(CategoryDO::getId,CategoryDO::getCategoryName)
+               )
+        );
     }
 
     /**
