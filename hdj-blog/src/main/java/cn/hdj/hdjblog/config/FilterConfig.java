@@ -19,6 +19,7 @@ import java.util.Arrays;
  * @date 16/01/2020 22:29
  * @description:
  */
+@SuppressWarnings("unchecked")
 @Configuration
 public class FilterConfig {
 

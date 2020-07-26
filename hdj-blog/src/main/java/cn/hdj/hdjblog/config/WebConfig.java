@@ -23,11 +23,6 @@ import java.util.List;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    private SystemProperties systemProperties;
-
-    public WebConfig(SystemProperties systemProperties) {
-        this.systemProperties = systemProperties;
-    }
 
     /**
      * json 消息转换器
@@ -37,7 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        List<MediaType> mediaTypes = new ArrayList(converter.getSupportedMediaTypes());
+        List<MediaType> mediaTypes = new ArrayList<>(converter.getSupportedMediaTypes());
         converter.setSupportedMediaTypes(mediaTypes);
         mediaTypes.addAll(Arrays.asList(MediaType.TEXT_PLAIN, MediaType.TEXT_HTML, MediaType.TEXT_XML));
 

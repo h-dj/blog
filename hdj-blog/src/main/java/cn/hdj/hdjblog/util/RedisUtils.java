@@ -1,5 +1,6 @@
 package cn.hdj.hdjblog.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,7 +17,8 @@ import java.util.concurrent.TimeUnit;
  * @Description: RedisUtils工具
  * @Version 1.0
  */
-@SuppressWarnings({"-Xlint:unchecked"})
+@SuppressWarnings("unchecked")
+@Slf4j
 @Component
 public class RedisUtils {
 
@@ -31,14 +33,13 @@ public class RedisUtils {
      * @param time 时间(秒)
      * @return
      */
-    public boolean expire(String key, long time) {
+    public void expire(String key, long time) {
         try {
             if (time >= 0) {
                 redisTemplate.expire(key, time, TimeUnit.SECONDS);
             }
-            return true;
         } catch (Exception e) {
-            return false;
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -124,16 +125,15 @@ public class RedisUtils {
     /**
      * 普通缓存放入，并设置过期时间
      */
-    public boolean set(String key, Object value, long time) {
+    public void set(String key, Object value, long time) {
         try {
             if (time > 0) {
                 redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
             } else {
                 redisTemplate.opsForValue().set(key, value);
             }
-            return true;
         } catch (Exception ex) {
-            return false;
+            log.error(ex.getMessage(), ex);
         }
     }
 

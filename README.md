@@ -66,10 +66,7 @@ Visual Studio Code编辑器
 - [x] 加入文件上传功能(七牛云)
 
 ### 界面预览
-![博文图片1](./images/博文图片2.png)
 
-
-![博文图片1](./images/博文图片1.png)
-
-
-![博文图片1](./images/博文图片3.png)
+![a96FVH.png](https://s1.ax1x.com/2020/07/26/a96FVH.png)
+![a96Pqe.png](https://s1.ax1x.com/2020/07/26/a96Pqe.png)
+![a96kad.png](https://s1.ax1x.com/2020/07/26/a96kad.png)

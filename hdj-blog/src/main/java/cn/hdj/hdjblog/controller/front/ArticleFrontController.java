@@ -74,7 +74,6 @@ public class ArticleFrontController {
     @ApiOperation(value = "文章列表", httpMethod = "GET", response = ResultVO.class)
     public ResultVO list(ArticleSearchForm form) {
         return this.articleService.articleList(form);
-
     }
 
 

@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 /**
  * @author hdj
@@ -53,17 +52,15 @@ public class BaseForm implements Serializable {
             pageSize = 10;
         }
         Page<T> page = new Page<>(this.page, pageSize);
-
-        Optional.ofNullable(sort)
-                .ifPresent(strings -> {
-                    if (StrUtil.equalsIgnoreCase(DESC, sortType)) {
-                        page.addOrder(OrderItem.desc(sort));
-                    } else if (StrUtil.equalsIgnoreCase(ASC, sortType)) {
-                        page.addOrder(OrderItem.asc(sort));
-                    } else {
-                        page.addOrder(OrderItem.desc("update_time"));
-                    }
-                });
+        if (StrUtil.isNotEmpty(sort)) {
+            if (StrUtil.equalsIgnoreCase(DESC, sortType)) {
+                page.addOrder(OrderItem.desc(sort));
+            } else if (StrUtil.equalsIgnoreCase(ASC, sortType)) {
+                page.addOrder(OrderItem.asc(sort));
+            }
+        } else {
+            page.addOrder(OrderItem.desc("update_time"));
+        }
         return page;
     }
 }

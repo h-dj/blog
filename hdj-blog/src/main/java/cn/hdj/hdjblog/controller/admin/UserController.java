@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -160,7 +159,7 @@ public class UserController {
     @SysLog("修改头像")
     @PutMapping("/avatar")
     @ApiOperation(value = "修改头像", httpMethod = "PUT", response = ResultVO.class)
-    public ResultVO avatar(@ApiParam(value = "头像链接") @RequestBody Map<String, String> params) throws IOException {
+    public ResultVO avatar(@ApiParam(value = "头像链接") @RequestBody Map<String, String> params) {
 
         Long currentUserId = MyWebUtils.getCurrentUserId();
         UserDO userDO = new UserDO();

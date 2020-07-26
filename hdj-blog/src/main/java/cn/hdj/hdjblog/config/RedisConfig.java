@@ -48,6 +48,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      *
      * @return
      */
+    @SuppressWarnings("unchecked")
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
 
@@ -92,7 +93,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     public CacheErrorHandler errorHandler() {
         // 异常处理，当Redis发生异常时，打印日志，但是程序正常走
         log.info("初始化 -> [{}]", "Redis CacheErrorHandler");
-        CacheErrorHandler cacheErrorHandler = new CacheErrorHandler() {
+        return new CacheErrorHandler() {
             @Override
             public void handleCacheGetError(RuntimeException e, Cache cache, Object key) {
                 log.error("Redis occur handleCacheGetError：key -> [{}]", key, e);
@@ -113,6 +114,5 @@ public class RedisConfig extends CachingConfigurerSupport {
                 log.error("Redis occur handleCacheClearError：", e);
             }
         };
-        return cacheErrorHandler;
     }
 }

@@ -7,7 +7,7 @@ VOLUME /tmp
 ARG JAR_FILE=hdj-blog-0.0.1-SNAPSHOT.jar
 # 表示将jar包添加到镜像中，并重命名app.jar
 COPY ${JAR_FILE} app.jar
-#拷贝依赖
+#拷贝依赖, 没有分离依赖则注释掉
 COPY lib ./lib
 RUN sh -c 'touch /app.jar'
 # 代表的是jvm的参数，如果有需要可以写在这里

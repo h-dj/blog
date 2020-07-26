@@ -1,22 +1,13 @@
 package cn.hdj.hdjblog.aspect;
 
-import cn.hdj.hdjblog.aspect.annotation.ArticleView;
-import cn.hdj.hdjblog.aspect.annotation.SysLog;
 import cn.hdj.hdjblog.dao.ArticleDao;
-import cn.hdj.hdjblog.entity.ArticleDO;
-import cn.hdj.hdjblog.service.ArticleService;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.lang.reflect.Method;
 
 /**
  * @author hdj
@@ -36,6 +27,7 @@ public class ArticleViewAspect {
     /**
      * 定义切入点
      */
+    @SuppressWarnings("unchecked")
     @Pointcut("@annotation(cn.hdj.hdjblog.aspect.annotation.ArticleView)")
     public void articleViewPointCut() {
     }

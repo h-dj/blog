@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  * @description:
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "友链搜索表单")
 public class FriendLinkSearchForm extends BaseForm {
 

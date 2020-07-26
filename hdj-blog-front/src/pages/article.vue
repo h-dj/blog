@@ -61,6 +61,18 @@
             id="articleContent"
             v-html="this.article.contentFormat"
           />
+          <div id="statement">
+            <div class="item">
+              {{ $t('article.author') }}：{{ statement.author }}
+            </div>
+            <div class="item">
+              {{ $t('article.originalLink') }}：
+              <a :href="statement.blogLink">{{ statement.blogLink }}</a>
+            </div>
+            <div class="item">
+              {{ $t('article.copyright') }}：{{ statement.copyright }}
+            </div>
+          </div>
         </el-card>
       </el-col>
     </el-row>
@@ -72,13 +84,15 @@ import VditorPreview from 'vditor/dist/method.min'
 import "vditor/dist/index.css";
 import { articleInfo ,articleLike} from "@/api/article";
 import { formatTime } from "@/utils";
+const settings =require('@/settings')
 
 export default {
   name: "Article",
   data() {
     return {
       article: {},
-      fullscreenLoading: false
+      fullscreenLoading: false,
+      statement:settings.statement
     };
   },
   beforeRouteUpdate(to, from, next) {
@@ -157,6 +171,7 @@ export default {
 }
 
 #statement {
+  margin-top: 5px;
   border-left: 3px solid #f56c6c;
   padding: 20px;
   background-color: #ebeef5;

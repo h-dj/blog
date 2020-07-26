@@ -1,6 +1,7 @@
 package cn.hdj.hdjblog.controller.front;
 
 
+import cn.hdj.hdjblog.aspect.annotation.SysLog;
 import cn.hdj.hdjblog.entity.FriendLinkDO;
 import cn.hdj.hdjblog.model.params.FriendLinkForm;
 import cn.hdj.hdjblog.model.vo.ResultVO;
@@ -32,7 +33,7 @@ public class FriendLinkFrontController {
     @Autowired
     private FriendLinkService friendLinkService;
 
-
+    @SysLog("front:友链列表")
     @GetMapping(value = "/list")
     @ApiOperation(value = "友链列表", httpMethod = "GET", response = ResultVO.class)
     public ResultVO list() {
@@ -42,8 +43,9 @@ public class FriendLinkFrontController {
         return ResultVO.successJson(list);
     }
 
+    @SysLog("front:申请友链")
     @PostMapping(value = "/add")
-    @ApiOperation(value = "友链列表", httpMethod = "POST", response = ResultVO.class)
+    @ApiOperation(value = "申请友链", httpMethod = "POST", response = ResultVO.class)
     public ResultVO add(@ApiParam @RequestBody FriendLinkForm form) {
         ValidatorUtils.validateEntity(form);
         FriendLinkDO friendLinkDO = new FriendLinkDO();

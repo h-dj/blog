@@ -9,5 +9,5 @@ package cn.hdj.hdjblog.constaint.enums;
 public enum LevelEnum {
     ERROR(),
     INFO(),
-    LOGIN();
+    LOGIN()
 }

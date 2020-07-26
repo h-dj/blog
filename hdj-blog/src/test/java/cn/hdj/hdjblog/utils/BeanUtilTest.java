@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.AES;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -24,6 +25,6 @@ public class BeanUtilTest {
         System.out.println(a);
 
 
-        SecureUtil.aes(s.getBytes("utf-8"));
+        SecureUtil.aes(s.getBytes(StandardCharsets.UTF_8));
     }
 }

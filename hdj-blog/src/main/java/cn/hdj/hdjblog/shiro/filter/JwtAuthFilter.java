@@ -33,11 +33,6 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class JwtAuthFilter extends AuthenticatingFilter {
 
-    /**
-     * token 过期前300秒 重新生成token
-     */
-    private final long TOKEN_REFRESH_INTERVAL = 300L;
-
     @Autowired
     private ShiroService shiroService;
 
@@ -89,7 +84,7 @@ public class JwtAuthFilter extends AuthenticatingFilter {
         if (token instanceof JwtToken) {
             JwtToken jwtToken = (JwtToken) token;
             UserDetailDTO user = (UserDetailDTO) subject.getPrincipal();
-            boolean shouldRefresh = JwtUtils.isShouldRefreshToken(jwtToken.getToken(), TOKEN_REFRESH_INTERVAL);
+            boolean shouldRefresh = JwtUtils.isShouldRefreshToken(jwtToken.getToken(), 300L);
             if (shouldRefresh) {
                 newToken = shiroService.generateJwtToken(user.getEmail());
             }

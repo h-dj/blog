@@ -59,7 +59,7 @@ public class DbShiroRealm extends AuthorizingRealm {
             throw new UnknownAccountException();
         }
         // 账户被锁定或禁用
-        if (user.getLocked() || user.getEnable() == false) {
+        if (user.getLocked() || !user.getEnable()) {
             throw new LockedAccountException();
         }
         UserDetailDTO userDetailDTO = new UserDetailDTO();

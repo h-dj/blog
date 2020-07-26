@@ -19,7 +19,7 @@ public class ArticleServiceImplTest extends HdjBlogApplicationTests {
 
     @Test
     public void recommandsTest() {
-        articleService.<ArticleDO>list(
+        articleService.list(
                 Wrappers.<ArticleDO>lambdaQuery()
                         .select(ArticleDO::getId,
                                 ArticleDO::getTitle,

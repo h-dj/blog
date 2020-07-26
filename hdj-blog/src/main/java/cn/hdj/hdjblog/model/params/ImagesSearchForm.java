@@ -15,7 +15,7 @@ import java.util.Date;
  * @description: 图库搜索参数
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "ImagesSearchForm", description = "图库搜索参数")
 public class ImagesSearchForm extends BaseForm {
 

@@ -65,6 +65,7 @@
           {{ $t("header.category") }}
         </template>
         <el-menu-item
+          index="#all"
           @click="goto('/home')"
         >
           全部
@@ -195,6 +196,9 @@ export default {
     goto(url){
       if(this.activeIndex != url){
         this.$router.push(url)
+      }
+      if(this.drawer){
+          this.drawer = false
       }
     },
   }

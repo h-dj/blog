@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  * @Description: 用户搜索参数
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "UserSearchForm", description = "用户搜索参数")
 public class UserSearchForm extends BaseForm {
 

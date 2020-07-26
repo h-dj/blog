@@ -11,7 +11,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
  * @Version 1.0
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class DbToken extends UsernamePasswordToken {
     private LoginForm user;
 

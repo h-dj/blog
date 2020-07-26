@@ -42,7 +42,7 @@ public class SysLogAspect {
     @Autowired
     private LogService logService;
 
-    private ThreadLocal<LogDO> logPool = new ThreadLocal<>();
+    private final ThreadLocal<LogDO> logPool = new ThreadLocal<>();
 
     /**
      * 定义切入点

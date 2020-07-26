@@ -29,9 +29,9 @@ cleanLog
 
 ## 备份数据
 ## 备份数据库表结构
-docker exec blog-mysql sh -c 'exec mysqldump -uroot -p"$MYSQL_ROOT_PASSWORD" -d blog' > ./blog-schema-`date +%Y%m%d`.sql
+docker exec blog-mysql sh -c 'exec mysqldump -uroot -p"$MYSQL_ROOT_PASSWORD" --ignore-table=blog.t_log -d blog' > ./blog-schema-`date +%Y%m%d`.sql
 #备份数据库数据
-docker exec blog-mysql sh -c 'exec mysqldump -uroot -p"$MYSQL_ROOT_PASSWORD" -t blog' > ./blog-data-`date +%Y%m%d`.sql
+docker exec blog-mysql sh -c 'exec mysqldump -uroot -p"$MYSQL_ROOT_PASSWORD" --ignore-table=blog.t_log -t blog' > ./blog-data-`date +%Y%m%d`.sql
 #echo  "备份结束 ===> "
 
 

@@ -17,7 +17,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
@@ -117,7 +116,6 @@ public class MyWebUtils {
      * @return
      */
     public static String getCityInfo(String ip) {
-        File file = null;
         try {
             DbConfig config = new DbConfig();
             DbSearcher searcher = new DbSearcher(config, dbBinStr);
@@ -129,9 +127,6 @@ public class MyWebUtils {
             return ConfigConstaint.REGION.equals(address) ? "内网IP" : address;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            if (file != null && file.exists()) {
-                file.delete();
-            }
         }
         return "";
     }
@@ -164,8 +159,7 @@ public class MyWebUtils {
      * @return
      */
     public static UserDetailDTO getCurrentUser() {
-        UserDetailDTO user = (UserDetailDTO) SecurityUtils.getSubject().getPrincipal();
-        return user;
+        return (UserDetailDTO) SecurityUtils.getSubject().getPrincipal();
     }
 
     /**

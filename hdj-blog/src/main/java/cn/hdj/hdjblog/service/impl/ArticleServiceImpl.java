@@ -19,6 +19,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -172,8 +173,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleDO> imple
 
     @Override
     public ResultVO articleList(ArticleSearchForm form) {
+        Page<ArticleDO> iPage = (Page<ArticleDO>) form.<ArticleDO>getIPage();
+        iPage.setOrders(form.getOrderList());
         IPage<ArticleDO> page = this.page(
-                form.getIPage(),
+                iPage,
                 Wrappers.<ArticleDO>lambdaQuery()
                         .select(ArticleDO::getId,
                                 ArticleDO::getTitle,
@@ -185,13 +188,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleDO> imple
                                 ArticleDO::getPublishTime,
                                 ArticleDO::getDescription,
                                 ArticleDO::getCover,
-                                ArticleDO::getSlug
+                                ArticleDO::getSlug,
+                                ArticleDO::getTop
                         )
                         .eq(ArticleDO::getStatus, 1)
                         .eq(form.getCategoryId() != null, ArticleDO::getCategoryId, form.getCategoryId())
 
         );
-
         return ResultVO.successJson(PageVO.build(page));
     }
 

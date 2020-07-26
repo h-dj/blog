@@ -50,7 +50,7 @@ public class ArticleController {
     @SysLog("文章详情")
     @GetMapping("/info/{id:\\d+}")
     @ApiOperation(value = "文章详情", httpMethod = "GET", response = ResultVO.class)
-    public ResultVO info(@PathVariable("id") Long id) {
+    public ResultVO<ArticleForm> info(@PathVariable("id") Long id) {
         return ResultVO.successJson(service.detail(String.valueOf(id)));
     }
 

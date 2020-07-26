@@ -44,7 +44,7 @@ public class RoleController  {
     @GetMapping(value = "/selectList")
     @ApiOperation(value = "下拉角色列表", httpMethod = "GET", response = ResultVO.class)
     public ResultVO selectList() {
-        LambdaQueryWrapper<RoleDO> query = Wrappers.<RoleDO>lambdaQuery();
+        LambdaQueryWrapper<RoleDO> query = Wrappers.lambdaQuery();
         Long currentUserId = MyWebUtils.getCurrentUserId();
         //如果不是超级管理员，则只查询自己所拥有的角色列表
         if (!ConfigConstaint.SUPER_ADMIN.equals(currentUserId)) {
@@ -61,7 +61,7 @@ public class RoleController  {
     @ApiOperation(value = "角色列表", httpMethod = "GET", response = ResultVO.class)
     public ResultVO list(@ApiParam RoleSearchForm roleForm) {
 
-        LambdaQueryWrapper<RoleDO> query = Wrappers.<RoleDO>lambdaQuery();
+        LambdaQueryWrapper<RoleDO> query = Wrappers.lambdaQuery();
         Long currentUserId = MyWebUtils.getCurrentUserId();
         //如果不是超级管理员，则只查询自己所拥有的角色列表
         if (!ConfigConstaint.SUPER_ADMIN.equals(currentUserId)) {

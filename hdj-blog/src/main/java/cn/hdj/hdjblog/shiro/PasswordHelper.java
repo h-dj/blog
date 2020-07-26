@@ -1,12 +1,11 @@
 package cn.hdj.hdjblog.shiro;
 
 import cn.hdj.hdjblog.entity.UserDO;
+import cn.hdj.hdjblog.util.JwtUtils;
 import lombok.NonNull;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
-import org.apache.shiro.util.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -21,7 +20,7 @@ public class PasswordHelper {
 
 
     public void encryptPassword(@NonNull UserDO user) {
-        user.setSalt(generateSalt());
+        user.setSalt(JwtUtils.generateSalt());
         String newPassword = encryptPassword(user.getPassword(), user.getSalt());
         user.setPassword(newPassword);
     }
@@ -34,16 +33,5 @@ public class PasswordHelper {
                 ByteSource.Util.bytes(salt),
                 2
         ).toHex();
-    }
-
-    /**
-     * 生成随机盐
-     *
-     * @return
-     */
-    public static String generateSalt() {
-        SecureRandomNumberGenerator secureRandom = new SecureRandomNumberGenerator();
-        String hex = secureRandom.nextBytes(16).toHex();
-        return hex;
     }
 }

@@ -94,8 +94,7 @@ public class JwtUtils {
      */
     public static String generateSalt() {
         SecureRandomNumberGenerator secureRandom = new SecureRandomNumberGenerator();
-        String hex = secureRandom.nextBytes(16).toHex();
-        return hex;
+        return secureRandom.nextBytes(16).toHex();
     }
 
     /**

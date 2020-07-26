@@ -10,6 +10,7 @@ import java.util.List;
  * @date 12/01/2020 16:22
  * @description: 时间线归档--月份
  */
+@SuppressWarnings("unchecked")
 @Data
 public class TimelineMonthVO {
     private Integer month;

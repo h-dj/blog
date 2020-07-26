@@ -27,10 +27,6 @@ export default {
     return {
       icons: [
         {
-          icon: "rss",
-          link: ""
-        },
-        {
           icon: "yuque",
           link: "https://www.yuque.com/h_dj"
         },

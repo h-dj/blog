@@ -15,6 +15,7 @@ import java.util.Date;
  * @author hdj
  * @since 2019-09-21
  */
+@SuppressWarnings("unchecked")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("t_article")

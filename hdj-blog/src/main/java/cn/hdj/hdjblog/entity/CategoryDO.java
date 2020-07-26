@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  * @since 2019-09-24
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @TableName("t_category")
 public class CategoryDO extends BaseEntity {
 

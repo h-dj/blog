@@ -26,6 +26,7 @@ public class ArticleLikeAspect {
     /**
      * 定义切入点
      */
+    @SuppressWarnings("unchecked")
     @Pointcut("@annotation(cn.hdj.hdjblog.aspect.annotation.ArticleLike)")
     public void articleLikePointCut() {
     }

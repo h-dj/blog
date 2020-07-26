@@ -58,12 +58,12 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     public Map<String, String[]> getParameterMap() {
         Map<String, String[]> map = new LinkedHashMap<>();
         Map<String, String[]> parameters = super.getParameterMap();
-        for (String key : parameters.keySet()) {
-            String[] values = parameters.get(key);
+        for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
+            String[] values = entry.getValue();
             for (int i = 0; i < values.length; i++) {
                 values[i] = xssFilter(values[i]);
             }
-            map.put(key, values);
+            map.put(entry.getKey(), values);
         }
         return map;
     }

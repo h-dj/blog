@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  * @Description:
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "RoleSearchForm", description = "角色搜索表单")
 public class RoleSearchForm extends BaseForm {
     /**

@@ -73,11 +73,10 @@ public class ShiroServiceImpl implements ShiroService {
 
     @Override
     public UserDO findByUserName(String account) {
-        UserDO userDO = userDao.selectOne(Wrappers.<UserDO>lambdaQuery()
+        return userDao.selectOne(Wrappers.<UserDO>lambdaQuery()
                 .eq(UserDO::getEmail, account)
                 .eq(UserDO::getDeleted, false)
         );
-        return userDO;
     }
 
     @Override

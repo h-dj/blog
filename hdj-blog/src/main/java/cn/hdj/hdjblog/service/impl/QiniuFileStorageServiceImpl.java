@@ -26,17 +26,13 @@ import java.io.InputStream;
 public class QiniuFileStorageServiceImpl extends FileStorageService {
 
     /**
-     * 指定Region对象的配置类
-     */
-    private Configuration cfg;
-    /**
      * 上传管理类
      */
-    private UploadManager uploadManager;
+    private final UploadManager uploadManager;
     /**
      * 凭证
      */
-    private Auth auth;
+    private final Auth auth;
     /**
      * 上传token
      */
@@ -44,7 +40,7 @@ public class QiniuFileStorageServiceImpl extends FileStorageService {
 
     public QiniuFileStorageServiceImpl(SystemProperties systemProperties) {
         this.config = systemProperties;
-        cfg = new Configuration(Region.huanan());
+        Configuration cfg = new Configuration(Region.huanan());
         uploadManager = new UploadManager(cfg);
         auth = Auth.create(systemProperties.getOss().getQiniu().getAccessKey(), systemProperties.getOss().getQiniu().getSecretKey());
         upToken = auth.uploadToken(this.config.getOss().getQiniu().getBucketName());

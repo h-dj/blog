@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * @Description: 验证工具
  */
 public abstract class ValidatorUtils {
-    private static Validator validator;
+    private final static Validator validator;
 
     static {
         validator = Validation.buildDefaultValidatorFactory().getValidator();

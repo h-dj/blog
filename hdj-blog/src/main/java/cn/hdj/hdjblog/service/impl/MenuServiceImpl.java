@@ -49,6 +49,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuDao, MenuDO> implements Men
      * @param menuIdList
      * @return
      */
+    @SuppressWarnings("unchecked")
     private List<MenuDO> getAllMenuList(List<Long> menuIdList) {
         return list(Wrappers.<MenuDO>lambdaQuery()
                 .eq(MenuDO::getDeleted, false)

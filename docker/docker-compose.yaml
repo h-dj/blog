@@ -92,6 +92,7 @@ services:
       - mq
       - redis
     environment:
+      - JAVA_OPTS="-Xms512m -Xmx512m"
       - BLOG-ES-HOSTS=http://es:9200
       - BLOG-MQ-HOST=mq
       - BLOG-REDIS-HOST=redis

@@ -54,8 +54,8 @@ public class JwtShiroRealm extends AuthorizingRealm {
             // token过期，请重新登录
             throw new MyException(ResponseCodeEnum.TOKEN_GENERATOR_EXPIRE);
         }
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user, user.getTokenSalt(), "jwtRealm");
-        return authenticationInfo;
+        return new SimpleAuthenticationInfo(user, user.getTokenSalt(), "jwtRealm");
+
     }
 
     @Override

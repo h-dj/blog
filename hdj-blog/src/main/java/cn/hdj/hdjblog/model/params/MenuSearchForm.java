@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
  * @description: 菜单搜索表单
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class MenuSearchForm extends BaseForm {
 
     /**
