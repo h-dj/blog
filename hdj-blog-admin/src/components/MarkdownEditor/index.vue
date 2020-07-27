@@ -30,6 +30,11 @@ export default {
       type: Boolean,
       required: false,
       default: true
+    },
+    autoSaveTime: {
+      type: Number,
+      required: true,
+      default: 5000
     }
   },
   data() {
@@ -123,7 +128,7 @@ export default {
               clearTimeout(this.taskId)
             }
           }
-        }, 3000)
+        }, 5000)
       }
     }
   }

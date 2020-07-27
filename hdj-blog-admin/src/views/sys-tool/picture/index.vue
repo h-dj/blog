@@ -126,7 +126,7 @@ export default {
       date: [],
       listQuery: {
         page: 1,
-        pageSize: 5,
+        pageSize: 10,
         account: undefined,
         sortType: undefined,
         sort: undefined

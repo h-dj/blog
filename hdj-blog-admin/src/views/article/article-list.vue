@@ -81,7 +81,7 @@
       v-show="total>0"
       :total="total"
       :page.sync="listQuery.page"
-      :limit.sync="listQuery.limit"
+      :limit.sync="listQuery.pageSize"
       @pagination="getList"
     />
   </div>
@@ -115,7 +115,7 @@ export default {
       publishLoading: false,
       listQuery: {
         page: 1,
-        limit: 20,
+        pageSize: 10,
         title: null
       },
       selectList: []

@@ -19,7 +19,7 @@
           ref="vditor"
           v-model="article.content"
           :auto-save="true"
-          @autoSubmit="saveArticleHandler"
+          @autoSubmit="autoSubmit"
           @submit="saveArticleHandler"
           @openSetting="openSetting"
         />
@@ -275,6 +275,14 @@ export default {
         }
       })
       this.article.tagList = tagList
+    },
+    autoSubmit() {
+      if (this.submitLoading) return
+      this.$refs['articleForm'].validate(valid => {
+        if (valid) {
+          this.saveArticleHandler()
+        }
+      })
     },
     // 保存文章
     saveArticleHandler() {
