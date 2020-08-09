@@ -128,7 +128,7 @@ export default {
               clearTimeout(this.taskId)
             }
           }
-        }, 5000)
+        }, 10000)
       }
     }
   }
