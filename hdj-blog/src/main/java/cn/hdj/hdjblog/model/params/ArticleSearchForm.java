@@ -17,7 +17,7 @@ import java.util.List;
  * @date 8/13/19
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @ApiModel
 public class ArticleSearchForm extends BaseForm {
 
@@ -37,8 +37,7 @@ public class ArticleSearchForm extends BaseForm {
         if (BooleanUtil.isTrue(recommend)) {
             orderItems.add(OrderItem.desc("recommend"));
         } else {
-            orderItems.add(OrderItem.desc("update_time"));
-            orderItems.add(OrderItem.desc("like_num"));
+            orderItems.add(OrderItem.desc("create_time"));
         }
         return orderItems;
     }

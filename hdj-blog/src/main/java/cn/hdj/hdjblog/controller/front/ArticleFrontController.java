@@ -12,6 +12,7 @@ import cn.hdj.hdjblog.model.vo.ResultVO;
 import cn.hdj.hdjblog.service.ArticleService;
 import cn.hdj.hdjblog.service.CategoryService;
 import cn.hdj.hdjblog.service.TagService;
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +23,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import java.util.Map;
 
 /**
  * @author hdj
@@ -54,6 +56,7 @@ public class ArticleFrontController {
     public void initIndex() {
         rabbitTemplate.convertAndSend(RabbitMqConstants.REFRESH_ES_INDEX_QUEUE, RabbitMqConstants.REFRESH_ES_INDEX_QUEUE, "init index");
     }
+
     /**
      * 搜索标题，描述，内容
      *
@@ -72,7 +75,8 @@ public class ArticleFrontController {
     @GetMapping({"", "/"})
     @Cacheable(cacheNames = RedisCacheNames.ARTICLE)
     @ApiOperation(value = "文章列表", httpMethod = "GET", response = ResultVO.class)
-    public ResultVO list(ArticleSearchForm form) {
+    public ResultVO list(@RequestParam Map<String, Object> params) {
+        ArticleSearchForm form = BeanUtil.mapToBean(params, ArticleSearchForm.class, true);
         return this.articleService.articleList(form);
     }
 
@@ -108,9 +112,9 @@ public class ArticleFrontController {
     @ApiOperation(value = "标签墙", httpMethod = "GET", response = ResultVO.class)
     public ResultVO categorys() {
         return ResultVO.successJson(
-               categoryService.list(Wrappers.<CategoryDO>lambdaQuery()
-                       .select(CategoryDO::getId,CategoryDO::getCategoryName)
-               )
+                categoryService.list(Wrappers.<CategoryDO>lambdaQuery()
+                        .select(CategoryDO::getId, CategoryDO::getCategoryName)
+                )
         );
     }
 

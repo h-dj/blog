@@ -244,7 +244,7 @@ export default {
       const query = Object.assign({}, this.listQuery);
       fetchList(query).then(resp => {
         if (resp.success && resp.data.list) {
-          this.articleList.push(...resp.data.list);
+          this.list.push(...resp.data.list);
           this.currPage = resp.data.currPage;
         }
       });
