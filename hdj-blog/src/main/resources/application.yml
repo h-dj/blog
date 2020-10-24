@@ -36,5 +36,3 @@ mybatis-plus:
   # 数据库表与实体类的驼峰命名自动转换
   configuration:
     map-underscore-to-camel-case: true
-logging:
-  path: 'logs'

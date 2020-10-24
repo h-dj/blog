@@ -10,8 +10,9 @@ COPY ${JAR_FILE} app.jar
 #拷贝依赖, 没有分离依赖则注释掉
 COPY lib ./lib
 RUN sh -c 'touch /app.jar'
-# 代表的是jvm的参数，如果有需要可以写在这里
-ENV JAVA_OPTS=""
+#代表的是jvm的参数，如果有需要可以写在这里
+ENV JAVA_ARG=
+ENV JAVA_OPTS=
 
 # 表示启动时运行 java -jar app.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ENTRYPOINT ["java","$JAVA_OPTS -Djava.security.egd=file:/dev/./urandom","-jar","/app.jar","$JAVA_ARG"]

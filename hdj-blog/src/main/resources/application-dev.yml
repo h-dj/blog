@@ -6,8 +6,8 @@ spring:
       # mysql数据库接地址
       url: jdbc:mysql://127.0.0.1:3306/blog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
       driver-class-name: com.mysql.cj.jdbc.Driver
-      username: root
-      password: 123456
+      username: blog
+      password: 'mpw:iWqMvsaC90f/xzaHeRWj/A=='
       # 监控页面的用户名和密码 以及页面地址
       stat-view-servlet:
         login-username: admin
@@ -65,9 +65,9 @@ spring:
     # Redis服务器地址
     host: 127.0.0.1
     # Redis服务器连接端口
-    port: 6379
+    port: 63799
     # Redis服务器连接密码（默认为空）如果没有配置密码就不要写这个属性了
-    password: 123456
+    password: 'mpw:1mrZFYXZGnTXck8sloalZw=='
     #连接池
     lettuce:
       pool:
@@ -84,8 +84,8 @@ spring:
   rabbitmq:
     host: 127.0.0.1
     port: 5672
-    username: guest
-    password: guest
+    username: blog
+    password: blog
     #虚拟主机地址
     virtual-host: /
     #连接超时时间
