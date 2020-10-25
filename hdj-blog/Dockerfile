@@ -15,4 +15,4 @@ ENV JAVA_ARG=
 ENV JAVA_OPTS=
 
 # 表示启动时运行 java -jar app.jar
-ENTRYPOINT ["java","$JAVA_OPTS -Djava.security.egd=file:/dev/./urandom","-jar","/app.jar","$JAVA_ARG"]
+ENTRYPOINT java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar $JAVA_ARG
