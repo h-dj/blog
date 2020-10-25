@@ -41,7 +41,8 @@ pipeline {
         stage('项目启动') {
                      steps {
                           sh "ssh ${user}@${host} -p 22022 docker-compose -f /home/blog/blog/docker-compose.yaml up -d --build"
-                          sh "ssh ${user}@${host} -p 22022 docker logs -f blog-api"
+                          sleep 2
+                          sh "ssh ${user}@${host} -p 22022 docker logs blog-api"
                        }
                      }
     }
