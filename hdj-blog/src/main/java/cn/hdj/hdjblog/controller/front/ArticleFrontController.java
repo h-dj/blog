@@ -63,10 +63,11 @@ public class ArticleFrontController {
      * @param keyword
      * @return
      */
+    @SysLog("front:文章搜索")
     @GetMapping("/search")
     public ResultVO search(@RequestParam("keyword") String keyword,
                            @RequestParam(value = "page", defaultValue = "1") Integer page,
-                           @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) {
+                           @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
         return ResultVO.successJson(articleRepository.pageSearch(keyword, page, pageSize));
     }
 

@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
+import org.lionsoul.ip2region.DbMakerConfigException;
 import org.lionsoul.ip2region.DbSearcher;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -41,11 +42,14 @@ public class MyWebUtils {
     private static final String IP_ADDR_WEBLOGIC_HEADER = "WL-Proxy-Client-IP";
     private static final String IP_ADDER_REAL_HEADER = "X-Real-IP";
 
-    private static final byte[] dbBinStr;
-
+    private static DbSearcher searcher = null;
     static {
-        Resource ip2region = ResourceUtil.getResourceObj("classpath:ip2region.db");
-        dbBinStr = ip2region.readBytes();
+        try {
+            Resource ip2region = ResourceUtil.getResourceObj("classpath:ip2region.db");
+            searcher=new DbSearcher(new DbConfig(), ip2region.readBytes());
+        } catch (DbMakerConfigException e) {
+           log.error("初始化ip 数据库失败"+e.getMessage());
+        }
     }
 
     /**
@@ -117,8 +121,6 @@ public class MyWebUtils {
      */
     public static String getCityInfo(String ip) {
         try {
-            DbConfig config = new DbConfig();
-            DbSearcher searcher = new DbSearcher(config, dbBinStr);
             DataBlock dataBlock = searcher.memorySearch(ip);
             String address = dataBlock.getRegion().replace("0|", "");
             if (address.charAt(address.length() - 1) == '|') {

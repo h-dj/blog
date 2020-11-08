@@ -53,7 +53,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .apiInfo(apiInfo())
                 .enable(systemProperties.isSwaggerEnabled())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("cn.hdj.hdjblog"))
+                .apis(RequestHandlerSelectors.basePackage("cn.hdj.hdjblog.controller"))
                 .paths(PathSelectors.any())
                 .build();
 
@@ -66,7 +66,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .contact(new Contact("hdj", "http://localhost:8080", "1432517356@qq.com"))
                 .license("MIT")
                 .licenseUrl("")
-                .version("1.0")
+                .version("v1.0")
                 .build();
     }
 }

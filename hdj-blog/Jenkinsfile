@@ -33,16 +33,16 @@ pipeline {
                           sh 'date'
                           echo "项目构建结果路径：${WORKSPACE}"
                           dir("${WORKSPACE}/blog/hdj-blog"){
-                            sh "rsync -avu --progress -e 'ssh -p ${port}' ./target/hdj-blog-0.0.1-SNAPSHOT.jar ./target/lib ./Dockerfile   ${user}@${host}:/home/blog/blog/app"
+                            sh "rsync -avu --progress -e 'ssh -p ${PORT}' ./target/hdj-blog-0.0.1-SNAPSHOT.jar ./target/lib ./Dockerfile   ${USER}@${HOST}:/home/blog/blog/app"
                           }
                           echo '发送成功'
                        }
                }
         stage('项目启动') {
                      steps {
-                          sh "ssh ${user}@${host} -p 22022 docker-compose -f /home/blog/blog/docker-compose.yaml up -d --build"
+                          sh "ssh ${USER}@${HOST} -p 22022 docker-compose -f /home/blog/blog/docker-compose.yaml up -d --build"
                           sleep 2
-                          sh "ssh ${user}@${host} -p 22022 docker logs blog-api"
+                          sh "ssh ${USER}@${HOST} -p 22022 docker logs blog-api"
                        }
                      }
     }

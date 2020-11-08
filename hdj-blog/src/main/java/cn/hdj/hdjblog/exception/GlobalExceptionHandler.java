@@ -1,7 +1,6 @@
-package cn.hdj.hdjblog.handler;
+package cn.hdj.hdjblog.exception;
 
 import cn.hdj.hdjblog.constaint.enums.ResponseCodeEnum;
-import cn.hdj.hdjblog.exception.MyException;
 import cn.hdj.hdjblog.model.vo.ResultVO;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import lombok.extern.slf4j.Slf4j;
@@ -12,9 +11,10 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 /**
@@ -23,7 +23,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  * @Description: 全局异常处理
  */
 @Slf4j
-@RestControllerAdvice
+@ControllerAdvice
 public class GlobalExceptionHandler {
 
     /**
@@ -33,6 +33,7 @@ public class GlobalExceptionHandler {
      * @return 返回前端异常信息
      */
     @ExceptionHandler(MyException.class)
+    @ResponseBody
     public ResultVO exception(MyException ex) {
         log.error("错误详情：" + ex.getMessage(), ex);
         return ResultVO.errorJson(
@@ -47,6 +48,7 @@ public class GlobalExceptionHandler {
      * @param ex 异常信息
      * @return 返回前端异常信息
      */
+    @ResponseBody
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(JWTVerificationException.class)
     public ResultVO exception(JWTVerificationException ex) {
@@ -60,8 +62,9 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
+    @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NoHandlerFoundException.class)
+    @ExceptionHandler({NoHandlerFoundException.class})
     public ResultVO handlerNoFoundException(NoHandlerFoundException e) {
         log.error("错误详情：" + e.getMessage());
         return ResultVO.errorJson(ResponseCodeEnum.PATH_NOT_FOUND);
@@ -73,6 +76,7 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
+    @ResponseBody
     @ExceptionHandler(DuplicateKeyException.class)
     public ResultVO handleDuplicateKeyException(DuplicateKeyException e) {
         log.error("错误详情：" + e.getMessage());
@@ -86,6 +90,7 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
+    @ResponseBody
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AuthorizationException.class)
     public ResultVO handleAuthorizationException(AuthorizationException e) {
@@ -99,6 +104,7 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
+    @ResponseBody
     @ExceptionHandler(AuthenticationException.class)
     public ResultVO handleUnknownAccountException(AuthenticationException e) {
         log.error("错误详情：" + e.getMessage());
@@ -121,6 +127,7 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
+    @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ResultVO handleException(Exception e) {

@@ -22,7 +22,7 @@
         <hutool.version>5.1.0</hutool.version>
         <ip2region.version>1.7.2</ip2region.version>
         <beanutils.version>1.0.11</beanutils.version>
-        <swagger.version>2.7.0</swagger.version>
+        <swagger.version>3.0.0</swagger.version>
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
         <druid.version>1.1.10</druid.version>
         <shiro.version>1.4.0</shiro.version>
@@ -102,23 +102,17 @@
             <version>${java.jwt.version}</version>
         </dependency>
 
-        <!--Swagger UI-->
+
+
+        <!--springfox swagger官方Starter-->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${swagger.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>guava</artifactId>
-                    <groupId>com.google.guava</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.version}</version>
-        </dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-boot-starter</artifactId>
+        <version>${swagger.version}</version>
+    </dependency>
+
+
+
         <!--Lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>

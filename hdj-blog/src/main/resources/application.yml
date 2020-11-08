@@ -14,12 +14,12 @@ spring:
       #文件上传大小配置
       max-file-size: 100MB
       max-request-size: 100MB
-  mvc:
-    #restFul风格：当找不到页面时，正常抛出错误，不跳转页面
-    throw-exception-if-no-handler-found: true
-    resources:
-      #restFul风格: 不要为资源文件建立映射
-      add-mappings: false
+#  mvc:
+#    #restFul风格：当找不到页面时，正常抛出错误，不跳转页面
+#    throw-exception-if-no-handler-found: true
+#    resources:
+#      #restFul风格: 不要为资源文件建立映射
+#      add-mappings: false
 server:
   port: 8181
   servlet:
