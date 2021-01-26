@@ -4,10 +4,10 @@ spring:
     # 初始化Druid
     druid:
       # mysql数据库接地址
-      url: jdbc:mysql://127.0.0.1:3306/blog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+      url: jdbc:mysql://192.168.43.178:3306/blog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
       driver-class-name: com.mysql.cj.jdbc.Driver
-      username: blog
-      password: 'mpw:iWqMvsaC90f/xzaHeRWj/A=='
+      username: root
+      password: '123456'
       # 监控页面的用户名和密码 以及页面地址
       stat-view-servlet:
         login-username: admin
@@ -63,11 +63,11 @@ spring:
     # Redis数据库索引（默认为0）
     database: 0
     # Redis服务器地址
-    host: 127.0.0.1
+    host: 192.168.43.178
     # Redis服务器连接端口
-    port: 63799
+    port: 6379
     # Redis服务器连接密码（默认为空）如果没有配置密码就不要写这个属性了
-    password: 'mpw:1mrZFYXZGnTXck8sloalZw=='
+    #password: '123456'
     #连接池
     lettuce:
       pool:
@@ -82,10 +82,10 @@ spring:
     #连接超时时间（毫秒）
     timeout: 6000
   rabbitmq:
-    host: 127.0.0.1
+    host: 192.168.43.178
     port: 5672
-    username: blog
-    password: blog
+    username: guest
+    password: guest
     #虚拟主机地址
     virtual-host: /
     #连接超时时间
@@ -108,7 +108,7 @@ spring:
   elasticsearch:
     rest:
       uris:
-        - http://127.0.0.1:9200
+        - http://192.168.43.178:9200
       connection-timeout: 2000
       read-timeout: 60000
 blog:

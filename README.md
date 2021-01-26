@@ -49,7 +49,7 @@ Visual Studio Code编辑器
 3. 前端地址：localhost:8282 管理界面地址：localhost:8383 账号admin@qq.com，密码123456
 
 ### TODOList
-#### v1.0
+#### v1.0.0
 - [x] 完成框架的搭建
 - [x] Shiro 完成整合
 - [x] Redis完成整合
@@ -64,6 +64,11 @@ Visual Studio Code编辑器
 - [x] 加入缓存
 - [x] ES搜索文章
 - [x] 加入文件上传功能(七牛云)
+
+#### v1.1.0
+- [ ] 完善jenkins pipeline docker化打包部署
+- [ ] 加入OAuth2.0 认证方式
+
 
 ### 界面预览
 

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.0.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>2.4.2</version>
+        <relativePath/>
     </parent>
     <groupId>cn.hdj</groupId>
     <artifactId>hdj-blog</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <version>0.0.1-SNAPSHOT</version>
     <name>hdj-blog</name>
     <description>A Personal Blog</description>
 
@@ -32,7 +32,6 @@
 
 
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -183,87 +182,40 @@
             </activation>
             <properties>
                 <profile.active>dev</profile.active>
+                <project.build.version>v1.0.1-dev</project.build.version>
             </properties>
-
         </profile>
 
         <profile>
             <id>prod</id>
             <properties>
                 <profile.active>prod</profile.active>
+                <project.build.version>v1.0.1</project.build.version>
             </properties>
-
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <configuration>
-                            <executable>true</executable>
-                            <fork>true</fork>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <!--分离打包-->
-        <profile>
-            <id>prod_lib</id>
-            <properties>
-                <profile.active>prod-lib</profile.active>
-            </properties>
-            <build>
-                <plugins>
-                    <!--打包jar-->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-jar-plugin</artifactId>
-                        <configuration>
-                            <archive>
-                                <manifest>
-                                    <mainClass>cn.hdj.hdjblog.HdjBlogApplication</mainClass>
-                                    <addClasspath>true</addClasspath>
-                                    <classpathPrefix>lib/</classpathPrefix>
-                                </manifest>
-                                <manifestEntries>
-                                    <Class-Path>./</Class-Path>
-                                </manifestEntries>
-                            </archive>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                        </configuration>
-                    </plugin>
-
-                    <!-- 拷贝依赖的jar包到lib目录 -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>copy-dependencies</id>
-                                <phase>prepare-package</phase>
-                                <goals>
-                                    <goal>copy-dependencies</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>
-                                        ${project.build.directory}/lib
-                                    </outputDirectory>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
     </profiles>
 
     <build>
+        <finalName>${project.name}-${project.build.version}</finalName>
         <plugins>
-            <!-- 测试-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.4.2</version>
+                <configuration>
+                    <fork>true</fork>
+                    <layers>
+                        <enabled>true</enabled>
+                    </layers>
+                </configuration>
+
+            </plugin>
+
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
@@ -272,6 +224,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -321,5 +274,4 @@
             </resource>
         </resources>
     </build>
-
 </project>

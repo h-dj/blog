@@ -22,6 +22,7 @@ spring:
 #      add-mappings: false
 server:
   port: 8181
+  shutdown: graceful
   servlet:
     context-path: /
   error:

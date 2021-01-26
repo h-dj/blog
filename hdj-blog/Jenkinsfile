@@ -1,63 +1,49 @@
 pipeline {
     agent any
+    parameters {
+      //参数化
+      string  name: 'GIT_URL', description: 'git仓库地址', defaultValue: 'http://192.168.43.178:10080/hdj/blog.git'
+      string  name: 'GIT_BRANCH', description: 'git分支', defaultValue: 'develop'
+      string  name: 'GIT_CREDENTIALS_ID', description: 'git访问凭证', defaultValue: 'git-gogs-rpi'
+      string  name: 'MAVEN_VERSION', description: 'maven版本', defaultValue: 'maven3'
+      string  name: 'MAVEN_CONFIG', description: 'maven配置文件id', defaultValue: 'ba0feaaf-9ef0-4ce5-98c4-2dc0d34647c9'
+      string  name: 'PROJECT_PROFILE', description: '项目的profile', defaultValue: 'dev'
+    }
     stages {
         stage('拉取代码') {
             steps {
-                echo "开始拉取代码: 位置：${WORKSPACE}"
-                 script {
-                        if(!fileExists("${WORKSPACE}/blog")){
-                            sh "git clone git@github.com:h-dj/blog.git"
-                            dir("${WORKSPACE}/blog"){
-                                sh "git checkout develop"
-                                sh "git branch"
-                            }
-                         }else{
-                            dir("${WORKSPACE}/blog"){
-                                sh "git pull"
-                            }
-                         }
-                }
-                echo "开始拉取代码: 完成 "
+                 echo "拉去分支 $GIT_BRANCH 代码"
+                 git branch: "$GIT_BRANCH", credentialsId: "$GIT_CREDENTIALS_ID", url: "$GIT_URL"
             }
         }
-        stage('构建jar包') {
-            steps {
-                dir("${WORKSPACE}/blog/hdj-blog"){
-                    sh "${MAVEN_HOME}/bin/mvn -DskipTests=true clean package -P prod_lib"
-                    sh "ls -l ./target"
-                }
+        stage('打包') {
+           steps {
+                 withMaven(
+                     maven: "$MAVEN_VERSION",
+                     mavenLocalRepo: '.m2',
+                     mavenSettingsConfig: "$MAVEN_CONFIG"
+                 ){
+                    dir("${WORKSPACE}/hdj-blog"){
+                        echo "maven 打包"
+                        sh "mvn clean package -P $PROJECT_PROFILE"
+                        sh "ls -l ./target"
+                    }
+                 }
             }
         }
-        stage('发送至指定服务器') {
-                     steps {
-                          sh 'date'
-                          echo "项目构建结果路径：${WORKSPACE}"
-                          dir("${WORKSPACE}/blog/hdj-blog"){
-                            sh "rsync -avu --progress -e 'ssh -p ${PORT}' ./target/hdj-blog-0.0.1-SNAPSHOT.jar ./target/lib ./Dockerfile   ${USER}@${HOST}:/home/blog/blog/app"
-                          }
-                          echo '发送成功'
+        stage('构建镜像') {
+             steps {
+                  echo "构建docker镜像"
+                  script{
+                    dir("${WORKSPACE}/hdj-blog"){
+                        docker.withRegistry('swr.cn-north-4.myhuaweicloud.com', 'docker-swr') {
+                              def customImage = docker.build("hdj-blog:v1.0.1-dev")
+                              /* Push the container to the custom Registry */
+                              customImage.push()
                        }
-               }
-        stage('项目启动') {
-                     steps {
-                          sh "ssh ${USER}@${HOST} -p 22022 docker-compose -f /home/blog/blog/docker-compose.yaml up -d --build"
-                          sleep 2
-                          sh "ssh ${USER}@${HOST} -p 22022 docker logs blog-api"
-                       }
-                     }
+                    }
+                 }
+             }
+       }
     }
-    post {
-            success {
-                echo 'success'
-            }
-            unstable {
-                echo 'I am unstable :/'
-            }
-            failure {
-                echo 'failed'
-            }
-            changed {
-                echo 'Things were different before...'
-            }
-        }
 }
