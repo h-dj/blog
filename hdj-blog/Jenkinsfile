@@ -8,6 +8,7 @@ pipeline {
       string  name: 'MAVEN_VERSION', description: 'maven版本', defaultValue: 'maven3'
       string  name: 'MAVEN_CONFIG', description: 'maven配置文件id', defaultValue: 'ba0feaaf-9ef0-4ce5-98c4-2dc0d34647c9'
       string  name: 'PROJECT_PROFILE', description: '项目的profile', defaultValue: 'dev'
+      string  name: 'PROJECT_BUILD_DIR', description: '项目构建的目录,从工作目录开始', defaultValue: 'hdj-blog'
     }
     stages {
         stage('拉取代码') {
@@ -20,10 +21,9 @@ pipeline {
            steps {
                  withMaven(
                      maven: "$MAVEN_VERSION",
-                     mavenLocalRepo: '.m2',
                      mavenSettingsConfig: "$MAVEN_CONFIG"
                  ){
-                    dir("${WORKSPACE}/hdj-blog"){
+                    dir("${WORKSPACE}/$PROJECT_BUILD_DIR"){
                         echo "maven 打包"
                         sh "mvn clean package -P $PROJECT_PROFILE"
                         sh "ls -l ./target"
@@ -33,16 +33,16 @@ pipeline {
         }
         stage('构建镜像') {
              steps {
-                  echo "构建docker镜像"
-                  script{
-                    dir("${WORKSPACE}/hdj-blog"){
-                        docker.withRegistry('swr.cn-north-4.myhuaweicloud.com', 'docker-swr') {
-                              def customImage = docker.build("hdj-blog:v1.0.1-dev")
-                              /* Push the container to the custom Registry */
-                              customImage.push()
-                       }
-                    }
-                 }
+                 script{
+                      echo "构建docker镜像 ${WORKSPACE}/$PROJECT_BUILD_DIR"
+                      dir("${WORKSPACE}/$PROJECT_BUILD_DIR"){
+                            docker.withRegistry('swr.cn-north-4.myhuaweicloud.com', 'docker-swr') {
+                                  def customImage = docker.build("hdj-blog:v1.0.1-dev")
+                                  /* Push the container to the custom Registry */
+                                  customImage.push()
+                           }
+                        }
+                  }
              }
        }
     }
