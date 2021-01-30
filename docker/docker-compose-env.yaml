@@ -67,37 +67,11 @@ services:
       - ./nginx/certs/full_chain.pem:/etc/nginx/certs/full_chain.pem
       - ./nginx/certs/private.key:/etc/nginx/certs/private.key
       - ./nginx/logs:/var/log/nginx
-      - ./nginx/www:/home/www/website
     ports:
       - 80:80
       - 443:443
     networks:
       - blog-extranet
-    depends_on:
-      - blog-api
-  blog-api:
-    build: ./app
-    restart: always
-    privileged: false
-    container_name: blog-api
-    networks:
-      - blog-extranet
-    volumes:
-      - ./app/logs:/logs
-      - /etc/timezone:/etc/timezone
-    expose:
-      - 8181
-    depends_on:
-      - db
-      - mq
-      - redis
-    environment:
-      - JAVA_ARG=
-      - JAVA_OPTS=-Xms512m -Xmx512m
-      - BLOG-ES-HOSTS=http://es:9200
-      - BLOG-MQ-HOST=mq
-      - BLOG-REDIS-HOST=redis
-      - BLOG-MYSQL-URL=jdbc:mysql://db:3306/blog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
 networks:
   blog-extranet:
     driver: bridge

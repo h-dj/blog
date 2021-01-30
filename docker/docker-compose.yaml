@@ -1,82 +1,7 @@
 version: '3'
 services:
-  db:
-    container_name: blog-mysql
-    image: 'mysql:8.0'
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=123456
-      - MYSQL_DATABASE=blog
-    volumes:
-      - ./mysql/data:/var/lib/mysql
-      - ./mysql/conf/my.cnf:/etc/mysql/my.cnf
-    privileged: false
-    networks:
-      - blog-extranet
-    expose:
-      - 3306
-  redis:
-    container_name: blog-redis
-    image: 'redis:6-alpine'
-    restart: always
-    privileged: false
-    volumes:
-      - ./redis/data:/data
-      - ./redis/conf/redis.conf:/conf/redis.conf
-    command: redis-server /conf/redis.conf
-    networks:
-      - blog-extranet
-    expose:
-      - 6379
-  mq:
-    container_name: blog-rabbitmq
-    image: 'rabbitmq:3-alpine'
-    restart: always
-    privileged: false
-    environment:
-      - RABBITMQ_DEFAULT_USER=blog
-      - RABBITMQ_DEFAULT_PASS=blog
-    expose:
-      - 5672
-      - 15672
-    networks:
-      - blog-extranet
-  es:
-    container_name: blog-es
-    image: 'elasticsearch:7.1.0'
-    restart: always
-    privileged: false
-    environment:
-      - "discovery.type=single-node"
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    volumes:
-      - ./es/plugins:/usr/share/elasticsearch/plugins
-      - ./es/data:/usr/share/elasticsearch/data
-    expose:
-      - 9200
-      - 9300
-    networks:
-      - blog-extranet
-  nginx:
-    container_name: blog-nginx
-    image: 'nginx:1.16-alpine'
-    restart: always
-    privileged: false
-    volumes:
-      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/certs/full_chain.pem:/etc/nginx/certs/full_chain.pem
-      - ./nginx/certs/private.key:/etc/nginx/certs/private.key
-      - ./nginx/logs:/var/log/nginx
-      - ./nginx/www:/home/www/website
-    ports:
-      - 80:80
-      - 443:443
-    networks:
-      - blog-extranet
-    depends_on:
-      - blog-api
   blog-api:
-    build: ./app
+    image: ''
     restart: always
     privileged: false
     container_name: blog-api
@@ -87,17 +12,31 @@ services:
       - /etc/timezone:/etc/timezone
     expose:
       - 8181
-    depends_on:
-      - db
-      - mq
-      - redis
     environment:
-      - JAVA_ARG=
-      - JAVA_OPTS=-Xms512m -Xmx512m
-      - BLOG-ES-HOSTS=http://es:9200
-      - BLOG-MQ-HOST=mq
-      - BLOG-REDIS-HOST=redis
-      - BLOG-MYSQL-URL=jdbc:mysql://db:3306/blog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+      - BLOG-MYSQL-USER=
+      - BLOG-MYSQL-PWD=
+      - BLOG-REDIS-PWD=
+      - BLOG-MQ-USER=
+      - BLOG-MQ-PWD=
+  blog-admin:
+    image: ''
+      restart: always
+      privileged: false
+      container_name: blog-admin
+      networks:
+        - blog-extranet
+      expose:
+        - 8282
+  blog-front:
+    image: ''
+      restart: always
+      privileged: false
+      container_name: blog-front
+      networks:
+        - blog-extranet
+      expose:
+        - 8383
+
 networks:
   blog-extranet:
     driver: bridge

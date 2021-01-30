@@ -65,9 +65,12 @@ Visual Studio Code编辑器
 - [x] ES搜索文章
 - [x] 加入文件上传功能(七牛云)
 
-#### v1.1.0
+#### v1.0.1
 - [ ] 完善jenkins pipeline docker化打包部署
-- [ ] 加入OAuth2.0 认证方式
+- [ ] 加入OAuth2.0 认证方式，完善RBAC 权限管理
+    - 第三方登陆
+    - 按钮级别权限
+    - 使用url动态权限
 
 
 ### 界面预览

@@ -5,10 +5,11 @@ pipeline {
       string  name: 'GIT_URL', description: 'git仓库地址', defaultValue: 'http://192.168.43.178:10080/hdj/blog.git'
       string  name: 'GIT_BRANCH', description: 'git分支', defaultValue: 'develop'
       string  name: 'GIT_CREDENTIALS_ID', description: 'git访问凭证', defaultValue: 'git-gogs-rpi'
-      string  name: 'MAVEN_VERSION', description: 'maven版本', defaultValue: 'maven3'
       string  name: 'MAVEN_CONFIG', description: 'maven配置文件id', defaultValue: 'ba0feaaf-9ef0-4ce5-98c4-2dc0d34647c9'
       string  name: 'PROJECT_PROFILE', description: '项目的profile', defaultValue: 'dev'
-      string  name: 'PROJECT_BUILD_DIR', description: '项目构建的目录,从工作目录开始', defaultValue: 'hdj-blog'
+    }
+    environment {
+       // EXAMPLE_KEY = credentials('example-credentials-id') // Secret value is 'sec%ret'
     }
     stages {
         stage('拉取代码') {
@@ -20,10 +21,14 @@ pipeline {
         stage('打包') {
            steps {
                  withMaven(
-                     maven: "$MAVEN_VERSION",
+                     //指定mavne 版本
+                     maven: "maven3",
+                     // 仓库位置
+                     mavenLocalRepo: '${WORKSPACE}/.m2',
+                     //settings.xml配置，全局定义的名称
                      mavenSettingsConfig: "$MAVEN_CONFIG"
                  ){
-                    dir("${WORKSPACE}/$PROJECT_BUILD_DIR"){
+                    dir("${WORKSPACE}/hdj-blog"){
                         echo "maven 打包"
                         sh "mvn clean package -P $PROJECT_PROFILE"
                         sh "ls -l ./target"
@@ -33,17 +38,25 @@ pipeline {
         }
         stage('构建镜像') {
              steps {
-                 script{
-                      echo "构建docker镜像 ${WORKSPACE}/$PROJECT_BUILD_DIR"
-                      dir("${WORKSPACE}/$PROJECT_BUILD_DIR"){
-                            docker.withRegistry('swr.cn-north-4.myhuaweicloud.com', 'docker-swr') {
-                                  def customImage = docker.build("hdj-blog:v1.0.1-dev")
-                                  /* Push the container to the custom Registry */
-                                  customImage.push()
-                           }
-                        }
+              script{
+                  dir("${WORKSPACE}/hdj-blog"){
+                        docker.withRegistry('https://swr.cn-north-4.myhuaweicloud.com', 'docker-swr') {
+                              def customImage = docker.build("hdj/hdj-blog:v1.0.1-dev")
+                              /* Push the container to the custom Registry */
+                              customImage.push()
+                       }
+                    }
                   }
-             }
+            }
+       }
+       stage('启动项目') {
+            steps {
+              sshagent (credentials: ['huawei-ssh']) {
+                  //sh 'ssh -o StrictHostKeyChecking=no  ${user}@${host} "time docker-compose -f docker-compose.yml up -d --build"'
+                  sh 'ssh -o StrictHostKeyChecking=no -p 22022 blog@139.159.150.1 "ll"'
+              }
+           }
        }
     }
 }
+
