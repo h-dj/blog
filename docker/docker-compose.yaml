@@ -13,11 +13,11 @@ services:
     expose:
       - 8181
     environment:
-      - BLOG-MYSQL-USER=
-      - BLOG-MYSQL-PWD=
-      - BLOG-REDIS-PWD=
-      - BLOG-MQ-USER=
-      - BLOG-MQ-PWD=
+      - BLOG-MYSQL-USER=root
+      - BLOG-MYSQL-PWD=123456
+      - BLOG-REDIS-PWD=123456
+      - BLOG-MQ-USER=guest
+      - BLOG-MQ-PWD=guest
   blog-admin:
     image: ''
       restart: always
