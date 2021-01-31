@@ -1,5 +1,5 @@
 
-FROM adoptopenjdk/openjdk8:jre8u-ubuntu-nightly as builder
+FROM openjdk:8-jre as builder
 
 WORKDIR application
 
