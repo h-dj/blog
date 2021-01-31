@@ -1,7 +1,7 @@
 version: '3'
 services:
   blog-api:
-    image: ''
+    image: 'blog-api:v1.0.1'
     restart: always
     privileged: false
     container_name: blog-api
@@ -19,7 +19,7 @@ services:
       - BLOG-MQ-USER=guest
       - BLOG-MQ-PWD=guest
   blog-admin:
-    image: ''
+    image: 'blog-admin:v1.0.1'
       restart: always
       privileged: false
       container_name: blog-admin
@@ -38,5 +38,5 @@ services:
         - 8383
 
 networks:
-  blog-extranet:
-    driver: bridge
+  outside:
+    external: true

@@ -1,5 +1,5 @@
 
-FROM openjdk:8-jre as builder
+FROM adoptopenjdk/openjdk8:jre8u-ubuntu-nightly as builder
 
 WORKDIR application
 
@@ -7,7 +7,7 @@ ADD ./target/*.jar ./app.jar
 
 RUN java -Djarmode=layertools -jar app.jar extract
 
-FROM openjdk:8-jre
+FROM adoptopenjdk/openjdk8:jre8u-ubuntu-nightly
 
 MAINTAINER jiajian.java@gmail.com
 
