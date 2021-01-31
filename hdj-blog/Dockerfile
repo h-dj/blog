@@ -3,7 +3,7 @@ FROM adoptopenjdk/openjdk8:jre8u-ubuntu-nightly as builder
 
 WORKDIR application
 
-ADD ./target/*.jar ./app.jar
+COPY ./target/*.jar ./app.jar
 
 RUN java -Djarmode=layertools -jar app.jar extract
 
