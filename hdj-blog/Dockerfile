@@ -3,7 +3,7 @@ FROM adoptopenjdk/openjdk8:jre8u-ubuntu-nightly as builder
 
 WORKDIR application
 
-COPY ./target/*.jar ./app.jar
+ADD ./target/hdj-blog-v1.0.1-dev.jar ./app.jar
 
 RUN java -Djarmode=layertools -jar app.jar extract
 
