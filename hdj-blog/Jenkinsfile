@@ -9,9 +9,9 @@ pipeline {
        GIT_BRANCH = 'develop'
        GIT_URL = 'http://192.168.43.178:10080/hdj/blog.git'
        MAVEN_CONFIG = 'ba0feaaf-9ef0-4ce5-98c4-2dc0d34647c9'
-       SSH_AGENT_CREDENTIALS = 'huawei-ssh'
-       DOCKER_REGISTER= 'https://swr.cn-north-4.myhuaweicloud.com'
-       DOCKER_REGISTER_CREDENTIALS_ID= 'docker-swr'
+       SSH_AGENT_CREDENTIALS = ''
+       DOCKER_REGISTER= 'http://127.0.0.1:6000'
+       DOCKER_REGISTER_CREDENTIALS_ID= ''
        DOCKER_TAG = "hdj/hdj-blog:v1.0.1-dev"
        REMOTE_HOST = "blog@139.159.150.1"
        REMOTE_PORT = "22022"
@@ -46,9 +46,12 @@ pipeline {
               script{
                   dir("${WORKSPACE}/hdj-blog"){
                         docker.withRegistry("$DOCKER_REGISTER", "$DOCKER_REGISTER_CREDENTIALS_ID") {
-                              def customImage = docker.build("$DOCKER_TAG")
-                              /* Push the container to the custom Registry */
-                              customImage.push()
+                              sh 'docker image prune --filter="dangling=true" -f'
+                              sh """
+                                    docker buildx build -t blog-api:v1.0.1-dev -f Dockerfile.arm64  --platform=linux/arm64 -o type=docker .
+                                    #docker buildx build -t blog-api:v1.0.1-dev -f Dockerfile  --platform=linux/amd64 -o type=docker .
+                                    docker push $DOCKER_TAG
+                              """
                        }
                     }
                   }

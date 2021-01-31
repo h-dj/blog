@@ -1,25 +1,19 @@
 
-FROM adoptopenjdk/openjdk8:jre8u-ubuntu-nightly as builder
+# java -Djarmode=layertools -jar app.jar extract
 
-WORKDIR application
-
-ADD ./target/hdj-blog-v1.0.1-dev.jar ./app.jar
-
-RUN java -Djarmode=layertools -jar app.jar extract
-
-FROM adoptopenjdk/openjdk8:jre8u-ubuntu-nightly
+FROM openjdk:8-jre
 
 MAINTAINER jiajian.java@gmail.com
 
 WORKDIR application
 
-COPY --from=builder application/dependencies/ ./
+COPY ./target/dependencies/ ./
 
-COPY --from=builder application/spring-boot-loader/ ./
+COPY ./target/spring-boot-loader/ ./
 
-COPY --from=builder application/snapshot-dependencies/ ./
+COPY ./target/snapshot-dependencies/ ./
 
-COPY --from=builder application/application/ ./
+COPY ./target/application/ ./
 
 EXPOSE 8181
 
