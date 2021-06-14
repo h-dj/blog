@@ -6,15 +6,16 @@ pipeline {
     }
     environment {
        GIT_CREDENTIALS_ID = 'git-gogs-rpi'
-       GIT_BRANCH = 'develop'
+       GIT_BRANCH = 'dev-jenkins'
        GIT_URL = 'http://192.168.43.178:10080/hdj/blog.git'
        MAVEN_CONFIG = 'ba0feaaf-9ef0-4ce5-98c4-2dc0d34647c9'
-       SSH_AGENT_CREDENTIALS = ''
+       SSH_AGENT_CREDENTIALS = 'huawei-ssh'
        DOCKER_REGISTER= 'http://127.0.0.1:6000'
        DOCKER_REGISTER_CREDENTIALS_ID= ''
-       DOCKER_TAG = "hdj/hdj-blog:v1.0.1-dev"
-       REMOTE_HOST = "blog@139.159.150.1"
-       REMOTE_PORT = "22022"
+       DOCKER_TAG = "hdj/blog-api-dev-amd64"
+       REMOTE_HOST = "blog@127.0.0.1"
+       REMOTE_PORT = "22"
+       DOCKERFILE = "Dockerfile"
     }
     stages {
         stage('拉取代码') {
@@ -36,6 +37,9 @@ pipeline {
                     dir("${WORKSPACE}/hdj-blog"){
                         echo "maven 打包"
                         sh "mvn clean package -P $PROJECT_PROFILE"
+                        dir("${WORKSPACE}/hdj-blog/target"){
+                            sh "java -Djarmode=layertools -jar *.jar extract"
+                        }
                         sh "ls -l ./target"
                     }
                  }
@@ -45,13 +49,11 @@ pipeline {
              steps {
               script{
                   dir("${WORKSPACE}/hdj-blog"){
-                        docker.withRegistry("$DOCKER_REGISTER", "$DOCKER_REGISTER_CREDENTIALS_ID") {
+                        docker.withRegistry("$DOCKER_REGISTER") {
                               sh 'docker image prune --filter="dangling=true" -f'
-                              sh """
-                                    docker buildx build -t blog-api:v1.0.1-dev -f Dockerfile.arm64  --platform=linux/arm64 -o type=docker .
-                                    #docker buildx build -t blog-api:v1.0.1-dev -f Dockerfile  --platform=linux/amd64 -o type=docker .
-                                    docker push $DOCKER_TAG
-                              """
+                              def customImage = docker.build("$DOCKER_TAG","-f $DOCKERFILE .  --no-cache")
+                              /* Push the container to the custom Registry */
+                              customImage.push()
                        }
                     }
                   }
@@ -60,7 +62,7 @@ pipeline {
        stage('启动项目') {
             steps {
               sshagent (credentials: ["$SSH_AGENT_CREDENTIALS"]) {
-                  sh 'ssh -o StrictHostKeyChecking=no -p $REMOTE_PORT $REMOTE_HOST "time docker-compose -f docker-compose.yml up -d --build"'
+                  sh 'ssh -o StrictHostKeyChecking=no -p $REMOTE_PORT $REMOTE_HOST "cd ~/blog && time docker-compose -f docker-compose.yml up -d --build"'
               }
            }
        }

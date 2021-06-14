@@ -4,13 +4,12 @@ import cn.hdj.hdjblog.constaint.enums.ResponseCodeEnum;
 import cn.hdj.hdjblog.model.vo.ResultVO;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -79,7 +78,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(DuplicateKeyException.class)
     public ResultVO handleDuplicateKeyException(DuplicateKeyException e) {
-        log.error("错误详情：" + e.getMessage());
+        log.error("错误详情：",e.getMessage(),e);
         return ResultVO.errorJson(ResponseCodeEnum.DUPLICATE_KEY);
     }
 
@@ -94,32 +93,12 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AuthorizationException.class)
     public ResultVO handleAuthorizationException(AuthorizationException e) {
-        log.error("错误详情：" + e.getMessage());
+        log.error("错误详情:{}", e.getMessage(),e);
         return ResultVO.errorJson(ResponseCodeEnum.NO_AUTH);
     }
 
-    /**
-     * 账号验证异常
-     *
-     * @param e
-     * @return
-     */
-    @ResponseBody
-    @ExceptionHandler(AuthenticationException.class)
-    public ResultVO handleUnknownAccountException(AuthenticationException e) {
-        log.error("错误详情：" + e.getMessage());
-        if (e instanceof UnknownAccountException) {
-            return ResultVO.errorJson(ResponseCodeEnum.USERNAME_OR_PASSWORD_WRONG);
-        }
-        if (e instanceof LockedAccountException) {
-            return ResultVO.errorJson(ResponseCodeEnum.LOCK_ACCOUNT);
-        }
-        if (e instanceof IncorrectCredentialsException) {
-            return ResultVO.errorJson(ResponseCodeEnum.USERNAME_OR_PASSWORD_WRONG);
-        }
-        return ResultVO.errorJson(ResponseCodeEnum.LOGIN_FAIL);
 
-    }
+
 
     /**
      * 系统其它异常
@@ -131,7 +110,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ResultVO handleException(Exception e) {
-        log.error("错误详情：" + e.getMessage(), e);
+        log.error("错误详情：{}",e.getMessage(), e);
         return ResultVO.errorJson();
     }
 }

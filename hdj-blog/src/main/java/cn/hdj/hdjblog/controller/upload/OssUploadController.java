@@ -6,7 +6,7 @@ import cn.hdj.hdjblog.model.params.ImagesSearchForm;
 import cn.hdj.hdjblog.model.vo.PageVO;
 import cn.hdj.hdjblog.model.vo.ResultVO;
 import cn.hdj.hdjblog.service.AttachmentService;
-import cn.hdj.hdjblog.service.impl.QiniuFileStorageServiceImpl;
+import cn.hdj.hdjblog.service.FileStorageService;
 import cn.hdj.hdjblog.util.MyWebUtils;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.NumberUtil;
@@ -39,7 +39,7 @@ import java.io.IOException;
 public class OssUploadController {
 
     @Autowired
-    private QiniuFileStorageServiceImpl fileStorageService;
+    private FileStorageService fileStorageService;
 
     @Autowired
     private AttachmentService attachmentService;

@@ -1,56 +1,58 @@
 pipeline {
     agent any
+    environment {
+       GIT_CREDENTIALS_ID = 'git-gogs-rpi'
+       GIT_BRANCH = 'dev-jenkins'
+       GIT_URL = 'http://192.168.43.178:10080/hdj/blog.git'
+       NODE_CONFIG = 'b700ac95-4843-4028-a157-679082a30441'
+       SSH_AGENT_CREDENTIALS = 'huawei-ssh'
+       DOCKER_REGISTER= 'http://127.0.0.1:6000'
+       DOCKER_REGISTER_CREDENTIALS_ID= ''
+       DOCKER_TAG = "hdj/blog-admin-arm64"
+       REMOTE_HOST = "blog@127.0.0.1"
+       REMOTE_PORT = "22"
+       DOCKERFILE = "Dockerfile"
+    }
     stages {
         stage('拉取代码') {
             steps {
-                echo "开始拉取代码: 位置：${WORKSPACE}"
-                 script {
-                        if(!fileExists("${WORKSPACE}/blog")){
-                           sh "git clone git@github.com:h-dj/blog.git"
-                           dir("${WORKSPACE}/blog"){
-                               sh "git checkout develop"
-                               sh "git branch"
-                           }
-                        }else{
-                           dir("${WORKSPACE}/blog"){
-                               sh "git pull"
-                           }
-                        }
+                 echo "拉去分支 $GIT_BRANCH 代码"
+                 git branch: "$GIT_BRANCH", credentialsId: "$GIT_CREDENTIALS_ID", url: "$GIT_URL"
+            }
+        }
+        stage('打包') {
+           steps {
+             dir("${WORKSPACE}/hdj-blog-admin"){
+                nodejs(nodeJSInstallationName: 'node15', configId: "$NODE_CONFIG") {
+                     sh 'npm config ls'
+                     sh 'npm install'
+                     sh 'npm run build:prod'
                 }
-                echo "开始拉取代码: 完成 "
+             }
             }
         }
-        stage('构建') {
-            steps {
-              dir("${WORKSPACE}/blog/hdj-blog-admin"){
-                sh "/usr/bin/npm install"
-                sh "/usr/bin/npm run build:prod"
-              }
-            }
-        }
-        stage('发送至指定服务器') {
+        stage('构建镜像') {
              steps {
-                  sh 'date'
-                  echo "项目构建结果路径：${WORKSPACE}"
-                  dir("${WORKSPACE}/blog/hdj-blog-admin"){
-                    sh "rsync -avu --progress  ./dist/**  ${user}@${host}:/home/blog/blog/nginx/www/admin"
+              script{
+                  dir("${WORKSPACE}/hdj-blog-admin"){
+                        docker.withRegistry("$DOCKER_REGISTER") {
+                              sh 'docker image prune --filter="dangling=true" -f'
+                              def customImage = docker.build("$DOCKER_TAG","-f $DOCKERFILE .  --no-cache")
+                              /* Push the container to the custom Registry */
+                              customImage.push()
+                       }
+                    }
                   }
-                  echo '发送成功'
-               }
             }
-        }
-    post {
-            success {
-                echo 'success'
-            }
-            unstable {
-                echo 'I am unstable :/'
-            }
-            failure {
-                echo 'failed'
-            }
-            changed {
-                echo 'Things were different before...'
-            }
-        }
+       }
+       stage('启动项目') {
+            steps {
+              sshagent (credentials: ["$SSH_AGENT_CREDENTIALS"]) {
+                  echo "1233"
+                  //sh 'ssh -o StrictHostKeyChecking=no -p $REMOTE_PORT $REMOTE_HOST "cd ~/blog && time docker-compose -f docker-compose.yml up -d --build"'
+              }
+           }
+       }
+    }
 }
+

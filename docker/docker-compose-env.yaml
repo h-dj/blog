@@ -12,7 +12,7 @@ services:
       - ./mysql/conf/my.cnf:/etc/mysql/my.cnf
     privileged: false
     networks:
-      - blog-extranet
+      - blog-backend
     expose:
       - 3306
   redis:
@@ -25,7 +25,7 @@ services:
       - ./redis/conf/redis.conf:/conf/redis.conf
     command: redis-server /conf/redis.conf
     networks:
-      - blog-extranet
+      - blog-backend
     expose:
       - 6379
   mq:
@@ -40,7 +40,7 @@ services:
       - 5672
       - 15672
     networks:
-      - blog-extranet
+      - blog-backend
   es:
     container_name: blog-es
     image: 'elasticsearch:7.1.0'
@@ -56,22 +56,9 @@ services:
       - 9200
       - 9300
     networks:
-      - blog-extranet
-  nginx:
-    container_name: blog-nginx
-    image: 'nginx:1.16-alpine'
-    restart: always
-    privileged: false
-    volumes:
-      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/certs/full_chain.pem:/etc/nginx/certs/full_chain.pem
-      - ./nginx/certs/private.key:/etc/nginx/certs/private.key
-      - ./nginx/logs:/var/log/nginx
-    ports:
-      - 80:80
-      - 443:443
-    networks:
-      - blog-extranet
+      - blog-backend
 networks:
-  blog-extranet:
-    driver: bridge
+  blog-backend:
+    external: true
+  blog-frontend:
+    external: true

@@ -1,11 +1,10 @@
 package cn.hdj.hdjblog.utils;
 
-import cn.hutool.crypto.SecureUtil;
-import com.baomidou.mybatisplus.core.toolkit.AES;
+import cn.hutool.core.util.NumberUtil;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
+import java.math.BigDecimal;
 
 
 /**
@@ -19,12 +18,16 @@ public class BeanUtilTest {
     @Test
     public void testHutoolBeanUtil() throws UnsupportedEncodingException {
 
-        String s = AES.generateRandomKey();
+//        String s = AES.generateRandomKey();
+//
+//        String a = AES.encrypt("A", s);
+//        System.out.println(a);
+//
+//
+//        SecureUtil.aes(s.getBytes(StandardCharsets.UTF_8));
 
-        String a = AES.encrypt("A", s);
-        System.out.println(a);
+        BigDecimal add = NumberUtil.add("79211.38", "-9350.01", "-25760.45", "-10017.46");
+        System.out.println(add);
 
-
-        SecureUtil.aes(s.getBytes(StandardCharsets.UTF_8));
     }
 }

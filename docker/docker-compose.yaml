@@ -6,7 +6,7 @@ services:
     privileged: false
     container_name: blog-api
     networks:
-      - blog-extranet
+      - blog-backend
     volumes:
       - ./app/logs:/logs
       - /etc/timezone:/etc/timezone
@@ -24,19 +24,42 @@ services:
       privileged: false
       container_name: blog-admin
       networks:
-        - blog-extranet
+        - blog-frontend
+      volumes:
+        - /etc/timezone:/etc/timezone
       expose:
         - 8282
   blog-front:
-    image: ''
+    image: 'blog-front:v1.0.1'
       restart: always
       privileged: false
       container_name: blog-front
+      volumes:
+        - /etc/timezone:/etc/timezone
       networks:
-        - blog-extranet
+        - blog-frontend
       expose:
         - 8383
+      - blog-extranet
+  nginx-proxy:
+    container_name: blog-nginx
+    image: 'nginx:1.16-alpine'
+    restart: always
+    privileged: false
+    volumes:
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/certs/full_chain.pem:/etc/nginx/certs/full_chain.pem
+      - ./nginx/certs/private.key:/etc/nginx/certs/private.key
+      - ./nginx/logs:/var/log/nginx
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - blog-backend
+      - blog-frontend
 
 networks:
-  outside:
+  blog-backend:
+    external: true
+  blog-frontend:
     external: true
