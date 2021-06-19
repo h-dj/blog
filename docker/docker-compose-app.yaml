@@ -1,0 +1,45 @@
+version: '3'
+services:
+  blog-api:
+    image: 'blog-api:v1.0.1-dev'
+    restart: 'false'
+    privileged: false
+    container_name: blog-api
+    networks:
+      - blog-nextwork
+    volumes:
+      - ./logs:/logs
+      - /etc/timezone:/etc/timezone
+    expose:
+      - 8181
+    environment:
+      - 'ES_HOST=es'
+      - 'MQ_HOST=mq'
+      - 'DB_HOST=db'
+      - 'REDIS_HOST=redis'
+  blog-admin-web:
+    image: 'blog-admin-web:v1.0.1-dev'
+    restart: 'false'
+    privileged: false
+    container_name: blog-admin
+    networks:
+      - blog-nextwork
+    volumes:
+      - /etc/timezone:/etc/timezone
+    expose:
+      - 8282
+  blog-front-web:
+    image: 'blog-front:v1.0.1-dev'
+    restart: 'false'
+    privileged: false
+    container_name: blog-front
+    volumes:
+      - /etc/timezone:/etc/timezone
+    networks:
+      - blog-nextwork
+    expose:
+      - 8383
+
+networks:
+  blog-nextwork:
+    external: true #使用外部的blog-nextwork
