@@ -1,5 +1,12 @@
+FROM openjdk:8-jre
 
-# java -Djarmode=layertools -jar app.jar extract
+FROM openjdk:8-jre as builder
+
+WORKDIR application
+
+ADD ./target/hdj-blog-v1.0.1-dev.jar ./app.jar
+
+RUN java -Djarmode=layertools -jar app.jar extract
 
 FROM openjdk:8-jre
 
@@ -7,13 +14,13 @@ MAINTAINER jiajian.java@gmail.com
 
 WORKDIR application
 
-COPY ./target/dependencies/ ./
+COPY --from=builder application/dependencies/ ./
 
-COPY ./target/spring-boot-loader/ ./
+COPY --from=builder application/spring-boot-loader/ ./
 
-COPY ./target/snapshot-dependencies/ ./
+COPY --from=builder application/snapshot-dependencies/ ./
 
-COPY ./target/application/ ./
+COPY --from=builder application/application/ ./
 
 EXPOSE 8181
 

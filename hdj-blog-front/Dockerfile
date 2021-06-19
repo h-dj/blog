@@ -1,5 +1,5 @@
-# 生产阶段(用nginx简洁版镜像)
-FROM nginx:1.19.6-alpine as production-stage
+
+FROM nginx:1.19.6-alpine
 
 WORKDIR /app
 
