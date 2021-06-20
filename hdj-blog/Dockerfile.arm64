@@ -3,7 +3,7 @@ FROM arm64v8/openjdk:8-jre-alpine3.8 as builder
 WORKDIR application
 
 ADD ./target/hdj-blog-v1.0.1-dev.jar ./app.jar
-
+RUN java -version
 RUN java -Djarmode=layertools -jar app.jar extract
 
 

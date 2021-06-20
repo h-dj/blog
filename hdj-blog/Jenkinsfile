@@ -7,7 +7,7 @@ pipeline {
     environment {
        GIT_CREDENTIALS_ID = 'git-gogs-rpi'
        GIT_BRANCH = 'dev-jenkins'
-       GIT_URL = 'http://192.168.43.178:10080/hdj/blog.git'
+       GIT_URL = 'http://192.168.43.178:3080/jiajian/blog.git'
        MAVEN_CONFIG = 'ba0feaaf-9ef0-4ce5-98c4-2dc0d34647c9'
        SSH_AGENT_CREDENTIALS = 'huawei-ssh'
        DOCKER_REGISTER= 'http://127.0.0.1:6000'
