@@ -1,13 +1,3 @@
 /.idea/
-/logs/blog-debug-2020-11-08.0.log
-/logs/blog-error-2020-11-08.0.log
-/logs/blog-error-2021-01-12.0.log
-/logs/blog-info-2020-11-08.0.log
-/logs/blog-info-2021-01-12.0.log
-/logs/blog-info-2021-01-13.0.log
-/logs/blog-warn-2020-11-08.0.log
-/logs/blog-warn-2021-01-12.0.log
-/logs/blog_debug.log
-/logs/blog_error.log
-/logs/blog_info.log
-/logs/blog_warn.log
+/logs/
+
